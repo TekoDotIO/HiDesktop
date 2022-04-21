@@ -15,8 +15,7 @@ namespace HiDesktop
         [STAThread]
         static void Main()
         {
-            TextBar textBar = new TextBar();
-            textBar.Opacity = 0.5;
+            TextBar textBar = new TextBar("./JuniorExam/");
             textBar.BackColor = Color.SkyBlue;
             textBar.TransparencyKey = Color.SkyBlue;
             textBar.ShowDialog();
