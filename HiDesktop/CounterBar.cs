@@ -12,13 +12,13 @@ using System.IO;
 
 namespace HiDesktop
 {
-    public partial class TextBar : Form
+    public partial class CounterBar : Form
     {
         
         DateTime Latest;
-        DateTime Target;
-        string Path;
-        public TextBar(string Path)
+        readonly DateTime Target;
+        readonly string Path;
+        public CounterBar(string Path)
         {
             TopMost = false;
             InitializeComponent();
@@ -28,6 +28,8 @@ namespace HiDesktop
             float fontSize = Convert.ToInt32(File.ReadAllText(Path + "/fontSize.txt"));
             if (!File.Exists(Path + "/Opacity.txt")) File.WriteAllText(Path + "/Opacity.txt", "1");
             Opacity = Convert.ToInt32(File.ReadAllText(Path + "/Opacity.txt"));
+            if (!File.Exists(Path + "/TopMost.txt")) File.WriteAllText(Path + "/TopMost.txt", "true");
+            if (File.ReadAllText(Path + "/TopMost.txt") == "true") TopMost = true;
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;
             CheckForIllegalCrossThreadCalls = false;
@@ -86,7 +88,7 @@ namespace HiDesktop
             while (true)
             {
                 var span = Target - Latest;
-                NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({getDays(Target, Latest)}个工作日).";
+                NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
                 Thread.Sleep(500);
                 Latest = DateTime.Now;
                 File.WriteAllText($"{Path}/Location.txt", $"{Location.X}\n{Location.Y}");
@@ -95,11 +97,11 @@ namespace HiDesktop
         private void UpdateTimeOnce()
         {
             var span = Target - Latest;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({getDays(Target, Latest)}个工作日).";
+            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
             Thread.Sleep(500);
             Latest = DateTime.Now;
         }
-        public int getDays(DateTime dt1, DateTime dt2)
+        public int GetDays(DateTime dt1, DateTime dt2)
         {
             TimeSpan ts1 = dt1 - dt2;//TimeSpan得到dt1和dt2的时间间隔
             int countday = ts1.Days;//获取两个日期间的总天数
@@ -122,7 +124,7 @@ namespace HiDesktop
         [DllImport("user32.dll")]
         public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
 
-        private void frmMain_MouseDown(object sender, MouseEventArgs e)
+        private void FrmMain_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x0112, 0xF012, 0);
@@ -132,12 +134,12 @@ namespace HiDesktop
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void changeLocation(object sender, EventArgs e)
+        private void ChangeLocation(object sender, EventArgs e)
         {
             
 
@@ -147,7 +149,7 @@ namespace HiDesktop
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            frmMain_MouseDown(this, e);
+            FrmMain_MouseDown(this, e);
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
@@ -165,7 +167,7 @@ namespace HiDesktop
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            frmMain_MouseDown(this, e);
+            FrmMain_MouseDown(this, e);
         }
     }
 }

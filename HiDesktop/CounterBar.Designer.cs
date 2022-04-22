@@ -1,6 +1,6 @@
 ﻿namespace HiDesktop
 {
-    partial class TextBar
+    partial class CounterBar
     {
         /// <summary>
         /// Required designer variable.
@@ -48,7 +48,7 @@
             this.LabelNo1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
             this.LabelNo1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
             this.LabelNo1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-            this.LabelNo1.Move += new System.EventHandler(this.changeLocation);
+            this.LabelNo1.Move += new System.EventHandler(this.ChangeLocation);
             // 
             // EventText
             // 
@@ -60,7 +60,7 @@
             this.EventText.Size = new System.Drawing.Size(86, 35);
             this.EventText.TabIndex = 1;
             this.EventText.Text = "Event";
-            this.EventText.Click += new System.EventHandler(this.label1_Click);
+            this.EventText.Click += new System.EventHandler(this.Label1_Click);
             this.EventText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
             this.EventText.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
             // 

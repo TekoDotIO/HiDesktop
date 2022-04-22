@@ -15,9 +15,11 @@ namespace HiDesktop
         [STAThread]
         static void Main()
         {
-            TextBar textBar = new TextBar("./JuniorExam/");
-            textBar.BackColor = Color.SkyBlue;
-            textBar.TransparencyKey = Color.SkyBlue;
+            CounterBar textBar = new CounterBar("./JuniorExam/")
+            {
+                BackColor = Color.SkyBlue,
+                TransparencyKey = Color.SkyBlue
+            };
             textBar.ShowDialog();
 
         }
