@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Collections;
 
 namespace HiDesktop
 {
@@ -18,25 +19,54 @@ namespace HiDesktop
         DateTime Latest;
         readonly DateTime Target;
         readonly string Path;
+        Hashtable AppConfig;
         public CounterBar(string Path)
         {
             TopMost = false;
             InitializeComponent();
             this.Path = Path;
-            Directory.CreateDirectory(Path);
-            if (!File.Exists(Path + "/fontSize.txt")) File.WriteAllText(Path + "/fontSize.txt", "30");
-            float fontSize = Convert.ToInt32(File.ReadAllText(Path + "/fontSize.txt"));
-            if (!File.Exists(Path + "/Opacity.txt")) File.WriteAllText(Path + "/Opacity.txt", "1");
-            Opacity = Convert.ToInt32(File.ReadAllText(Path + "/Opacity.txt"));
-            if (!File.Exists(Path + "/TopMost.txt")) File.WriteAllText(Path + "/TopMost.txt", "true");
-            if (File.ReadAllText(Path + "/TopMost.txt") == "true") TopMost = true;
+            
+            if (!File.Exists(Path))
+            {
+                Hashtable Config = new Hashtable();
+                Config.Add("fontSize", "30");
+                Config.Add("opacity", "1");
+                Config.Add("topMost", "true");
+                Config.Add("date", "2023.1.1");
+                Config.Add("event", "Configue your countBar in properties file..");
+                Config.Add("location", "auto");
+                Properties.Save(Path, Config);
+            }
+            if (File.ReadAllText(Path) == "")
+            {
+                Hashtable Config = new Hashtable();
+                Config.Add("fontSize", "30");
+                Config.Add("opacity", "1");
+                Config.Add("topMost", "true");
+                Config.Add("date", "2023.1.1");
+                Config.Add("event", "Configue your countBar in properties file..");
+                Config.Add("location", "auto");
+                Properties.Save(Path, Config);
+            }
+            this.AppConfig = Properties.Load(Path);
+            float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
+            Opacity = Convert.ToDouble(AppConfig["opacity"]);
+            if ((string)AppConfig["topMost"] == "true") 
+            {
+                TopMost = true;
+            }
+            else
+            {
+                TopMost = false;
+            }
+            string[] targetStr = ((string)AppConfig["date"]).Split(".");
+            EventText.Text = (string)AppConfig["event"];
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;
             CheckForIllegalCrossThreadCalls = false;
             Latest = DateTime.Now;
             //MessageBox.Show(Latest.DayOfWeek.ToString());
-            if (!File.Exists(Path + "/Date.txt")) File.WriteAllText(Path + "/Date.txt", "2023 1 1");
-            string[] targetStr = File.ReadAllText(Path + "/Date.txt").Split(" ");
+            
             Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
             LabelNo2.Font = new Font(LabelNo2.Font.Name, fontSize);
@@ -49,36 +79,45 @@ namespace HiDesktop
             NumText.ForeColor = Color.Red;
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
-            if (!File.Exists(Path + "/Event.txt")) File.WriteAllText(Path + "/Event.txt", "事件");
-            EventText.Text = File.ReadAllText(Path + "/Event.txt");
+            
             LabelNo2.Location = new Point(EventText.Location.X + EventText.Size.Width, LabelNo2.Location.Y);
             UpdateTimeOnce();
             NumText.Location = new Point(LabelNo2.Location.X + LabelNo2.Size.Width, NumText.Location.Y);
             Size = new Size(NumText.Location.X + NumText.Size.Width, NumText.Size.Height);
-            if (File.Exists(Path + "/Location.txt")) 
-            {
-                try
-                {
-                    string Location = File.ReadAllText(Path + "/Location.txt");
-                    this.Location = new Point(Convert.ToInt32(Location.Split("\n")[0]), Convert.ToInt32(Location.Split("\n")[1]));
-                }
-                catch
-                {
-                    File.Delete(Path + "/Location.txt");
-                    int startX = LabelNo1.Location.X;
-                    int endX = NumText.Location.X + NumText.Size.Width;
-                    int deltaX = endX - startX;
-                    Location = new Point(w / 2 - (deltaX) / 2, Location.Y);
-                }
-            }
-            else
+            if ((string)AppConfig["location"] == "auto") 
             {
                 int startX = LabelNo1.Location.X;
                 int endX = NumText.Location.X + NumText.Size.Width;
                 int deltaX = endX - startX;
                 Location = new Point(w / 2 - (deltaX) / 2, Location.Y);
             }
-            
+            else
+            {
+                try
+                {
+                    string Location = (string)AppConfig["location"];
+                    if (Location == null) 
+                    {
+                        int startX = LabelNo1.Location.X;
+                        int endX = NumText.Location.X + NumText.Size.Width;
+                        int deltaX = endX - startX;
+                        this.Location = new Point(w / 2 - (deltaX) / 2, this.Location.Y);
+                    }
+                    else
+                    {
+                        this.Location = new Point(Convert.ToInt32(Location.Split(",")[0]), Convert.ToInt32(Location.Split(",")[1]));
+                    }
+                    
+                }
+                catch
+                {
+                    int startX = LabelNo1.Location.X;
+                    int endX = NumText.Location.X + NumText.Size.Width;
+                    int deltaX = endX - startX;
+                    Location = new Point(w / 2 - (deltaX) / 2, Location.Y);
+                }
+            }
+
             Thread thread = new Thread(new ThreadStart(UpdateTime));
             thread.Start();
 
@@ -91,7 +130,8 @@ namespace HiDesktop
                 NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
                 Thread.Sleep(500);
                 Latest = DateTime.Now;
-                File.WriteAllText($"{Path}/Location.txt", $"{Location.X}\n{Location.Y}");
+                AppConfig["location"] = $"{Location.X},{Location.Y}";
+                Properties.Save(Path, AppConfig);
             }
         }
         private void UpdateTimeOnce()
@@ -153,7 +193,7 @@ namespace HiDesktop
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            File.WriteAllText($"{Path}/Location.txt", $"{Location.X}\n{Location.Y}");
+
         }
         private void LabelNo1_Click(object sender, EventArgs e)
         {
@@ -162,7 +202,7 @@ namespace HiDesktop
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            File.WriteAllText($"{Path}/Location.txt", $"{Location.X}\n{Location.Y}");
+
         }
         private void OnMouseDown(object sender, MouseEventArgs e)
         {

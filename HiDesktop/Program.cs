@@ -15,7 +15,7 @@ namespace HiDesktop
         [STAThread]
         static void Main()
         {
-            CounterBar textBar = new CounterBar("./JuniorExam/")
+            CounterBar textBar = new CounterBar("./JuniorExam.properties")
             {
                 BackColor = Color.SkyBlue,
                 TransparencyKey = Color.SkyBlue

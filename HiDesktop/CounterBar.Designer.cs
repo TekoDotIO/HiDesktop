@@ -107,7 +107,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "TextBar";
-            this.TopMost = false;
             this.Load += new System.EventHandler(this.TextBar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
