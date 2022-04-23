@@ -130,8 +130,7 @@ namespace HiDesktop
                 NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
                 Thread.Sleep(500);
                 Latest = DateTime.Now;
-                AppConfig["location"] = $"{Location.X},{Location.Y}";
-                Properties.Save(Path, AppConfig);
+                
             }
         }
         private void UpdateTimeOnce()
@@ -193,16 +192,19 @@ namespace HiDesktop
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
-
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            Properties.Save(Path, AppConfig);
         }
         private void LabelNo1_Click(object sender, EventArgs e)
         {
-
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            Properties.Save(Path, AppConfig);
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            Properties.Save(Path, AppConfig);
         }
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
