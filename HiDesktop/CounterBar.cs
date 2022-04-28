@@ -128,7 +128,7 @@ namespace HiDesktop
             {
                 var span = Target - Latest;
                 NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
-                Thread.Sleep(500);
+                Thread.Sleep(400);
                 Latest = DateTime.Now;
                 
             }
