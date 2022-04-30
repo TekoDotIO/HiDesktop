@@ -10,6 +10,7 @@ using System.Windows;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Collections;
+using System.Drawing.Text;
 
 namespace HiDesktop
 {
@@ -28,27 +29,40 @@ namespace HiDesktop
             
             if (!File.Exists(Path))
             {
-                Hashtable Config = new Hashtable();
-                Config.Add("fontSize", "30");
-                Config.Add("opacity", "1");
-                Config.Add("topMost", "true");
-                Config.Add("date", "2023.1.1");
-                Config.Add("event", "Configue your countBar in properties file..");
-                Config.Add("location", "auto");
+                Hashtable Config = new Hashtable
+                {
+                    { "type", "CounterBar" },
+                    { "font", "auto" },
+                    { "fontSize", "30" },
+                    { "opacity", "1" },
+                    { "topMost", "true" },
+                    { "date", "2023.1.1" },
+                    { "event", "Configue your countBar in properties file.." },
+                    { "location", "auto" }
+                };
                 Properties.Save(Path, Config);
             }
             if (File.ReadAllText(Path) == "")
             {
-                Hashtable Config = new Hashtable();
-                Config.Add("fontSize", "30");
-                Config.Add("opacity", "1");
-                Config.Add("topMost", "true");
-                Config.Add("date", "2023.1.1");
-                Config.Add("event", "Configue your countBar in properties file..");
-                Config.Add("location", "auto");
+                Hashtable Config = new Hashtable
+                {
+                    { "type", "CounterBar" },
+                    { "font", "auto" },
+                    { "fontSize", "30" },
+                    { "opacity", "1" },
+                    { "topMost", "true" },
+                    { "date", "2023.1.1" },
+                    { "event", "Configue your countBar in properties file.." },
+                    { "location", "auto" }
+                };
                 Properties.Save(Path, Config);
             }
-            this.AppConfig = Properties.Load(Path);
+            AppConfig = Properties.Load(Path);
+            if ((string)AppConfig["type"] !="CounterBar")
+            {
+                Log.SaveLog($"{Path}不是一个倒计时窗口的配置文件,已跳过加载.");
+                return;
+            }
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
             if ((string)AppConfig["topMost"] == "true") 
@@ -66,12 +80,20 @@ namespace HiDesktop
             CheckForIllegalCrossThreadCalls = false;
             Latest = DateTime.Now;
             //MessageBox.Show(Latest.DayOfWeek.ToString());
+
+            if ((string)AppConfig["font"] != "auto")
+            {
+                Setfont((string)AppConfig["font"]);
+            }
             
+
             Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
             LabelNo2.Font = new Font(LabelNo2.Font.Name, fontSize);
             EventText.Font = new Font(EventText.Font.Name, fontSize);
             NumText.Font = new Font(NumText.Font.Name, fontSize);
+
+            
 
             LabelNo1.ForeColor = Color.White;
             LabelNo2.ForeColor = Color.White;
@@ -128,7 +150,7 @@ namespace HiDesktop
             {
                 var span = Target - Latest;
                 NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
-                Thread.Sleep(400);
+                Thread.Sleep(500);
                 Latest = DateTime.Now;
                 
             }
@@ -157,6 +179,32 @@ namespace HiDesktop
             }
             return weekday;
         }
+        public void Setfont(string path)
+        {
+            string AppPath = Application.StartupPath;
+            try
+            {
+                //从外部文件加载字体文件
+                PrivateFontCollection font = new PrivateFontCollection();
+                font.AddFontFile(AppPath + path);
+
+                //定义成新的字体对象
+                FontFamily myFontFamily = new FontFamily(font.Families[0].Name, font);
+                Font myFont = new Font(myFontFamily, 56F, FontStyle.Regular);
+
+                //将字体显示到控件
+                EventText.Font = myFont;
+                LabelNo1.Font = myFont;
+                LabelNo2.Font = myFont;
+                NumText.Font = myFont;
+
+            }
+            catch (InvalidCastException e)
+            {
+                MessageBox.Show(e.Message.ToString(), "异常：", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+        //原文链接：https://blog.csdn.net/electricperi/article/details/8630757
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
