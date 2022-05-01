@@ -8,6 +8,7 @@ namespace HiDesktop
 {
     internal class Program
     {
+        const string productName = "HiDesktop";
         CounterBar counterBar;
         void StartView()
         {
@@ -16,6 +17,31 @@ namespace HiDesktop
                 counterBar.ShowDialog();
 
             }
+        }
+        static void MainProcess()
+        {
+            Directory.CreateDirectory("./Properties/");
+            string[] properties = Directory.GetFiles("./Properties/");
+            foreach (string localFile in properties)
+            {
+                if (localFile.Contains(".properties"))
+                {
+                    CounterBar textBar = new CounterBar(localFile)
+                    {
+                        BackColor = Color.SkyBlue,
+                        TransparencyKey = Color.SkyBlue
+                    };
+                    Program p = new Program
+                    {
+                        counterBar = textBar
+                    };
+                    Thread Counter = new Thread(new ThreadStart(p.StartView));
+                    Counter.Start();
+                    Log.SaveLog($"Lanunched {localFile}");
+                }
+
+            }
+            Log.SaveLog("Lanunched all.");
         }
         /// <summary>
         ///  The main entry point for the application.
@@ -26,51 +52,35 @@ namespace HiDesktop
             switch (args.Length)//读取传入的参数
             {
                 case 0:
-
-                    string[] properties = Directory.GetFiles("./");
-                    foreach (string localFile in properties)
-                    {
-                        if (localFile.Contains(".properties"))
-                        {
-                            CounterBar textBar = new CounterBar(localFile)
-                            {
-                                BackColor = Color.SkyBlue,
-                                TransparencyKey = Color.SkyBlue
-                            };
-                            Program p = new Program
-                            {
-                                counterBar = textBar
-                            };
-                            Thread Counter = new Thread(new ThreadStart(p.StartView));
-                            Counter.Start();
-                            Log.SaveLog($"Lanunched {localFile}");
-                        }
-
-                    }
-                    Log.SaveLog("Lanunched all.");
+                    Process p = new Process();
+                    p.StartInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
+                    //p.StartInfo.CreateNoWindow = true;
+                    p.Start();
                     break;
                 //当参数为1个,存在多种情况
                 case 1:
                     //读取第一个参数
                     switch (args[0])
                     {
+                        case "--MainProcess":
+                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            MainProcess();
+                            break;
                         case "--ExitAll":
-                            var Running = Process.GetProcessesByName("AutoFileBAK");
-                            //获取所有名为AutoFileBAK的进程
-                            var ThisID = Process.GetCurrentProcess().Id;
-                            //获取当前进程ID,防止自己结束自己导致结束程序不彻底
-                            foreach (Process process in Running)//为每个识别到的进程重复
-                            {
-                                if (ThisID != process.Id)//防止自行结束
-                                {
-                                    process.Kill();//结束此进程
-                                    Log.SaveLog("Killed process:" + process.Id);
-                                }
-                            }
-                            Log.SaveLog("Killed all AutoFileBAK process.");
+                            CommandRepo.ExitAll(productName);
+                            Log.SaveLog($"Killed all {productName} process.");
+                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            break;
+                        case "--Install":
+                            CommandRepo.CreateStartUpScript();
+                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            break;
+                        case "--Uninstall":
+                            CommandRepo.Uninstall(productName);
                             break;
                     }
                     break;
+
             }
 
 

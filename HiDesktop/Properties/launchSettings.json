@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HiDesktop": {
+      "commandName": "Project",
+      "commandLineArgs": "--MainProcess"
+    }
+  }
+}

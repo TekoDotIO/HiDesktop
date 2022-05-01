@@ -178,12 +178,11 @@ namespace HiDesktop
         }
         public void Setfont(string path)
         {
-            string AppPath = Application.StartupPath;
             try
             {
                 //从外部文件加载字体文件
                 PrivateFontCollection font = new PrivateFontCollection();
-                font.AddFontFile(AppPath + path);
+                font.AddFontFile(path);
 
                 //定义成新的字体对象
                 FontFamily myFontFamily = new FontFamily(font.Families[0].Name, font);
