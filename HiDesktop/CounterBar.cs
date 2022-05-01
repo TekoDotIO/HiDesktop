@@ -9,13 +9,19 @@ using System.Windows.Forms;
 
 namespace HiDesktop
 {
-    public partial class CounterBar : Form
+    partial class CounterBar : Form
     {
 
         DateTime Latest;
         readonly DateTime Target;
         readonly string Path;
         readonly Hashtable AppConfig;
+        string days;
+        string hours;
+        string minutes;
+        string seconds;
+        string workdays;
+        int refreshTime;
         public CounterBar(string Path)
         {
             TopMost = false;
@@ -31,7 +37,15 @@ namespace HiDesktop
                 { "date", "2023.1.1" },
                 { "event", "Configue your countBar in properties file.." },
                 { "location", "auto" },
-                { "enabled","true" }
+                { "enabled","true" },
+                { "frontText","To" },
+                { "middleText",",there are" },
+                { "days","day(s)" },
+                { "hours","hour(s)" },
+                { "minutes","minute(s)" },
+                { "seconds","second(s)" },
+                { "workdays","workday(s)" },
+                { "refreshTime","500" }
             };
             if (!File.Exists(Path))
             {
@@ -72,6 +86,14 @@ namespace HiDesktop
             }
             string[] targetStr = ((string)AppConfig["date"]).Split(".");
             EventText.Text = (string)AppConfig["event"];
+            LabelNo1.Text = (string)AppConfig["frontText"];
+            LabelNo2.Text = (string)AppConfig["middleText"];
+            days = (string)AppConfig["days"];
+            hours = (string)AppConfig["hours"];
+            minutes = (string)AppConfig["minutes"];
+            seconds = (string)AppConfig["seconds"];
+            workdays = (string)AppConfig["workdays"];
+            refreshTime = Convert.ToInt32((string)AppConfig["refreshTime"]);
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;
             CheckForIllegalCrossThreadCalls = false;
@@ -146,8 +168,8 @@ namespace HiDesktop
             while (true)
             {
                 var span = Target - Latest;
-                NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
-                Thread.Sleep(500);
+                NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{workdays}).";
+                Thread.Sleep(refreshTime);
                 Latest = DateTime.Now;
 
             }
@@ -155,7 +177,7 @@ namespace HiDesktop
         private void UpdateTimeOnce()
         {
             var span = Target - Latest;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
+            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}{workdays}).";
             Thread.Sleep(500);
             Latest = DateTime.Now;
         }
