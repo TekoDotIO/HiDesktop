@@ -54,6 +54,7 @@ namespace HiDesktop
                 case 0:
                     Process p = new Process();
                     p.StartInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
+                    p.StartInfo.Arguments = "--MainProcess";
                     //p.StartInfo.CreateNoWindow = true;
                     p.Start();
                     break;
