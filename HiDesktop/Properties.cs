@@ -62,6 +62,17 @@ namespace HiDesktop
             }
         }
 
+        public static Hashtable FixProperties(Hashtable htStandard,string path)
+        {
+            Hashtable ht = Load(path);
+            foreach(string key in htStandard.Keys)
+            {
+                if (!ht.Contains(key)) ht.Add(key, (string)htStandard[key]);
+            }
+            Save(path, ht);
+            Log.SaveLog("Hashtable fixed.");
+            return ht;
+        }
 
 
     }

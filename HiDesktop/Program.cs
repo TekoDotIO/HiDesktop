@@ -15,7 +15,11 @@ namespace HiDesktop
         CounterBar counterBar;
         void StartView()
         {
-            counterBar.ShowDialog();
+            if (!counterBar.IsDisposed)
+            {
+                counterBar.ShowDialog();
+
+            }
         }
         /// <summary>
         ///  The main entry point for the application.

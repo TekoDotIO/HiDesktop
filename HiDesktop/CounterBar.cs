@@ -26,41 +26,43 @@ namespace HiDesktop
             TopMost = false;
             InitializeComponent();
             this.Path = Path;
-            
+            Hashtable htStandard = new Hashtable()
+            {
+                { "type", "CounterBar" },
+                { "font", "auto" },
+                { "fontSize", "30" },
+                { "opacity", "1" },
+                { "topMost", "true" },
+                { "date", "2023.1.1" },
+                { "event", "Configue your countBar in properties file.." },
+                { "location", "auto" },
+                { "enabled","true" }
+            };
             if (!File.Exists(Path))
             {
-                Hashtable Config = new Hashtable
-                {
-                    { "type", "CounterBar" },
-                    { "font", "auto" },
-                    { "fontSize", "30" },
-                    { "opacity", "1" },
-                    { "topMost", "true" },
-                    { "date", "2023.1.1" },
-                    { "event", "Configue your countBar in properties file.." },
-                    { "location", "auto" }
-                };
+                Hashtable Config = htStandard;
                 Properties.Save(Path, Config);
             }
             if (File.ReadAllText(Path) == "")
             {
-                Hashtable Config = new Hashtable
-                {
-                    { "type", "CounterBar" },
-                    { "font", "auto" },
-                    { "fontSize", "30" },
-                    { "opacity", "1" },
-                    { "topMost", "true" },
-                    { "date", "2023.1.1" },
-                    { "event", "Configue your countBar in properties file.." },
-                    { "location", "auto" }
-                };
+                Hashtable Config = htStandard;
                 Properties.Save(Path, Config);
             }
+            Properties.FixProperties(htStandard, Path);
             AppConfig = Properties.Load(Path);
+
+            if ((string)AppConfig["enabled"] != "true")
+            {
+                Log.SaveLog($"{Path}已被禁用");
+                this.Close();
+                return;
+                
+            }
+
             if ((string)AppConfig["type"] !="CounterBar")
             {
                 Log.SaveLog($"{Path}不是一个倒计时窗口的配置文件,已跳过加载.");
+                this.Close(); 
                 return;
             }
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
