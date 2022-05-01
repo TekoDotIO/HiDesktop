@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace HiDesktop
 {
@@ -30,7 +26,7 @@ namespace HiDesktop
             switch (args.Length)//读取传入的参数
             {
                 case 0:
-                    
+
                     string[] properties = Directory.GetFiles("./");
                     foreach (string localFile in properties)
                     {
@@ -41,8 +37,10 @@ namespace HiDesktop
                                 BackColor = Color.SkyBlue,
                                 TransparencyKey = Color.SkyBlue
                             };
-                            Program p = new Program();
-                            p.counterBar = textBar;
+                            Program p = new Program
+                            {
+                                counterBar = textBar
+                            };
                             Thread Counter = new Thread(new ThreadStart(p.StartView));
                             Counter.Start();
                             Log.SaveLog($"Lanunched {localFile}");
@@ -74,8 +72,8 @@ namespace HiDesktop
                     }
                     break;
             }
-            
-            
+
+
         }
     }
 }

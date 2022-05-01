@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Collections;
 using System.Drawing;
-using System.Text;
+using System.Drawing.Text;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Collections;
-using System.Drawing.Text;
 
 namespace HiDesktop
 {
     public partial class CounterBar : Form
     {
-        
+
         DateTime Latest;
         readonly DateTime Target;
         readonly string Path;
-        Hashtable AppConfig;
+        readonly Hashtable AppConfig;
         public CounterBar(string Path)
         {
             TopMost = false;
@@ -56,18 +51,18 @@ namespace HiDesktop
                 Log.SaveLog($"{Path}已被禁用");
                 this.Close();
                 return;
-                
+
             }
 
-            if ((string)AppConfig["type"] !="CounterBar")
+            if ((string)AppConfig["type"] != "CounterBar")
             {
                 Log.SaveLog($"{Path}不是一个倒计时窗口的配置文件,已跳过加载.");
-                this.Close(); 
+                this.Close();
                 return;
             }
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
-            if ((string)AppConfig["topMost"] == "true") 
+            if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
             }
@@ -87,7 +82,7 @@ namespace HiDesktop
             {
                 Setfont((string)AppConfig["font"]);
             }
-            
+
 
             Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
@@ -95,7 +90,7 @@ namespace HiDesktop
             EventText.Font = new Font(EventText.Font.Name, fontSize);
             NumText.Font = new Font(NumText.Font.Name, fontSize);
 
-            
+
 
             LabelNo1.ForeColor = Color.White;
             LabelNo2.ForeColor = Color.White;
@@ -103,12 +98,12 @@ namespace HiDesktop
             NumText.ForeColor = Color.Red;
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
-            
+
             LabelNo2.Location = new Point(EventText.Location.X + EventText.Size.Width, LabelNo2.Location.Y);
             UpdateTimeOnce();
             NumText.Location = new Point(LabelNo2.Location.X + LabelNo2.Size.Width, NumText.Location.Y);
             Size = new Size(NumText.Location.X + NumText.Size.Width, NumText.Size.Height);
-            if ((string)AppConfig["location"] == "auto") 
+            if ((string)AppConfig["location"] == "auto")
             {
                 int startX = LabelNo1.Location.X;
                 int endX = NumText.Location.X + NumText.Size.Width;
@@ -120,7 +115,7 @@ namespace HiDesktop
                 try
                 {
                     string Location = (string)AppConfig["location"];
-                    if (Location == null) 
+                    if (Location == null)
                     {
                         int startX = LabelNo1.Location.X;
                         int endX = NumText.Location.X + NumText.Size.Width;
@@ -131,7 +126,7 @@ namespace HiDesktop
                     {
                         this.Location = new Point(Convert.ToInt32(Location.Split(",")[0]), Convert.ToInt32(Location.Split(",")[1]));
                     }
-                    
+
                 }
                 catch
                 {
@@ -154,7 +149,7 @@ namespace HiDesktop
                 NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}个工作日).";
                 Thread.Sleep(500);
                 Latest = DateTime.Now;
-                
+
             }
         }
         private void UpdateTimeOnce()
@@ -175,7 +170,7 @@ namespace HiDesktop
                 DateTime tempdt = dt2.Date.AddDays(i);
                 if (tempdt.DayOfWeek != DayOfWeek.Saturday && tempdt.DayOfWeek != DayOfWeek.Sunday)
                 {
-                    
+
                     weekday++;
                 }
             }
@@ -230,9 +225,9 @@ namespace HiDesktop
 
         private void ChangeLocation(object sender, EventArgs e)
         {
-            
 
-            
+
+
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

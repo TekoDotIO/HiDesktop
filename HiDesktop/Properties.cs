@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Text;
-using System.Collections;
 
 /*
  * @author : RoadToTheExpert
@@ -62,10 +62,10 @@ namespace HiDesktop
             }
         }
 
-        public static Hashtable FixProperties(Hashtable htStandard,string path)
+        public static Hashtable FixProperties(Hashtable htStandard, string path)
         {
             Hashtable ht = Load(path);
-            foreach(string key in htStandard.Keys)
+            foreach (string key in htStandard.Keys)
             {
                 if (!ht.Contains(key)) ht.Add(key, (string)htStandard[key]);
             }
