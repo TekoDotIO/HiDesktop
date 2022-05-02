@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -26,18 +27,35 @@ namespace HiDesktop
             {
                 if (localFile.Contains(".properties"))
                 {
-                    CounterBar textBar = new CounterBar(localFile)
+                    Hashtable config = Properties.Load(localFile);
+                    switch ((string)config["type"])
                     {
-                        BackColor = Color.SkyBlue,
-                        TransparencyKey = Color.SkyBlue
-                    };
-                    Program p = new Program
-                    {
-                        counterBar = textBar
-                    };
-                    Thread Counter = new Thread(new ThreadStart(p.StartView));
-                    Counter.Start();
-                    Log.SaveLog($"Lanunched {localFile}");
+                        case "CounterBar":
+                            if ((string)config["enabled"] == "true") 
+                            {
+                                CounterBar textBar = new CounterBar(localFile)
+                                {
+                                    BackColor = Color.SkyBlue,
+                                    TransparencyKey = Color.SkyBlue
+                                };
+                                Program p = new Program
+                                {
+                                    counterBar = textBar
+                                };
+                                Thread Counter = new Thread(new ThreadStart(p.StartView));
+                                Counter.Start();
+                                Log.SaveLog($"Lanunched {localFile}");
+                            }
+                            else
+                            {
+                                Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                            }
+                            break;
+                        default:
+                            Log.SaveLog($"Unknown program type:{localFile}");
+                            break;
+                    }
+                    
                 }
 
             }
