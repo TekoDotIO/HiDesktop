@@ -10,12 +10,13 @@ namespace HiDesktop
     internal class Program
     {
         const string productName = "HiDesktop";
-        CounterBar counterBar;
+        readonly Hashtable widgets = new Hashtable();
+        string nowFile;
         void StartView()
         {
-            if (!counterBar.IsDisposed)
+            if (!((CounterBar)widgets[nowFile]).IsDisposed) 
             {
-                counterBar.ShowDialog();
+                ((CounterBar)widgets[nowFile]).ShowDialog();
 
             }
         }
@@ -31,6 +32,7 @@ namespace HiDesktop
                     switch ((string)config["type"])
                     {
                         case "CounterBar":
+                            Program p = new Program();
                             if ((string)config["enabled"] == "true") 
                             {
                                 CounterBar textBar = new CounterBar(localFile)
@@ -38,10 +40,8 @@ namespace HiDesktop
                                     BackColor = Color.SkyBlue,
                                     TransparencyKey = Color.SkyBlue
                                 };
-                                Program p = new Program
-                                {
-                                    counterBar = textBar
-                                };
+                                p.widgets.Add(localFile, textBar);
+                                p.nowFile = localFile;
                                 Thread Counter = new Thread(new ThreadStart(p.StartView));
                                 Counter.Start();
                                 Log.SaveLog($"Lanunched {localFile}");
