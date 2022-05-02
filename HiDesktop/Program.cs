@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace HiDesktop
 {
@@ -20,7 +21,7 @@ namespace HiDesktop
 
             }
         }
-        static void MainProcess()
+        public static void MainProcess()
         {
             Directory.CreateDirectory("./Properties/");
             string[] properties = Directory.GetFiles("./Properties/");
@@ -28,7 +29,7 @@ namespace HiDesktop
             {
                 if (localFile.Contains(".properties"))
                 {
-                    Hashtable config = Properties.Load(localFile);
+                    Hashtable config = PropertiesHelper.Load(localFile);
                     switch ((string)config["type"])
                     {
                         case "CounterBar":
@@ -67,6 +68,8 @@ namespace HiDesktop
         [STAThread]
         static void Main(string[] args)
         {
+            
+            
             switch (args.Length)//读取传入的参数
             {
                 case 0:
@@ -83,7 +86,8 @@ namespace HiDesktop
                     {
                         case "--MainProcess":
                             Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
-                            MainProcess();
+                            Application.EnableVisualStyles();
+                            Application.Run(new LaunchPage());
                             break;
                         case "--ExitAll":
                             CommandRepo.ExitAll(productName);
@@ -101,7 +105,7 @@ namespace HiDesktop
                     break;
 
             }
-
+            
 
         }
     }

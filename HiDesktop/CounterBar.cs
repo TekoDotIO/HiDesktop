@@ -57,15 +57,15 @@ namespace HiDesktop
             if (!File.Exists(Path))
             {
                 Hashtable Config = htStandard;
-                Properties.Save(Path, Config);
+                PropertiesHelper.Save(Path, Config);
             }
             if (File.ReadAllText(Path) == "")
             {
                 Hashtable Config = htStandard;
-                Properties.Save(Path, Config);
+                PropertiesHelper.Save(Path, Config);
             }
-            Properties.FixProperties(htStandard, Path);
-            AppConfig = Properties.Load(Path);
+            PropertiesHelper.FixProperties(htStandard, Path);
+            AppConfig = PropertiesHelper.Load(Path);
 
             if ((string)AppConfig["enabled"] != "true")
             {
@@ -321,18 +321,18 @@ namespace HiDesktop
         protected override void OnMouseUp(MouseEventArgs e)
         {
             AppConfig["location"] = $"{Location.X},{Location.Y}";
-            Properties.Save(Path, AppConfig);
+            PropertiesHelper.Save(Path, AppConfig);
         }
         private void LabelNo1_Click(object sender, EventArgs e)
         {
             AppConfig["location"] = $"{Location.X},{Location.Y}";
-            Properties.Save(Path, AppConfig);
+            PropertiesHelper.Save(Path, AppConfig);
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
             AppConfig["location"] = $"{Location.X},{Location.Y}";
-            Properties.Save(Path, AppConfig);
+            PropertiesHelper.Save(Path, AppConfig);
         }
         private void OnMouseDown(object sender, MouseEventArgs e)
         {

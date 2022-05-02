@@ -34,7 +34,7 @@ namespace HiDesktop
         public static void ExitAll(string product)
         {
             var Running = Process.GetProcessesByName(product);
-            //获取所有名为AutoFileBAK的进程
+            //获取所有名为product的进程
             var ThisID = Process.GetCurrentProcess().Id;
             //获取当前进程ID,防止自己结束自己导致结束程序不彻底
             foreach (Process process in Running)//为每个识别到的进程重复
