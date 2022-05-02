@@ -20,7 +20,7 @@ namespace HiDesktop
         string hours;
         string minutes;
         string seconds;
-        string workdays;
+        string weekdays;
         int refreshTime;
         public CounterBar(string Path)
         {
@@ -38,13 +38,15 @@ namespace HiDesktop
                 { "event", "Configue your countBar in properties file.." },
                 { "location", "auto" },
                 { "enabled","true" },
-                { "frontText","To" },
-                { "middleText",",there are" },
+                { "countdown_frontText","To" },
+                { "countdown_middleText",",there are" },
+                { "count_frontText","From" },
+                { "count_middleText",",there are already" },
                 { "days","day(s)" },
                 { "hours","hour(s)" },
                 { "minutes","minute(s)" },
                 { "seconds","second(s)" },
-                { "workdays","workday(s)" },
+                { "weekdays","weekday(s)" },
                 { "refreshTime","500" }
             };
             if (!File.Exists(Path))
@@ -86,13 +88,12 @@ namespace HiDesktop
             }
             string[] targetStr = ((string)AppConfig["date"]).Split(".");
             EventText.Text = (string)AppConfig["event"];
-            LabelNo1.Text = (string)AppConfig["frontText"];
-            LabelNo2.Text = (string)AppConfig["middleText"];
+            
             days = (string)AppConfig["days"];
             hours = (string)AppConfig["hours"];
             minutes = (string)AppConfig["minutes"];
             seconds = (string)AppConfig["seconds"];
-            workdays = (string)AppConfig["workdays"];
+            weekdays = (string)AppConfig["weekdays"];
             refreshTime = Convert.ToInt32((string)AppConfig["refreshTime"]);
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;
@@ -107,6 +108,19 @@ namespace HiDesktop
 
 
             Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
+            if (Target > DateTime.Now) 
+            {
+                LabelNo1.Text = (string)AppConfig["countdown_frontText"];
+                LabelNo2.Text = (string)AppConfig["countdown_middleText"];
+            }
+            else
+            {
+                LabelNo1.Text = (string)AppConfig["count_frontText"];
+                LabelNo2.Text = (string)AppConfig["count_middleText"];
+            }
+            
+
+
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
             LabelNo2.Font = new Font(LabelNo2.Font.Name, fontSize);
             EventText.Font = new Font(EventText.Font.Name, fontSize);
@@ -122,7 +136,15 @@ namespace HiDesktop
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
 
             LabelNo2.Location = new Point(EventText.Location.X + EventText.Size.Width, LabelNo2.Location.Y);
-            UpdateTimeOnce();
+            if (Target > DateTime.Now)
+            {
+                Countdown_UpdateTimeOnce();
+            }
+            else
+            {
+                Count_UpdateTimeOnce();
+            }
+                
             NumText.Location = new Point(LabelNo2.Location.X + LabelNo2.Size.Width, NumText.Location.Y);
             Size = new Size(NumText.Location.X + NumText.Size.Width, NumText.Size.Height);
             if ((string)AppConfig["location"] == "auto")
@@ -159,28 +181,58 @@ namespace HiDesktop
                 }
             }
 
-            Thread thread = new Thread(new ThreadStart(UpdateTime));
+            Thread thread;
+            if (Target > DateTime.Now)
+            {
+                thread = new Thread(new ThreadStart(Countdown_UpdateTime));
+            }
+            else
+            {
+                thread = new Thread(new ThreadStart(Count_UpdateTime));
+            }
+                
             thread.Start();
 
         }
-        private void UpdateTime()
+        private void Countdown_UpdateTime()
         {
             while (true)
             {
                 var span = Target - Latest;
-                NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{workdays}).";
+                NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{weekdays}).";
                 Thread.Sleep(refreshTime);
                 Latest = DateTime.Now;
 
             }
         }
-        private void UpdateTimeOnce()
+        private void Countdown_UpdateTimeOnce()
         {
             var span = Target - Latest;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}{workdays}).";
+            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}{weekdays}).";
+            Thread.Sleep(refreshTime);
+            Latest = DateTime.Now;
+        }
+
+        private void Count_UpdateTime()
+        {
+            while (true)
+            {
+                var span = Latest - Target;
+                NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Latest, Target)}{weekdays}).";
+                Thread.Sleep(refreshTime);
+                Latest = DateTime.Now;
+
+            }
+        }
+        private void Count_UpdateTimeOnce()
+        {
+            var span = Target - Latest;
+            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Latest, Target)}{weekdays}).";
             Thread.Sleep(500);
             Latest = DateTime.Now;
         }
+
+
         public int GetDays(DateTime dt1, DateTime dt2)
         {
             TimeSpan ts1 = dt1 - dt2;//TimeSpan得到dt1和dt2的时间间隔
