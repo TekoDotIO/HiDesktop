@@ -47,7 +47,12 @@ namespace HiDesktop
                 { "minutes","minute(s)" },
                 { "seconds","second(s)" },
                 { "weekdays","weekday(s)" },
-                { "refreshTime","500" }
+                { "refreshTime","500" },
+                { "frontText_Color","#FFFFFF" },
+                { "middleText_Color","#FFFFFF" },
+                { "event_Color","#FF0000" },
+                { "date_Color","#FF0000" },
+                { "allowMove","true" }
             };
             if (!File.Exists(Path))
             {
@@ -128,10 +133,11 @@ namespace HiDesktop
 
 
 
-            LabelNo1.ForeColor = Color.White;
-            LabelNo2.ForeColor = Color.White;
-            EventText.ForeColor = Color.Red;
-            NumText.ForeColor = Color.Red;
+            LabelNo1.ForeColor = ColorTranslator.FromHtml((string)AppConfig["frontText_Color"]);
+            LabelNo2.ForeColor = ColorTranslator.FromHtml((string)AppConfig["middleText_Color"]);
+            EventText.ForeColor = ColorTranslator.FromHtml((string)AppConfig["event_Color"]);
+            NumText.ForeColor = ColorTranslator.FromHtml((string)AppConfig["date_Color"]);
+
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
 
@@ -283,8 +289,12 @@ namespace HiDesktop
 
         private void FrmMain_MouseDown(object sender, MouseEventArgs e)
         {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x0112, 0xF012, 0);
+            if ((string)AppConfig["allowMove"] == "true") 
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, 0x0112, 0xF012, 0);
+            }
+            
         }
         private void TextBar_Load(object sender, EventArgs e)
         {
