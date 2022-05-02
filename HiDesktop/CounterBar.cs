@@ -16,12 +16,12 @@ namespace HiDesktop
         readonly DateTime Target;
         readonly string Path;
         readonly Hashtable AppConfig;
-        string days;
-        string hours;
-        string minutes;
-        string seconds;
-        string weekdays;
-        int refreshTime;
+        readonly string days;
+        readonly string hours;
+        readonly string minutes;
+        readonly string seconds;
+        readonly string weekdays;
+        readonly int refreshTime;
         public CounterBar(string Path)
         {
             TopMost = false;
