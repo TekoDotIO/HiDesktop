@@ -37,18 +37,22 @@ namespace HiDesktop
             {
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
+                Log.SaveLog($"[{Path}]Created properties file.");
+
             }
             if (File.ReadAllText(Path) == "")
             {
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
+                
             }
             PropertiesHelper.FixProperties(htStandard, Path);
+            Log.SaveLog($"[{Path}]Repaired properties");
             AppConfig = PropertiesHelper.Load(Path);
-
+            Log.SaveLog($"[{Path}]Loaded properties");
             if ((string)AppConfig["enabled"] != "true")
             {
-                Log.SaveLog($"{Path}已被禁用");
+                Log.SaveLog($"[{Path}]{Path} is not enabled.");
                 this.Close();
                 return;
 
@@ -56,20 +60,24 @@ namespace HiDesktop
 
             if ((string)AppConfig["type"] != "TextBar")
             {
-                Log.SaveLog($"{Path}不是一个文本窗口的配置文件,已跳过加载.");
+                Log.SaveLog($"[{Path}]{Path} is not a properties file of TextBar.");
                 this.Close();
                 return;
             }
 
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
+            Log.SaveLog($"[{Path}]FontSize set.");
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
+            Log.SaveLog($"[{Path}]Opacity set.");
             if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
+                Log.SaveLog($"[{Path}]TopMost.");
             }
             else
             {
                 TopMost = false;
+                Log.SaveLog($"[{Path}]Not TopMost.");
             }
             if ((string)AppConfig["font"] != "auto")
             {
