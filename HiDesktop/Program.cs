@@ -27,7 +27,6 @@ namespace HiDesktop
                     }
                     break;
                 case TextBar _:
-                    MessageBox.Show(widgets[nowFile].ToString());
                     ((TextBar)widgets[nowFile]).ShowDialog();
                     break;
                 default:
