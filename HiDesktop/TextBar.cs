@@ -54,7 +54,7 @@ namespace HiDesktop
 
             }
 
-            if ((string)AppConfig["type"] != "CounterBar")
+            if ((string)AppConfig["type"] != "TextBar")
             {
                 Log.SaveLog($"{Path}不是一个文本窗口的配置文件,已跳过加载.");
                 this.Close();
@@ -77,6 +77,46 @@ namespace HiDesktop
             }
             LabelNo1.ForeColor = ColorTranslator.FromHtml((string)AppConfig["color"]);
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
+            LabelNo1.Text = (string)AppConfig["text"];
+
+
+            int w = SystemInformation.PrimaryMonitorSize.Width;
+            int h = SystemInformation.PrimaryMonitorSize.Height;
+            LabelNo1.Location = new Point(0, 0);
+            Size = new Size(LabelNo1.Location.X + LabelNo1.Size.Width, LabelNo1.Size.Height);
+            if ((string)AppConfig["location"] == "auto")
+            {
+                int startX = LabelNo1.Location.X;
+                int endX = LabelNo1.Location.X + LabelNo1.Size.Width;
+                int deltaX = endX - startX;
+                Location = new Point(w / 2 - (deltaX) / 2, Location.Y);
+            }
+            else
+            {
+                try
+                {
+                    string Location = (string)AppConfig["location"];
+                    if (Location == null)
+                    {
+                        int startX = LabelNo1.Location.X;
+                        int endX = LabelNo1.Location.X + LabelNo1.Size.Width;
+                        int deltaX = endX - startX;
+                        this.Location = new Point(w / 2 - (deltaX) / 2, this.Location.Y);
+                    }
+                    else
+                    {
+                        this.Location = new Point(Convert.ToInt32(Location.Split(",")[0]), Convert.ToInt32(Location.Split(",")[1]));
+                    }
+
+                }
+                catch
+                {
+                    int startX = LabelNo1.Location.X;
+                    int endX = LabelNo1.Location.X + LabelNo1.Size.Width;
+                    int deltaX = endX - startX;
+                    Location = new Point(w / 2 - (deltaX) / 2, Location.Y);
+                }
+            }
 
         }
 

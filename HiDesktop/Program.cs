@@ -15,10 +15,23 @@ namespace HiDesktop
         string nowFile;
         void StartView()
         {
-            if (!((CounterBar)widgets[nowFile]).IsDisposed) 
+            
+            switch (widgets[nowFile])
             {
-                ((CounterBar)widgets[nowFile]).ShowDialog();
+                case CounterBar _:
+                    if (!((CounterBar)widgets[nowFile]).IsDisposed)
+                    {
+                        
+                        ((CounterBar)widgets[nowFile]).ShowDialog();
 
+                    }
+                    break;
+                case TextBar _:
+                    MessageBox.Show(widgets[nowFile].ToString());
+                    ((TextBar)widgets[nowFile]).ShowDialog();
+                    break;
+                default:
+                    break;
             }
         }
         public static void MainProcess()
@@ -37,6 +50,26 @@ namespace HiDesktop
                             if ((string)config["enabled"] == "true") 
                             {
                                 CounterBar textBar = new CounterBar(localFile)
+                                {
+                                    BackColor = Color.SkyBlue,
+                                    TransparencyKey = Color.SkyBlue
+                                };
+                                p.widgets.Add(localFile, textBar);
+                                p.nowFile = localFile;
+                                Thread View = new Thread(new ThreadStart(p.StartView));
+                                View.Start();
+                                Log.SaveLog($"Lanunched {localFile}");
+                            }
+                            else
+                            {
+                                Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                            }
+                            break;
+                        case "TextBar":
+                            p = new Program();
+                            if ((string)config["enabled"] == "true")
+                            {
+                                TextBar textBar = new TextBar(localFile)
                                 {
                                     BackColor = Color.SkyBlue,
                                     TransparencyKey = Color.SkyBlue
