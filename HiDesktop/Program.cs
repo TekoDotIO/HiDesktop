@@ -123,6 +123,7 @@ namespace HiDesktop.Widgets.MVP
                             break;
                         case "--ExitAll":
                             CommandRepo.ExitAll(productName);
+                            CommandRepo.ExitAll("Widgets.MVP");
                             Log.SaveLog($"Killed all {productName} process.");
                             Log.SaveLog("Each. Tech. œ‡ª•ø∆ºº 2022 All Right Reserved.");
                             break;
