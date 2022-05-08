@@ -28,7 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.timeBox = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // timeBox
+            // 
+            this.timeBox.AutoSize = true;
+            this.timeBox.Font = new System.Drawing.Font("极影毁片圆 Medium", 50F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.timeBox.Location = new System.Drawing.Point(12, 10);
+            this.timeBox.Name = "timeBox";
+            this.timeBox.Size = new System.Drawing.Size(315, 84);
+            this.timeBox.TabIndex = 0;
+            this.timeBox.Text = "00:00:00";
             // 
             // ScreenProtector
             // 
@@ -37,19 +48,22 @@
             this.BackColor = System.Drawing.Color.Black;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.timeBox);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ScreenProtector";
-            this.Opacity = 1D;
             this.Text = "ScreenProtector";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CloseSlowly);
             this.Load += new System.EventHandler(this.ScreenProtector_Load);
             this.Click += new System.EventHandler(this.CloseWindow);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label timeBox;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
@@ -14,6 +15,9 @@ namespace HiScreenProtect
 {
     public partial class ScreenProtector : Form
     {
+        Thread refreshThread;
+        int w = SystemInformation.PrimaryMonitorSize.Width;
+        int h = SystemInformation.PrimaryMonitorSize.Height;
         public ScreenProtector()
         {
             InitializeComponent();
@@ -29,11 +33,17 @@ namespace HiScreenProtect
             //    Opacity -= 0.01;
             //}
             AnimateWindow(this.Handle, 500, AW_BLEND | AW_HIDE);
+            Process.GetCurrentProcess().Kill();
+            Application.Exit();
         }
-        void CloseWindow()
-        {
-
-        }
+        //void TimeShining()
+        //{
+        //    for (int i = 0; i < 100; i++)
+        //    {
+        //        Thread.Sleep(1);
+        //        timeBox.Opacity += 0.01;
+        //    }
+        //}
 
         private void ScreenProtector_Load(object sender, EventArgs e)
         {
@@ -43,8 +53,31 @@ namespace HiScreenProtect
                 Thread.Sleep(1);
                 Opacity += 0.01;
             }
+            timeBox.Text = DateTime.Now.ToString("HH:mm:ss");
+            Font f = new Font(timeBox.Font.Name, 200);
+            timeBox.Font = f;
+            timeBox.ForeColor = Color.White;
+            Point timeLocation = new Point();
+            timeLocation.X = w / 2 - timeBox.Width / 2;
+            timeLocation.Y = h / 2 - timeBox.Height / 2;
+            timeBox.Location = timeLocation;
+
+            refreshThread = new Thread(new ThreadStart(RefreshTime));
+            refreshThread.Start();
+
+            //Thread shiningThread = new Thread(new ThreadStart(TimeShining));
+            //shiningThread.Start();
+
         }
 
+        void RefreshTime()
+        {
+            while (true)
+            {
+                Thread.Sleep(200);
+                timeBox.Text = DateTime.Now.ToString("HH:mm:ss");
+            }
+        }
         private void CloseWindow(object sender, EventArgs e)
         {
             Close();
