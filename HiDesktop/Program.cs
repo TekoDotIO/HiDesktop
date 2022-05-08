@@ -132,6 +132,7 @@ namespace HiDesktop.Widgets.MVP
                             Log.SaveLog("Each. Tech. œ‡ª•ø∆ºº 2022 All Right Reserved.");
                             break;
                         case "--Uninstall":
+                            CommandRepo.Uninstall("Widgets.MVP");
                             CommandRepo.Uninstall(productName);
                             break;
                     }
