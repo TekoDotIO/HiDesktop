@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace HiDesktop
+namespace HiDesktop.Widgets.MVP
 {
     internal class Program
     {
@@ -15,13 +15,13 @@ namespace HiDesktop
         string nowFile;
         void StartView()
         {
-            
+
             switch (widgets[nowFile])
             {
                 case CounterBar _:
                     if (!((CounterBar)widgets[nowFile]).IsDisposed)
                     {
-                        
+
                         ((CounterBar)widgets[nowFile]).ShowDialog();
 
                     }
@@ -46,7 +46,7 @@ namespace HiDesktop
                     {
                         case "CounterBar":
                             Program p = new Program();
-                            if ((string)config["enabled"] == "true") 
+                            if ((string)config["enabled"] == "true")
                             {
                                 CounterBar textBar = new CounterBar(localFile)
                                 {
@@ -88,7 +88,7 @@ namespace HiDesktop
                             Log.SaveLog($"Unknown program type:{localFile}");
                             break;
                     }
-                    
+
                 }
 
             }
@@ -100,8 +100,8 @@ namespace HiDesktop
         [STAThread]
         static void Main(string[] args)
         {
-            
-            
+
+
             switch (args.Length)//读取传入的参数
             {
                 case 0:
@@ -137,7 +137,7 @@ namespace HiDesktop
                     break;
 
             }
-            
+
 
         }
     }

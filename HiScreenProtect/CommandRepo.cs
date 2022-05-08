@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace HiDesktop.Widgets.MVP
+namespace ScreenProtect.MVP
 {
     internal class CommandRepo
     {

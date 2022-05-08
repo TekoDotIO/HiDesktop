@@ -1,4 +1,4 @@
-﻿namespace HiScreenProtect
+﻿namespace HiDesktop.HiScreenProtect.MVP
 {
     partial class ScreenProtector
     {
@@ -29,17 +29,29 @@
         private void InitializeComponent()
         {
             this.timeBox = new System.Windows.Forms.Label();
+            this.Tips = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // timeBox
             // 
             this.timeBox.AutoSize = true;
             this.timeBox.Font = new System.Drawing.Font("极影毁片圆 Medium", 50F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timeBox.Location = new System.Drawing.Point(12, 10);
+            this.timeBox.Location = new System.Drawing.Point(248, 171);
             this.timeBox.Name = "timeBox";
             this.timeBox.Size = new System.Drawing.Size(315, 84);
             this.timeBox.TabIndex = 0;
             this.timeBox.Text = "00:00:00";
+            this.timeBox.Click += new System.EventHandler(this.timeBox_Click);
+            // 
+            // Tips
+            // 
+            this.Tips.AutoSize = true;
+            this.Tips.Location = new System.Drawing.Point(246, 403);
+            this.Tips.Name = "Tips";
+            this.Tips.Size = new System.Drawing.Size(323, 20);
+            this.Tips.TabIndex = 1;
+            this.Tips.Text = "Press any place on the screen to exit.";
+            this.Tips.Click += new System.EventHandler(this.label1_Click);
             // 
             // ScreenProtector
             // 
@@ -48,6 +60,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Tips);
             this.Controls.Add(this.timeBox);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -65,5 +78,6 @@
         #endregion
 
         private System.Windows.Forms.Label timeBox;
+        private System.Windows.Forms.Label Tips;
     }
 }

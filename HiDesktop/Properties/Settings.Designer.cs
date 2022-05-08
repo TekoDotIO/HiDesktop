@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HiDesktop.Properties {
+namespace Widgets.MVP.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

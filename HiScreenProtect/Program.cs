@@ -1,10 +1,11 @@
+using HiDesktop.HiScreenProtect.MVP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HiScreenProtect
+namespace ScreenProtect.MVP
 {
     internal static class Program
     {
