@@ -24,7 +24,7 @@ namespace HiDesktop.HiScreenProtect.MVP
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             TopMost = false;
-            this.Path = "./config.properties";
+            this.Path = $"{System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}/config.properties";
             Hashtable htStandard = new Hashtable()
             {
                 { "type", "screenProtector" },
@@ -45,14 +45,18 @@ namespace HiDesktop.HiScreenProtect.MVP
             {
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
+                Log.SaveLog($"{System.IO.Path.GetFullPath(Path)} created.");
             }
             if (File.ReadAllText(Path) == "")
             {
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
+                Log.SaveLog($"{System.IO.Path.GetFullPath(Path)} fixed.");
             }
             PropertiesHelper.FixProperties(htStandard, Path);
             AppConfig = PropertiesHelper.Load(Path);
+            Log.SaveLog($"{System.IO.Path.GetFullPath(Path)} loaded.");
+            File.WriteAllText("D:/result.txt", $"{System.IO.Path.GetFullPath(Path)} loaded.");
             if (!((string)AppConfig["enabled"] == "true")) 
             {
                 Log.SaveLog("Screen protector disabled...");
