@@ -1,5 +1,4 @@
-﻿using HiDesktop.Widgets.MVP;
-using System;
+﻿using System;
 using System.Collections;
 using System.Drawing;
 using System.Drawing.Text;
@@ -7,6 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using Widgets.MVP;
 
 namespace HiDesktop
 {

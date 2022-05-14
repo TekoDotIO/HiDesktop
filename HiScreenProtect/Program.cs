@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,12 @@ namespace ScreenProtect.MVP
             switch (args.Length)
             {
                 case 0:
+                    Thread.Sleep(500);
+                    if (CommandRepo.IsMultiProcess("ScreenProtect.MVP"))
+                    {
+                        Log.SaveLog("One or more HiDesktop.Widgets.MVP is already running.Exiting...");
+                        return;
+                    }
                     Application.SetHighDpiMode(HighDpiMode.SystemAware);
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);

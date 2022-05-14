@@ -3,8 +3,9 @@ using System.IO;
 
 namespace ScreenProtect.MVP
 {
-    internal class CommandRepo
+    public class CommandRepo
     {
+        public string ProductName;
         public static void CreateStartUpScript()
         {
             string CdPath = Directory.GetCurrentDirectory();
@@ -59,6 +60,56 @@ namespace ScreenProtect.MVP
             }
             //删除自启动文件夹内的批处理文件
             Log.SaveLog("Uninstalled successfully.");
+        }
+        public void Uninstall()
+        {
+            string CdPath = Directory.GetCurrentDirectory();
+            string ThisFile = Process.GetCurrentProcess().MainModule.FileName;
+            Log.SaveLog("Got path :" + ThisFile);
+            ExitAll(ProductName);
+            //退出所有除自己外的进程
+            if (File.Exists(@"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\EachTech_StartupScripts.cmd"))
+            {
+                File.WriteAllText(@"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\EachTech_StartupScripts.cmd", File.ReadAllText(@"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\EachTech_StartupScripts.cmd").Replace("cd /d \"" + CdPath + "\"\n" + ThisFile, ""));
+            }
+            //删除自启动文件夹内的批处理文件
+            Log.SaveLog("Uninstalled successfully.");
+        }
+        public static bool IsMultiProcess(string product)
+        {
+            var Running = Process.GetProcessesByName(product);
+            int i = 0;
+            foreach (Process process in Running)
+            {
+                i++;
+            }
+            if (i > 1)
+            {
+                Log.SaveLog($"One or more {product} process is already running.");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsMultiProcess()
+        {
+            var Running = Process.GetProcessesByName(ProductName);
+            int i = 0;
+            foreach (Process process in Running)
+            {
+                i++;
+            }
+            if (i != 1)
+            {
+                Log.SaveLog($"One or more {ProductName} process is already running.");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
  * @date : 2019.07
  * @file : Properties.cs
  */
-namespace HiDesktop.Widgets.MVP
+namespace Widgets.MVP
 {
     public class PropertiesHelper
     {

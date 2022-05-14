@@ -1,3 +1,4 @@
+using HiDesktop;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -6,7 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace HiDesktop.Widgets.MVP
+namespace Widgets.MVP
 {
     internal class Program
     {
@@ -105,6 +106,12 @@ namespace HiDesktop.Widgets.MVP
             switch (args.Length)//读取传入的参数
             {
                 case 0:
+                    Thread.Sleep(500);
+                    if (CommandRepo.IsMultiProcess("Widgets.MVP"))
+                    {
+                        Log.SaveLog("One or more HiDesktop.Widgets.MVP is already running.Exiting...");
+                        return;
+                    }
                     Process p = new Process();
                     p.StartInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
                     p.StartInfo.Arguments = "--MainProcess";
@@ -117,6 +124,7 @@ namespace HiDesktop.Widgets.MVP
                     switch (args[0])
                     {
                         case "--MainProcess":
+                            
                             Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.Run(new LaunchPage());

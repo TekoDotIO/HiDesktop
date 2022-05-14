@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace HiDesktop.Widgets.MVP
+namespace Widgets.MVP
 {
     /// <summary>
     /// 日志类
