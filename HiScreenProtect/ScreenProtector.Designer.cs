@@ -36,21 +36,22 @@
             // 
             this.timeBox.AutoSize = true;
             this.timeBox.Font = new System.Drawing.Font("极影毁片圆 Medium", 50F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timeBox.Location = new System.Drawing.Point(248, 171);
+            this.timeBox.Location = new System.Drawing.Point(110, 169);
             this.timeBox.Name = "timeBox";
-            this.timeBox.Size = new System.Drawing.Size(315, 84);
+            this.timeBox.Size = new System.Drawing.Size(602, 84);
             this.timeBox.TabIndex = 0;
-            this.timeBox.Text = "00:00:00";
+            this.timeBox.Text = "HiScreenProtector";
             this.timeBox.Click += new System.EventHandler(this.timeBox_Click);
             // 
             // Tips
             // 
             this.Tips.AutoSize = true;
-            this.Tips.Location = new System.Drawing.Point(246, 403);
+            this.Tips.Location = new System.Drawing.Point(267, 410);
             this.Tips.Name = "Tips";
-            this.Tips.Size = new System.Drawing.Size(323, 20);
+            this.Tips.Size = new System.Drawing.Size(258, 20);
             this.Tips.TabIndex = 1;
-            this.Tips.Text = "Press any place on the screen to exit.";
+            this.Tips.Text = "Each. Tech. all right reserved.";
+            this.Tips.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Tips.Click += new System.EventHandler(this.label1_Click);
             // 
             // ScreenProtector

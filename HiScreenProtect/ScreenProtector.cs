@@ -109,6 +109,23 @@ namespace HiDesktop.HiScreenProtect.MVP
                 Opacity = 1;
             }
             Opacity = Convert.ToDouble((string)AppConfig["opacity"]);
+
+            Point timeLocation = new Point
+            {
+                X = w / 2 - timeBox.Width / 2,
+                Y = h / 2 - timeBox.Height / 2
+            };
+            timeBox.Location = timeLocation;
+            Point tipsLocation = new Point
+            {
+                X = w / 2 - Tips.Width / 2,
+                Y = h - 50
+            };
+            Tips.Location = tipsLocation;
+            Tips.Text = "Each. Tech. All right reserved.\nBy 相互科技工作室";
+            Refresh();
+            Thread.Sleep(2000);
+
             timeBox.Text = DateTime.Now.ToString((string)AppConfig["timeType"]);
             Font f;
             if ((string)AppConfig["font"] == "auto")
@@ -126,13 +143,13 @@ namespace HiDesktop.HiScreenProtect.MVP
                     //定义成新的字体对象
                     FontFamily myFontFamily = new FontFamily(font.Families[0].Name, font);
                     f = new Font(myFontFamily, 56F, FontStyle.Regular);
+                    Log.SaveLog($"{(string)AppConfig["font"]} loaded.");
                 }
                 catch (Exception ex)
                 {
                     Log.SaveLog(ex.ToString());
                     f = new Font(timeBox.Font.Name, 200);
                 }
-                f = new Font(timeBox.Font.Name, 200);
             }
 
             f = new Font(f.FontFamily, Convert.ToInt32((string)AppConfig["time_fontSize"]));
@@ -141,7 +158,7 @@ namespace HiDesktop.HiScreenProtect.MVP
             Tips.Font = f;
 
             timeBox.ForeColor = ColorTranslator.FromHtml((string)AppConfig["time_Color"]);
-            Point timeLocation = new Point
+            timeLocation = new Point
             {
                 X = w / 2 - timeBox.Width / 2,
                 Y = h / 2 - timeBox.Height / 2
@@ -150,7 +167,7 @@ namespace HiDesktop.HiScreenProtect.MVP
 
             Tips.ForeColor = ColorTranslator.FromHtml((string)AppConfig["tips_Color"]);
             Tips.Text = (string)AppConfig["tips"];
-            Point tipsLocation = new Point
+            tipsLocation = new Point
             {
                 X = w / 2 - Tips.Width / 2,
                 Y = h - 50
