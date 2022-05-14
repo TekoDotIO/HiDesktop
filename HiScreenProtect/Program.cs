@@ -1,10 +1,7 @@
 using HiDesktop.HiScreenProtect.MVP;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ScreenProtect.MVP
@@ -51,10 +48,10 @@ namespace ScreenProtect.MVP
                             MessageBox.Show(args[0]);
                             break;
                     }
-                    
+
                     break;
                 default:
-                    
+
                     switch (args[0])
                     {
                         case "/S":
@@ -71,7 +68,7 @@ namespace ScreenProtect.MVP
                             Process.Start("./config.properties");
                             break;
                         default:
-                            if (args[0].Contains("/p") || args[0].Contains("/P")) 
+                            if (args[0].Contains("/p") || args[0].Contains("/P"))
                             {
                                 Application.SetHighDpiMode(HighDpiMode.SystemAware);
                                 Application.EnableVisualStyles();
@@ -93,15 +90,15 @@ namespace ScreenProtect.MVP
                                     }
                                     MessageBox.Show(arg);
                                 }
-                                
+
                             }
-                            
+
                             break;
                     }
 
                     break;
             }
-            
+
         }
     }
 }

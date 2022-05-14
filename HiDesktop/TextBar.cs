@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using Widgets.MVP;
 
@@ -45,7 +41,7 @@ namespace HiDesktop
             {
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
-                
+
             }
             PropertiesHelper.FixProperties(htStandard, Path);
             Log.SaveLog($"[{Path}]Repaired properties");

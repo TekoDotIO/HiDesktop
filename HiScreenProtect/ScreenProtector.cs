@@ -56,8 +56,7 @@ namespace HiDesktop.HiScreenProtect.MVP
             PropertiesHelper.FixProperties(htStandard, Path);
             AppConfig = PropertiesHelper.Load(Path);
             Log.SaveLog($"{System.IO.Path.GetFullPath(Path)} loaded.");
-            File.WriteAllText("D:/result.txt", $"{System.IO.Path.GetFullPath(Path)} loaded.");
-            if (!((string)AppConfig["enabled"] == "true")) 
+            if (!((string)AppConfig["enabled"] == "true"))
             {
                 Log.SaveLog("Screen protector disabled...");
                 return;
@@ -72,14 +71,15 @@ namespace HiDesktop.HiScreenProtect.MVP
             //    Thread.Sleep(1);
             //    Opacity -= 0.01;
             //}
-            if ((string)AppConfig["enableSmoothStart"] == "true") 
+            if ((string)AppConfig["enableSmoothStart"] == "true")
             {
                 AnimateWindow(Handle, 500, AW_BLEND | AW_HIDE);
             }
-            
+
             Process.GetCurrentProcess().Kill();
             Application.Exit();
         }
+
         //void TimeShining()
         //{
         //    for (int i = 0; i < 100; i++)
@@ -91,7 +91,7 @@ namespace HiDesktop.HiScreenProtect.MVP
 
         private void ScreenProtector_Load(object sender, EventArgs e)
         {
-            if ((string)AppConfig["topMost"]=="true")
+            if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
             }

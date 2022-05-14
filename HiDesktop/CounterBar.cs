@@ -94,7 +94,7 @@ namespace HiDesktop
             }
             string[] targetStr = ((string)AppConfig["date"]).Split(".");
             EventText.Text = (string)AppConfig["event"];
-            
+
             days = (string)AppConfig["days"];
             hours = (string)AppConfig["hours"];
             minutes = (string)AppConfig["minutes"];
@@ -114,7 +114,7 @@ namespace HiDesktop
 
 
             Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
-            if (Target > DateTime.Now) 
+            if (Target > DateTime.Now)
             {
                 LabelNo1.Text = (string)AppConfig["countdown_frontText"];
                 LabelNo2.Text = (string)AppConfig["countdown_middleText"];
@@ -124,7 +124,7 @@ namespace HiDesktop
                 LabelNo1.Text = (string)AppConfig["count_frontText"];
                 LabelNo2.Text = (string)AppConfig["count_middleText"];
             }
-            
+
 
 
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
@@ -151,7 +151,7 @@ namespace HiDesktop
             {
                 Count_UpdateTimeOnce();
             }
-                
+
             NumText.Location = new Point(LabelNo2.Location.X + LabelNo2.Size.Width, NumText.Location.Y);
             Size = new Size(NumText.Location.X + NumText.Size.Width, NumText.Size.Height);
             if ((string)AppConfig["location"] == "auto")
@@ -197,7 +197,7 @@ namespace HiDesktop
             {
                 thread = new Thread(new ThreadStart(Count_UpdateTime));
             }
-                
+
             thread.Start();
 
         }
@@ -290,12 +290,12 @@ namespace HiDesktop
 
         private void FrmMain_MouseDown(object sender, MouseEventArgs e)
         {
-            if ((string)AppConfig["allowMove"] == "true") 
+            if ((string)AppConfig["allowMove"] == "true")
             {
                 ReleaseCapture();
                 SendMessage(this.Handle, 0x0112, 0xF012, 0);
             }
-            
+
         }
         private void TextBar_Load(object sender, EventArgs e)
         {

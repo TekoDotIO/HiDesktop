@@ -124,7 +124,7 @@ namespace Widgets.MVP
                     switch (args[0])
                     {
                         case "--MainProcess":
-                            
+
                             Log.SaveLog("Each. Tech. œ‡ª•ø∆ºº 2022 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.Run(new LaunchPage());
