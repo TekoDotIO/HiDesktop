@@ -38,21 +38,23 @@ namespace Widgets.MVP
         {
             Directory.CreateDirectory("./Properties/");
             string[] properties = Directory.GetFiles("./Properties/");
+            Program p = new Program();
             foreach (string localFile in properties)
             {
                 if (localFile.Contains(".properties"))
                 {
                     Hashtable config = PropertiesHelper.Load(localFile);
+                    
                     switch ((string)config["type"])
                     {
                         case "CounterBar":
-                            Program p = new Program();
+                            
                             if ((string)config["enabled"] == "true")
                             {
                                 CounterBar textBar = new CounterBar(localFile)
                                 {
-                                    BackColor = Color.SkyBlue,
-                                    TransparencyKey = Color.SkyBlue
+                                    BackColor = Color.Black,
+                                    TransparencyKey = Color.Black
                                 };
                                 p.widgets.Add(localFile, textBar);
                                 p.nowFile = localFile;
@@ -66,13 +68,12 @@ namespace Widgets.MVP
                             }
                             break;
                         case "TextBar":
-                            p = new Program();
                             if ((string)config["enabled"] == "true")
                             {
                                 TextBar textBar = new TextBar(localFile)
                                 {
-                                    BackColor = Color.SkyBlue,
-                                    TransparencyKey = Color.SkyBlue
+                                    BackColor = Color.Black,
+                                    TransparencyKey = Color.Black
                                 };
                                 p.widgets.Add(localFile, textBar);
                                 p.nowFile = localFile;

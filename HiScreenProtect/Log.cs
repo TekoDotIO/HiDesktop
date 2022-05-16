@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace ScreenProtect.MVP
@@ -16,10 +17,10 @@ namespace ScreenProtect.MVP
         {
             try
             {
-
+                string Path = $"{System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}/";
                 message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "] " + message;
                 //空格是为了增强日志可读性,DateTime的作用是获取目前时间
-                Directory.CreateDirectory("./Log/");
+                Directory.CreateDirectory($"{Path}/Log/");
                 //如果不存在Log文件夹,则创建(会略微拖慢运行速度,但是用if判断一次代码量和工作量会大很多)
                 File.AppendAllText(@"./Log/Console" + DateTime.Now.ToString("yyyy-MM-dd") + ".log", "\r\n" + message);
                 //AppendAllTexe是追加到文件末尾.因为文件名不能出现"/",所以这里在ToString里面指定格式为yyyy-MM-dd.

@@ -75,20 +75,12 @@ namespace ScreenProtect.Ultra
 
         private void timeBox_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            LoginGrid.OpacityMask = this.Resources["ClosedBrush"] as LinearGradientBrush;
-            Storyboard std = this.Resources["ClosedStoryboard"] as Storyboard;
-            std.Completed += delegate { this.Close(); };
 
-            std.Begin();
         }
 
         private void Tips_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            LoginGrid.OpacityMask = this.Resources["ClosedBrush"] as LinearGradientBrush;
-            Storyboard std = this.Resources["ClosedStoryboard"] as Storyboard;
-            std.Completed += delegate { this.Close(); };
 
-            std.Begin();
         }
     }
 }
