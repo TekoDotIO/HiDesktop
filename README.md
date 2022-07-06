@@ -2,18 +2,22 @@
 ## HiDesktop - A lightweight desktop-widgets repository.
 
 #项目概况
+
 欢迎使用 HiDesktop . 这是一款轻量级的桌面小组件仓库。本项目使用.NET C#进行开发，小组件是使用WinForm技术开发而成的。本项目旨在通过极小的资源占用量、简易的操作、较高的自由度、小巧的应用程序体积等，为电子白板以及桌面级设备提供更好的小组件体验。
 
 
 #跨平台特性
+
 HiDesktop基于C# WinForm技术进行开发，理论上可借助Mono等辅助工具实现跨平台。我们的开发人员并未对此进行测试与适配。因此建议用户在原生Windows系统环境下编译运行。
 
 
 #程序框架
+
 .NET Core 3.1
 
 
 #已经实现的功能
+
 -倒计时功能
 
 -文本标签功能
@@ -26,6 +30,7 @@ HiDesktop基于C# WinForm技术进行开发，理论上可借助Mono等辅助工
 
 
 #已经列入计划的功能
+
 - [ ] -课程表功能
 - [ ] -便签功能
 - [ ] -天气功能
@@ -36,6 +41,7 @@ HiDesktop基于C# WinForm技术进行开发，理论上可借助Mono等辅助工
 
 
 #关于配置文件
+
 此项目的配置文件采取“*.properties”配置文件的格式。一般这些配置文件位于“Properties“文件夹内
 
 例如：
@@ -68,10 +74,12 @@ key=value
 **text** 需要显示的文本。
 
 #关于开源许可
+
 开发方使用AGPL-3.0开源协议对HiDesktop进行开源。这意味着如果您要使用、修改以及发布本项目，您必须遵循AGPL-3.0开源协议，将本项目的修改版本也进行AGPL-3.0进行开源。需要开源的代码包括但不限于软件与网络接口等的源代码。关于AGPL-3.0开源协议的具体条款，你可以查看LICENSE文件。 如果您肆意修改、发布、仿冒甚至售卖HiDesktop软件，或是以任何形式诋毁开发团队与本产品的声誉，我们就会使用一切手段进行维权，包括但不限于对您发起诉讼。 若您对本项目进行下载和使用，即代表您已认真阅读并同意以上声明，并且愿意承担违法以上声明造成的一切后果。共同营造好的开源环境与保护开源产品的合法权利是每个开发者乃至每个人的义务，在此，HiDesktop开发团队感谢您的下载和使用，希望您使用愉快！
 
 
 #关于开发者团队
+
 HiDesktop开发团队非常高兴能听取各方意见和建议，如果您对我们的代码有任何疑问，或者有任何的改进建议，欢迎您通过以下联系方式与我们共同探讨！我们不一定24小时在线，但是我们一定会在看到消息后第一时间考虑，在考虑周全后尽快回复。 
 
 微信：EachFengye1003 
@@ -85,18 +93,22 @@ Telegram：@Fengye1003
 
 
 #ProjectOverview
+
 Welcome to HiDesktop . This is a lightweight desktop widget repository. NET C# and the widgets are developed using WinForm technology. The project aims to provide a better widget experience for whiteboards and desktop-level devices through a very small resource footprint, easy operation, high freedom, and small application size.
 
 
 #CrossPlatformFeatures
+
 HiDesktop is developed based on C# WinForm technology and can theoretically be cross-platform with the help of auxiliary tools such as Mono. This has not been tested and adapted by our developers. Therefore, we recommend that you compile and run it in a native Windows environment.
 
 
 #ApplicationFramework
+
 NET Core 3.1
 
 
 #FeaturesImplemented
+
 -Countdown timer
 
 -Text label function
@@ -109,16 +121,18 @@ NET Core 3.1
 
 
 #ScheduledFunctions
-- [ ] [ ] -Curriculum function
-- [ ] [ ] -Sticky note function
-- [ ] [ ] -Weather function
-- [ ] [ ] -Control hover window function
-- [ ] [ ] -Program Settings UI
-- [ ] [ ] -Right-click menu and hot reload
-- [ ] [ ] -Desktop launch menu function
+
+- [ ]  -Curriculum function
+- [ ] -Sticky note function
+- [ ] -Weather function
+- [ ] -Control hover window function
+- [ ] -Program Settings UI
+- [ ] -Right-click menu and hot reload
+- [ ] -Desktop launch menu function
 
 
 #AboutTheConfigurationFile
+
 The configuration files for this project are in the format of "*.properties" configuration files. Generally these configuration files are located in the "Properties" folder
 
 For example
@@ -129,32 +143,34 @@ The left side of the equal sign is the key of the setting item, and the right si
 
 Cross-reference table of common setting items' interpretations.
 
-fontSize Font size. It should be a number.
+**fontSize** Font size. It should be a number.
 
-allowMove Whether to allow movement. Should be true or false.
+**allowMove** Whether to allow movement. Should be true or false.
 
-..._Color The color of the surface of a control. Should be a hexadecimal color code. For example, "#FF0000".
+**..._Color** The color of the surface of a control. Should be a hexadecimal color code. For example, "#FF0000".
 
-refreshTime Refresh interval. Should be a number. The unit is milliseconds. For example, "refreshTime=500" means refresh every 0.5 seconds.
+**refreshTime** Refresh interval. Should be a number. The unit is milliseconds. For example, "refreshTime=500" means refresh every 0.5 seconds.
 
-opacity Transparency. It should be a decimal number between 0 and 1. For example, "opacity=0.5" means the transparency is 50%.
+**opacity** Transparency. It should be a decimal number between 0 and 1. For example, "opacity=0.5" means the transparency is 50%.
 
-location The position of the top-left corner of the form. Usually a comma-separated number pair. The unit is "pixels". For example, "location=400,1000" means the upper-left corner of the window is located at x=400 and y=1000 of the screen. When the location is set to auto, the default value of the programmed location is restored. Normally this setting does not need to be changed manually.
+**location** The position of the top-left corner of the form. Usually a comma-separated number pair. The unit is "pixels". For example, "location=400,1000" means the upper-left corner of the window is located at x=400 and y=1000 of the screen. When the location is set to auto, the default value of the programmed location is restored. Normally this setting does not need to be changed manually.
 
-type is used to indicate the type of program that the profile corresponds to. Usually no manual change is required. If you want to create a new widget, you can add this item manually. The program will automatically complete the rest of the content as default when it runs.
+**type** is used to indicate the type of program that the profile corresponds to. Usually no manual change is required. If you want to create a new widget, you can add this item manually. The program will automatically complete the rest of the content as default when it runs.
 
-enabled Enables or disables this profile. When the value is "true", the component corresponding to this profile will be loaded, when the value is "false", it will not be loaded.
+**enabled** Enables or disables this profile. When the value is "true", the component corresponding to this profile will be loaded, when the value is "false", it will not be loaded.
 
-topMost Indicates if the widget will be top-mounted. When the value is "true", the widget will be fixed at the top of all windows, when the value is "false", it will not.
+**topMost** Indicates if the widget will be top-mounted. When the value is "true", the widget will be fixed at the top of all windows, when the value is "false", it will not.
 
-font The font. Usually a path to a ttf or otf font file.
-text The text to be displayed.
+**font** The font. Usually a path to a ttf or otf font file.
+**text** The text to be displayed.
 
 #AboutOpenSourceLicense
+
 The developer uses the AGPL-3.0 open source protocol for HiDesktop open source. This means that if you want to use, modify, and distribute this project, you must follow the AGPL-3.0 open source agreement to open source the modified version of this project also AGPL-3.0. The code to be open sourced includes, but is not limited to, the source code of the software and web interface, etc. For the specific terms of the AGPL-3.0 open source agreement, you can check the LICENSE document. If you want to modify, publish, counterfeit or even sell HiDesktop software, or in any form to discredit the development team and this product, we will use all means to defend the rights, including but not limited to initiating litigation against you. If you download and use this project, that means you have carefully read and agree to the above statement, and are willing to bear all the consequences of violating the above statement. Together to create a good open source environment and protect the legal rights of open source products is the obligation of each developer and even everyone, here, HiDesktop development team thank you for your download and use, hope you enjoy using!
 
 
 #AboutTheDeveloperTeam
+
 HiDesktop development team is very happy to listen to comments and suggestions, if you have any questions about our code, or any suggestions for improvement, you are welcome to discuss with us through the following contacts! We may not be online 24 hours a day, but we will consider the message as soon as we see it, and reply as soon as possible after thorough consideration. 
 
 WeChat：EachFengye1003 
