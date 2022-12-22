@@ -75,7 +75,7 @@ key=value
 
 #关于开源许可
 
-开发方使用AGPL-3.0开源协议对HiDesktop进行开源。这意味着如果您要使用、修改以及发布本项目，您必须遵循AGPL-3.0开源协议，将本项目的修改版本也进行AGPL-3.0进行开源。需要开源的代码包括但不限于软件与网络接口等的源代码。关于AGPL-3.0开源协议的具体条款，你可以查看LICENSE文件。 如果您肆意修改、发布、仿冒甚至售卖HiDesktop软件，或是以任何形式诋毁开发团队与本产品的声誉，我们就会使用一切手段进行维权，包括但不限于对您发起诉讼。 若您对本项目进行下载和使用，即代表您已认真阅读并同意以上声明，并且愿意承担违法以上声明造成的一切后果。共同营造好的开源环境与保护开源产品的合法权利是每个开发者乃至每个人的义务，在此，HiDesktop开发团队感谢您的下载和使用，希望您使用愉快！
+开发方使用Apache2.0开源协议对HiDesktop进行开源。
 
 
 #关于开发者团队
@@ -166,7 +166,7 @@ Cross-reference table of common setting items' interpretations.
 
 #AboutOpenSourceLicense
 
-The developer uses the AGPL-3.0 open source protocol for HiDesktop open source. This means that if you want to use, modify, and distribute this project, you must follow the AGPL-3.0 open source agreement to open source the modified version of this project also AGPL-3.0. The code to be open sourced includes, but is not limited to, the source code of the software and web interface, etc. For the specific terms of the AGPL-3.0 open source agreement, you can check the LICENSE document. If you want to modify, publish, counterfeit or even sell HiDesktop software, or in any form to discredit the development team and this product, we will use all means to defend the rights, including but not limited to initiating litigation against you. If you download and use this project, that means you have carefully read and agree to the above statement, and are willing to bear all the consequences of violating the above statement. Together to create a good open source environment and protect the legal rights of open source products is the obligation of each developer and even everyone, here, HiDesktop development team thank you for your download and use, hope you enjoy using!
+The developer uses the Apache2.0 open source protocol for HiDesktop open source. 
 
 
 #AboutTheDeveloperTeam
