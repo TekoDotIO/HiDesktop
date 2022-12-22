@@ -15,6 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 		UpdateLog.txt = UpdateLog.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{2EEEB357-5317-4EE3-B4D8-B56125A85956}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Pictures\HiDesktopBar.png = ..\..\..\Pictures\HiDesktopBar.png
+		..\..\..\Pictures\HiDesktopBar.psd = ..\..\..\Pictures\HiDesktopBar.psd
+		..\..\..\Pictures\HiDesktopLogo.png = ..\..\..\Pictures\HiDesktopLogo.png
+		..\..\..\Pictures\HiDesktopLogo.psd = ..\..\..\Pictures\HiDesktopLogo.psd
+		..\..\..\Pictures\HiDesktopLogoUltra.png = ..\..\..\Pictures\HiDesktopLogoUltra.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

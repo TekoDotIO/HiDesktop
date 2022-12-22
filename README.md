@@ -1,6 +1,9 @@
 # HiDesktop - 轻量级的桌面小组件仓库
 ## HiDesktop - A lightweight desktop-widgets repository.
 
+![Logo](/Images/HiDesktopBar.png "TitleLogo")
+
+
 #项目概况
 
 欢迎使用 HiDesktop . 这是一款轻量级的桌面小组件仓库。本项目使用.NET C#进行开发，小组件是使用WinForm技术开发而成的。本项目旨在通过极小的资源占用量、简易的操作、较高的自由度、小巧的应用程序体积等，为电子白板以及桌面级设备提供更好的小组件体验。
