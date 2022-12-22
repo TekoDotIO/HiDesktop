@@ -13,11 +13,11 @@ namespace HiDesktop
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
-            Thread thread = new Thread(new ThreadStart(Initializate));
+            Thread thread = new Thread(new ThreadStart(Initialize));
             thread.Start();
         }
 
-        void Initializate()
+        void Initialize()
         {
             progressBar.Value = 20;
             ProcessText.Text = "程序正在启动-Program loading...";

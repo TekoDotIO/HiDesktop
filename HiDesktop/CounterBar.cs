@@ -36,7 +36,7 @@ namespace HiDesktop
                 { "opacity", "1" },
                 { "topMost", "true" },
                 { "date", "2023.1.1" },
-                { "event", "Configue your countBar in properties file.." },
+                { "event", "Config your countBar in properties file.." },
                 { "location", "auto" },
                 { "enabled","true" },
                 { "countdown_frontText","To" },

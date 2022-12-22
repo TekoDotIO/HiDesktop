@@ -60,7 +60,7 @@ namespace Widgets.MVP
                                 p.nowFile = localFile;
                                 Thread View = new Thread(new ThreadStart(p.StartView));
                                 View.Start();
-                                Log.SaveLog($"Lanunched {localFile}");
+                                Log.SaveLog($"Launched {localFile}");
                             }
                             else
                             {
@@ -79,7 +79,7 @@ namespace Widgets.MVP
                                 p.nowFile = localFile;
                                 Thread Counter = new Thread(new ThreadStart(p.StartView));
                                 Counter.Start();
-                                Log.SaveLog($"Lanunched {localFile}");
+                                Log.SaveLog($"Launched {localFile}");
                             }
                             else
                             {
@@ -94,7 +94,7 @@ namespace Widgets.MVP
                 }
 
             }
-            Log.SaveLog("Lanunched all.");
+            Log.SaveLog("Launched all.");
         }
         /// <summary>
         ///  The main entry point for the application.
@@ -128,6 +128,7 @@ namespace Widgets.MVP
 
                             Log.SaveLog("Each. Tech. œ‡ª•ø∆ºº 2022 All Right Reserved.");
                             Application.EnableVisualStyles();
+                            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                             Application.Run(new LaunchPage());
                             break;
                         case "--ExitAll":
