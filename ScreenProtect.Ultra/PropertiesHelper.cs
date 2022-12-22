@@ -8,6 +8,12 @@ using System.Text;
  * @date : 2019.07
  * @file : Properties.cs
  */
+
+//Re-edited by Fengye1003
+//Updated by Each. Tech.
+//Completed at 2022/08/28 12:14
+
+
 namespace ScreenProtect.Ultra
 {
     public class PropertiesHelper
@@ -38,6 +44,19 @@ namespace ScreenProtect.Ultra
                 {
                     ht[kv[0].Trim()] = kv[1].Trim();
                 }
+                else
+                {
+                    string value = "";
+                    for (int i = 1; i < kv.Length; i++)
+                    {
+                        if (i == 1)
+                            value = kv[i];
+                        else
+                            value = value + "=" + kv[i];
+                    }
+                    ht[kv[0].Trim()] = value.Trim();
+                    //To solve the problem of multi-"=";
+                }
             }
             return ht;
         }
@@ -64,16 +83,42 @@ namespace ScreenProtect.Ultra
 
         public static Hashtable FixProperties(Hashtable htStandard, string path)
         {
+
             Hashtable ht = Load(path);
+            if (ht == null)
+            {
+                ht = new();
+            }
             foreach (string key in htStandard.Keys)
             {
-                if (!ht.Contains(key)) ht.Add(key, (string)htStandard[key]);
+                if (!ht.Contains(key)) ht.Add(key, htStandard[key] as string);
             }
             Save(path, ht);
             Log.SaveLog("Hashtable fixed.");
             return ht;
         }
 
+        public static Hashtable AutoCheck(Hashtable htStandard, string path)
+        {
+            bool isFixed = true;
+            Hashtable ht = Load(path);
+            if (ht == null)
+            {
+                isFixed = false;
+            }
+            else
+            {
+                foreach (string key in htStandard.Keys)
+                {
+                    if (!ht.Contains(key)) isFixed = false;
+                }
+            }
+
+            if (!isFixed)
+                return FixProperties(htStandard, path);
+            else
+                return ht;
+        }
 
     }
 }

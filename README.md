@@ -13,7 +13,7 @@ HiDesktop基于C# WinForm技术进行开发，理论上可借助Mono等辅助工
 
 #程序框架
 
-.NET Core 3.1
+.NET 6.0
 
 
 #已经实现的功能
@@ -104,7 +104,7 @@ HiDesktop is developed based on C# WinForm technology and can theoretically be c
 
 #ApplicationFramework
 
-NET Core 3.1
+.NET 6.0
 
 
 #FeaturesImplemented

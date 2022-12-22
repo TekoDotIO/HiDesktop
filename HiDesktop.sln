@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Widgets.MVP", "HiDesktop\Wi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenProtect.MVP", "HiScreenProtect\ScreenProtect.MVP.csproj", "{5B88B3C5-5A2C-4BEF-AC8E-C12D83A82ED1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenProtect.Ultra", "ScreenProtect.Ultra\ScreenProtect.Ultra.csproj", "{AF601F25-0976-4D8D-8D77-C265BBCC7C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenProtect.Ultra", "ScreenProtect.Ultra\ScreenProtect.Ultra.csproj", "{AF601F25-0976-4D8D-8D77-C265BBCC7C29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{4145F729-112F-4A7E-ADE7-230703BEAC09}"
+	ProjectSection(SolutionItems) = preProject
+		NOTICE.txt = NOTICE.txt
+		UpdateLog.txt = UpdateLog.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -28,12 +28,14 @@ namespace HiDesktop
             ProcessText.Text = "安装字体-Install fonts...";
             try
             {
+                int fontNum = Directory.GetFiles("./Fonts/").Length;
                 foreach (string file in Directory.GetFiles("./Fonts/"))
                 {
                     ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
                     InstallFont(file);
-                    progressBar.Value = progressBar.Value + 5;
+                    progressBar.Value += 55 / fontNum;
                     Log.SaveLog($"[LaunchPage]Installed font {file}");
+                    Thread.Sleep(100);
                 }
                 ProcessText.Text = $"字体安装完成-Fonts installed..";
                 Log.SaveLog($"[LaunchPage]Fonts installed.");
