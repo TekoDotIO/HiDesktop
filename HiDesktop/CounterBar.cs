@@ -84,14 +84,7 @@ namespace HiDesktop
             }
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
-            if ((string)AppConfig["topMost"] == "true")
-            {
-                TopMost = true;
-            }
-            else
-            {
-                TopMost = false;
-            }
+            TopMost = (string)AppConfig["topMost"] == "true";
             string[] targetStr = ((string)AppConfig["date"]).Split(".");
             EventText.Text = (string)AppConfig["event"];
 
@@ -189,15 +182,8 @@ namespace HiDesktop
             }
 
             Thread thread;
-            if (Target > DateTime.Now)
-            {
-                thread = new Thread(new ThreadStart(Countdown_UpdateTime));
-            }
-            else
-            {
-                thread = new Thread(new ThreadStart(Count_UpdateTime));
-            }
-
+            thread = Target > DateTime.Now ? new Thread(new ThreadStart(Countdown_UpdateTime)) : new Thread(new ThreadStart(Count_UpdateTime));
+            //?:的作用相当于if else 如果?左侧是true 则执行:左侧句 否则执行右侧句
             thread.Start();
 
         }

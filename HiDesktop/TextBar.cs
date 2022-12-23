@@ -24,7 +24,7 @@ namespace HiDesktop
                 { "fontSize", "30" },
                 { "opacity", "1" },
                 { "topMost", "true" },
-                { "text", "Configue your textBar in properties file.." },
+                { "text", "Config your textBar in properties file.." },
                 { "location", "auto" },
                 { "enabled","true" },
                 { "color","#FFFFFF" },

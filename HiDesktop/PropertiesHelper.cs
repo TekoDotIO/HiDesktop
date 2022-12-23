@@ -84,11 +84,8 @@ namespace Widgets.MVP
         public static Hashtable FixProperties(Hashtable htStandard, string path)
         {
 
-            Hashtable ht = Load(path);
-            if (ht == null)
-            {
-                ht = new();
-            }
+            Hashtable ht = Load(path) ?? new();//如果Load出的哈希表为null 则新建一个并赋值
+            //C#中两个问号（“?”）的作用是判断“?”左边的对象是否为null，如果不为null则使用“?”左边的对象，如果为null则使用“?”右边的对象。
             foreach (string key in htStandard.Keys)
             {
                 if (!ht.Contains(key)) ht.Add(key, htStandard[key] as string);
