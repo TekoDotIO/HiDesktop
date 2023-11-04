@@ -52,8 +52,8 @@
             // ProcessText
             // 
             resources.ApplyResources(this.ProcessText, "ProcessText");
-            this.ProcessText.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ProcessText.ForeColor = System.Drawing.SystemColors.Control;
+            this.ProcessText.BackColor = System.Drawing.SystemColors.Control;
+            this.ProcessText.ForeColor = System.Drawing.SystemColors.Desktop;
             this.ProcessText.Name = "ProcessText";
             this.ProcessText.Click += new System.EventHandler(this.label1_Click);
             // 

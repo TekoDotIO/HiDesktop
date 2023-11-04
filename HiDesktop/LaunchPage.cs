@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -19,6 +20,9 @@ namespace HiDesktop
 
         void Initialize()
         {
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.MarqueeAnimationSpeed = 10;
+            //Thread.Sleep(10000);
             progressBar.Value = 20;
             ProcessText.Text = "程序正在启动-Program loading...";
             Log.SaveLog("[LaunchPage]Window launched.");
