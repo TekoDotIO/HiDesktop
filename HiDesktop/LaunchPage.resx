@@ -105,7 +105,7 @@
         RudN65tdA8sHzg46DF645Xrr8m2v29fvrLwzMBQydHc4cnjkLvvu5L2key/vZ9yff7DpIfph4SOpR+WP
         lR7X/aj3Y+uI5ciZUdfRvidBTx6Mscae/5T+04fx/Kfkp+UTqhONk2aTp6fcp24+W/1s/Hnq8/npgp+l
         f65+ofviu18cf+mbWTUz/pL/cuHX4lfyr468Xva6e9Z/9vGb5Dfzc4Vv5d8efcd41/s+7P3EfOYH7IeK
-        j3ofuz55f3q4kLyw8Bv3hPP74uYdwgAAAAlwSFlzAAAOwgAADsIBFShKgAAA9UFJREFUeF7s/evWtEmy
+        j3ofuz55f3q4kLyw8Bv3hPP74uYdwgAAAAlwSFlzAAAOvgAADr4B6kKxwAAA9UFJREFUeF7s/evWtEmy
         JITtKxxVVTdCSEKAhE4IBLofpm8VhZ3cLSLz/ap6BsQc9MOWu5uZe8TzZPVea6evfL9/+f/8q3/8T/+f
         /82/PkgU/ofJzf+rro3phf4P9vwPx8dexOlZ/A/u2fmbR2Nv8fFoHs5dTnrdY+rl6PP9+l57P9+dOTxV
         w+/I56VmpJ/R5zWXfCDPzAXSV7jmBtT2jOtO1AT20q9n2Fgadc8o32D0cKrBwyu0b3VB72d7K7cePvPi
@@ -20215,10 +20215,10 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pictureBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>794, 476</value>
+    <value>1021, 560</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
@@ -20241,13 +20241,13 @@
     <value>2</value>
   </data>
   <data name="progressBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 476</value>
+    <value>0, 560</value>
   </data>
   <data name="progressBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="progressBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>794, 22</value>
+    <value>1021, 45</value>
   </data>
   <data name="progressBar.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -20268,13 +20268,10 @@
     <value>True</value>
   </data>
   <data name="ProcessText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 479</value>
-  </data>
-  <data name="ProcessText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+    <value>12, 572</value>
   </data>
   <data name="ProcessText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 17</value>
+    <value>217, 20</value>
   </data>
   <data name="ProcessText.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -20298,13 +20295,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 17</value>
+    <value>9, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>790, 500</value>
+    <value>1016, 606</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
