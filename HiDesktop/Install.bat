@@ -1,5 +1,5 @@
 @echo off
-title Install
+title Widgets.MVP - Install
 color 0a
-HiDesktop.exe --Install
+start widgets.mvp.exe --Install
 pause

@@ -6,3 +6,18 @@
 -修复了设计器中屏幕保护程序标题显示错误的问题
 -修复了Widgets.MVP启动窗口纵横比错误的问题
 -更新了Log与PropertiesHelper模块,修复了配置文件中不可出现"="的问题以及配置文件乱序问题
+
+2024-01-20 20:03
+-增加"Widgets.BootHelper"项目文件：
+	由于一些限制，Widget.MVP在第一次安装某个字体后，无法正确加载字体，其中使用的新字体会被替换为宋体。
+	在希沃白板等带有系统恢复的设备上，这会导致字体始终无法正常加载。
+	此项目可以通过预先安装字体的方式，有效解决首次安装的字体无法工作的问题。
+-增加"LaunchPage.properties"配置文件，说明如下：
+	type - 指示此配置文件为加载页面的配置文件，值固定为"LaunchPage"。
+	showBootWindow - 指示是否允许启用启动窗口。启动窗口的作用是显示项目页面，安装字体。如为"true"，项目启动时将会显示这个窗口。你也可以通过添加控制台参数"--SkipLaunchPage"或使用批处理文件"StartAndSkipLaunchPage.bat"来临时关闭启动页面功能。
+	enableFontInstall - 指示是否允许启动页面安装"./Fonts/"目录下的字体文件。如为"true"，启动页面将逐一安装目录下的字体文件。
+	topMost - 指示启动页面是否启用指定窗口。
+	waitForEffects - 指示启动页面是否启用Thread.Sleep()语句来延长动画播放时间。关闭可使得运行速度加快。
+-更新了批处理文件"ExitAll.bat"，"Install.bat"，"Uninstall.bat"，使之指向正确的可执行文件；修改了标题名称，使之显示批处理文件的功能；将直接执行可执行文件变为用Start语句启动，避免出现控制台堵塞问题。
+-添加了"Start.bat"用于启动项目，添加了"StartAndSkipLaunchPage.bat"，用于临时跳过启动页面。
+-修改Program.cs，实现启动页面配置文件读取与调度是否启动启动页面的功能。

@@ -1,5 +1,5 @@
 @echo off
-title Install
+title Widgets.MVP - Uninstall
 color 0a
-HiDesktop.exe --Uninstall
+start widgets.mvp.exe --Uninstall
 pause

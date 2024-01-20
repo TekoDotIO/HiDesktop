@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -18,8 +19,27 @@ namespace HiDesktop
             thread.Start();
         }
 
+        public static Hashtable htStandard = new Hashtable()
+        {
+            { "type" , "launchPage" },
+            { "enableFontInstall" , "true"},
+            { "waitForEffects" , "false"},
+            { "showBootWindow" , "true"},
+            { "topMost" , "true"}
+        };
+
         void Initialize()
         {
+            var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
+            bool enableFontInstall = false;
+            bool waitForEffects = false;
+            //bool showBootWindow = false;
+            bool topMost = true;
+            if ((string)ht["enableFontInstall"] == "true") enableFontInstall = true;
+            if ((string)ht["waitForEffects"] == "true") waitForEffects = true;
+            //if ((string)ht["showBootWindow"] == "true") showBootWindow = true;
+            if ((string)ht["topMost"] == "true") topMost = true;
+            if (topMost) this.TopMost = true;
             progressBar.Style = ProgressBarStyle.Marquee;
             progressBar.MarqueeAnimationSpeed = 10;
             //Thread.Sleep(10000);
@@ -27,42 +47,50 @@ namespace HiDesktop
             ProcessText.Text = "程序正在启动-Program loading...";
             Log.SaveLog("[LaunchPage]Window launched.");
             Thread MainThread = new Thread(new ThreadStart(Program.MainProcess));
-            Thread.Sleep(1000);
+            if (waitForEffects) Thread.Sleep(1000);
             Log.SaveLog("[LaunchPage]Thread built");
-            ProcessText.Text = "安装字体-Install fonts...";
-            try
+            if (enableFontInstall)
             {
-                int fontNum = Directory.GetFiles("./Fonts/").Length;
-                foreach (string file in Directory.GetFiles("./Fonts/"))
+                ProcessText.Text = "安装字体-Install fonts...";
+                try
                 {
-                    ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
-                    InstallFont(file);
-                    progressBar.Value += 55 / fontNum;
-                    Log.SaveLog($"[LaunchPage]Installed font {file}");
-                    Thread.Sleep(100);
+                    int fontNum = Directory.GetFiles("./Fonts/").Length;
+                    foreach (string file in Directory.GetFiles("./Fonts/"))
+                    {
+                        ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
+                        InstallFont(file);
+                        progressBar.Value += 55 / fontNum;
+                        Log.SaveLog($"[LaunchPage]Installed font {file}");
+                        if (waitForEffects) Thread.Sleep(100);
+                    }
+                    ProcessText.Text = $"字体安装完成-Fonts installed..";
+                    Log.SaveLog($"[LaunchPage]Fonts installed.");
                 }
-                ProcessText.Text = $"字体安装完成-Fonts installed..";
-                Log.SaveLog($"[LaunchPage]Fonts installed.");
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"[LaunchPage]Exception while installing font:{ex}");
+                    ProcessText.Text = $"字体安装异常-Fonts installed with an exception..";
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Log.SaveLog($"[LaunchPage]Exception while installing font:{ex}");
-                ProcessText.Text = $"字体安装异常-Fonts installed with an exception..";
+                Log.SaveLog($"[LaunchPage]Font install is not enabled.");
+                ProcessText.Text = $"字体安装已禁用-Font installation is disabled..";
             }
 
 
 
             progressBar.Value = 75;
-            Thread.Sleep(500);
+            if (waitForEffects) Thread.Sleep(500);
             MainThread.Start();
             Log.SaveLog($"[LaunchPage]Thread started.");
             ProcessText.Text = "线程构建完成-Thread built... ";
 
             progressBar.Value = 100;
-            Thread.Sleep(1000);
+            if (waitForEffects) Thread.Sleep(1000);
             ProcessText.Text = "启动完成-Finished";
             Log.SaveLog($"[LaunchPage]Launched MainProcess.");
-            Thread.Sleep(200);
+            if (waitForEffects) Thread.Sleep(200);
             Close();
         }
 

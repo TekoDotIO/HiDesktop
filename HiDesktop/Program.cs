@@ -11,7 +11,18 @@ namespace Widgets.MVP
 {
     internal class Program
     {
+        public static Hashtable htStandard = new Hashtable()
+        {
+            { "type" , "launchPage" },
+            { "enableFontInstall" , "true"},
+            { "waitForEffects" , "false"},
+            { "showBootWindow" , "true"},
+            { "topMost" , "true"}
+        };
         const string productName = "HiDesktop";
+        static bool showBootWindow = false;
+        //static bool enableFontInstall = false;
+        //static bool waitForEffects = false;
         readonly Hashtable widgets = new Hashtable();
         string nowFile;
         void StartView()
@@ -36,9 +47,11 @@ namespace Widgets.MVP
         }
         public static void MainProcess()
         {
+
             Directory.CreateDirectory("./Properties/");
             string[] properties = Directory.GetFiles("./Properties/");
             Program p = new Program();
+            
             foreach (string localFile in properties)
             {
                 if (localFile.Contains(".properties"))
@@ -102,7 +115,12 @@ namespace Widgets.MVP
         [STAThread]
         static void Main(string[] args)
         {
+            var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
 
+
+            //if ((string)ht["enableFontInstall"] == "true") enableFontInstall = true;
+            //if ((string)ht["waitForEffects"] == "true") waitForEffects = true;
+            if ((string)ht["showBootWindow"] == "true") Program.showBootWindow = true;
 
             switch (args.Length)//读取传入的参数
             {
@@ -129,7 +147,21 @@ namespace Widgets.MVP
                             Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
-                            Application.Run(new LaunchPage());
+                            if (showBootWindow) Application.Run(new LaunchPage());
+                            else
+                            {
+                                Thread t = new(new ThreadStart(MainProcess));
+                                t.Start();
+                                Log.SaveLog("Program started with no launch pages.");
+                            };
+                            break;
+                        case "--SkipLaunchPage":
+                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            Application.EnableVisualStyles();
+                            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+                            Thread t2 = new(new ThreadStart(MainProcess));
+                            t2.Start();
+                            Log.SaveLog("Program started with no launch pages.");
                             break;
                         case "--ExitAll":
                             CommandRepo.ExitAll(productName);

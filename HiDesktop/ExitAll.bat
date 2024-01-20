@@ -1,5 +1,5 @@
 @echo off
-title Install
+title Widgets.MVP - ExitProccess
 color 0a
-HiDesktop.exe --ExitAll
+start widgets.mvp.exe --ExitAll
 pause
