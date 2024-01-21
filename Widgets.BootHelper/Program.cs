@@ -3,42 +3,137 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Collections;
+using Microsoft.Win32;
 
 namespace Widgets.BootHelper
 {
     class Program
     {
+        public static Hashtable htStandard = new()
+        {
+            { "type" , "BootHelper" },
+            { "enableScrSettings", "true" },
+            { "installFonts" , "true" },
+            { "skipLaunchPage" , "true" }
+        };
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
         static void Main()
         {
-            try
+            bool enableScrSettings = false;
+            bool installFonts = false;
+            bool skipLaunchPage = false;
+
+            var ht = PropertiesHelper.AutoCheck(htStandard, "./Properties/BootHelper.properties");
+            if ((string)ht["enableScrSettings"] == "true") enableScrSettings = true;
+            if ((string)ht["installFonts"] == "true") installFonts = true;
+            if ((string)ht["skipLaunchPage"] == "true") skipLaunchPage = true;
+
+            if (installFonts)
             {
-                foreach (string file in Directory.GetFiles("./Fonts/"))
+                try
                 {
-                    //ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
-                    InstallFont(file);
-                    //progressBar.Value = progressBar.Value + 5;
-                    Console.WriteLine($"[Helper]Installed font {file}");
-                    Log.SaveLog($"[Helper]Installed font {file}");
+                    foreach (string file in Directory.GetFiles("./Fonts/"))
+                    {
+                        //ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
+                        InstallFont(file);
+                        //progressBar.Value = progressBar.Value + 5;
+                        Console.WriteLine($"[Helper]Installed font {file}");
+                        Log.SaveLog($"[Helper]Installed font {file}");
+                    }
+                    //ProcessText.Text = $"字体安装完成-Fonts installed..";
+                    Console.WriteLine($"[Helper]Fonts installed.");
+                    Log.SaveLog($"[Helper]Fonts installed.");
                 }
-                //ProcessText.Text = $"字体安装完成-Fonts installed..";
-                Console.WriteLine($"[Helper]Fonts installed.");
-                Log.SaveLog($"[Helper]Fonts installed.");
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[Helper]Exception while installing font:{ex}");
+                    Log.SaveLog($"[Helper]Exception while installing font:{ex}");
+                    //ProcessText.Text = $"字体安装异常-Fonts installed with an exception..";
+                }
+                Log.SaveLog("[Helper]Font setting completed.Booting Main Process...");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"[Helper]Exception while installing font:{ex}");
-                Log.SaveLog($"[Helper]Exception while installing font:{ex}");
-                //ProcessText.Text = $"字体安装异常-Fonts installed with an exception..";
+                Log.SaveLog("[Helper]Font installing is not enabled.Booting Main Process...");
             }
-            Log.SaveLog("[Helper]Font setting completed.Booting Main Process...");
-            try
+
+            if (skipLaunchPage)
             {
-                Process.Start("./Widgets.MVP.exe", "--SkipLaunchPage");
+                try
+                {
+                    Process.Start("./Widgets.MVP.exe", "--SkipLaunchPage");
+                    Log.SaveLog("[Helper]Launched main process with launchpage skipped.");
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog("[Helper]Exception occured when booting Widgets.MVP with argument \"--SkipLaunchPage\".");
+                    Log.SaveLog($"[Helper][ExceptionDetails]{ex}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Log.SaveLog("[Helper]Exception occured when booting Widgets.MVP with argument \"--SkipLaunchPage\".");
-                Log.SaveLog($"[Helper][ExceptionDetails]{ex}");
+                try
+                {
+                    Process.Start("./Widgets.MVP.exe");
+                    Log.SaveLog("[Helper]Launched main process with launchpage not skipped.");
+                }
+                catch (Exception ex)
+                {
+
+                    Log.SaveLog("[Helper]Exception occured when booting Widgets.MVP without arguments.");
+                    Log.SaveLog($"[Helper][ExceptionDetails]{ex}");
+                }
+            }
+
+            /*
+            版权声明：本代码为CSDN博主「无熵~」的原创，遵循CC 4.0 BY - SA版权协议，转载请附上原文出处链接及本声明。
+            原文链接：https://blog.csdn.net/lvxingzhe3/article/details/135595441
+            */
+
+
+            if (enableScrSettings)
+            {
+                Log.SaveLog("[Helper]ScrSettings is enabled.Doing extra settings...");
+                string scrPath = @"./ScreenProtect.MVP.scr";
+                if (File.Exists(scrPath))
+                {
+                    try
+                    {
+                        //获取user根项
+                        RegistryKey user = Registry.CurrentUser;
+                        //打开desktop项
+                        RegistryKey desktop = user.OpenSubKey("Control Panel\\Desktop", true);
+                        if (desktop != null)
+                        {
+                            //设置屏保程序位置
+                            desktop.SetValue("SCRNSAVE.EXE", scrPath);
+                            //是否启动屏保 0:不启动 1:启动
+                            desktop.SetValue("ScreenSaveActive", "1");
+                            //退出屏保后是否需要登录 0：不需要 1：需要
+                            desktop.SetValue("ScreenSaverIsSecure", "0");
+                            //电脑无操作后启动屏保时间（秒）
+                            desktop.SetValue("ScreenSaveTimeout", "1800");
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.SaveLog($"[Helper]Exception occured when installing scr:\n{ex}");
+                    }
+                }
+                else
+                {
+                    Log.SaveLog("[Helper]Could not find the scr fil.Skipping...");
+                }
+                
+
+            }
+            else
+            {
+                Log.SaveLog("[Helper]ScrSettings is disabled.Exiting...");
             }
             
             

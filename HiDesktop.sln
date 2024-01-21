@@ -15,7 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 		UpdateLog.txt = UpdateLog.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Widgets.BootHelper", "Widgets.BootHelper\Widgets.BootHelper.csproj", "{3F466E4E-B752-400A-A5E2-F71BBBD69356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Widgets.BootHelper", "Widgets.BootHelper\Widgets.BootHelper.csproj", "{3F466E4E-B752-400A-A5E2-F71BBBD69356}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8832AA8-6359-43BE-A7F6-DC665C14C5E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

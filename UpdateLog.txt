@@ -21,3 +21,12 @@
 -更新了批处理文件"ExitAll.bat"，"Install.bat"，"Uninstall.bat"，使之指向正确的可执行文件；修改了标题名称，使之显示批处理文件的功能；将直接执行可执行文件变为用Start语句启动，避免出现控制台堵塞问题。
 -添加了"Start.bat"用于启动项目，添加了"StartAndSkipLaunchPage.bat"，用于临时跳过启动页面。
 -修改Program.cs，实现启动页面配置文件读取与调度是否启动启动页面的功能。
+
+2024-01-21 12:29
+-向Helper添加配置文件助手模块。
+-向Helper添加了配置文件"BootHelper.properties"：
+	type - 指示此配置文件为加载页面的配置文件，值固定为"BootHelper"。
+	enableScrSettings - 是否允许安装HiScr屏幕保护程序。
+	installFonts - 是否开启字体安装功能。
+	skipLaunchPage - 是否通过控制台参数跳过加载页面。
+**请注意Helper的部分功能仍未经过测试！
