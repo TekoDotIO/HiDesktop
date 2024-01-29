@@ -30,3 +30,10 @@
 	installFonts - 是否开启字体安装功能。
 	skipLaunchPage - 是否通过控制台参数跳过加载页面。
 **请注意Helper的部分功能仍未经过测试！
+
+2024-01-29 16:32
+**果然不应该冒险不调试的，果然出问题了
+-为Widgets.BootlHelper添加了app.manifest，现在该项目将要求使用管理员权限启动，因为安装字体到系统全局需要使用管理员权限，否则会出现异常。
+-为Widgets.BootlHelper的配置文件添加配置项：
+	filePath - 指示Widgets.MVP主程序的位置，启动器将会按照这个可执行文件的路径启动程序
+**此段代码仅做提交备份，并非Release版本。

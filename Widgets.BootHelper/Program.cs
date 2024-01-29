@@ -15,7 +15,8 @@ namespace Widgets.BootHelper
             { "type" , "BootHelper" },
             { "enableScrSettings", "true" },
             { "installFonts" , "true" },
-            { "skipLaunchPage" , "true" }
+            { "skipLaunchPage" , "true" },
+            { "filePath" , "D:/HiDesktop/Widgets.MVP.exe" }
         };
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
@@ -24,11 +25,14 @@ namespace Widgets.BootHelper
             bool enableScrSettings = false;
             bool installFonts = false;
             bool skipLaunchPage = false;
+            string filePath = "";
 
             var ht = PropertiesHelper.AutoCheck(htStandard, "./Properties/BootHelper.properties");
             if ((string)ht["enableScrSettings"] == "true") enableScrSettings = true;
             if ((string)ht["installFonts"] == "true") installFonts = true;
             if ((string)ht["skipLaunchPage"] == "true") skipLaunchPage = true;
+            filePath = (string)ht["filePath"];
+            if (filePath == null) filePath = "";
 
             if (installFonts)
             {
@@ -63,7 +67,7 @@ namespace Widgets.BootHelper
             {
                 try
                 {
-                    Process.Start("./Widgets.MVP.exe", "--SkipLaunchPage");
+                    Process.Start(filePath, "--SkipLaunchPage");
                     Log.SaveLog("[Helper]Launched main process with launchpage skipped.");
                 }
                 catch (Exception ex)
@@ -76,7 +80,7 @@ namespace Widgets.BootHelper
             {
                 try
                 {
-                    Process.Start("./Widgets.MVP.exe");
+                    Process.Start(filePath);
                     Log.SaveLog("[Helper]Launched main process with launchpage not skipped.");
                 }
                 catch (Exception ex)
