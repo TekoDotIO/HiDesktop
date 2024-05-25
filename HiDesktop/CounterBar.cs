@@ -23,10 +23,36 @@ namespace HiDesktop
         readonly string seconds;
         readonly string weekdays;
         readonly int refreshTime;
+
+        //protected override void SetVisibleCore(bool value)
+        //{
+        //    base.SetVisibleCore(value);
+        //}
+
+        /// <summary>
+        /// 让程序不显示在alt+Tab视图窗体中
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_EX_APPWINDOW = 0x40000;
+                const int WS_EX_TOOLWINDOW = 0x80;
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle &= (~WS_EX_APPWINDOW);
+                cp.ExStyle |= WS_EX_TOOLWINDOW;
+                return cp;
+            }
+        }
+        //From https://www.cnblogs.com/darkic/p/16256294.html
+
         public CounterBar(string Path)
         {
             TopMost = false;
             InitializeComponent();
+            //SetVisibleCore(false);
+            this.ShowInTaskbar = false;
+            //SetFormToolWindowStyle(this);
             this.Path = Path;
             Hashtable htStandard = new Hashtable()
             {
@@ -48,6 +74,7 @@ namespace HiDesktop
                 { "minutes","minute(s)" },
                 { "seconds","second(s)" },
                 { "weekdays","weekday(s)" },
+                { "countLevel","" },
                 { "refreshTime","500" },
                 { "frontText_Color","#FFFFFF" },
                 { "middleText_Color","#FFFFFF" },
@@ -326,5 +353,35 @@ namespace HiDesktop
             base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
         }
+
+
+
+        //From https://www.cnblogs.com/pcy0/archive/2010/07/11/1775108.html
+        [DllImport("user32.dll")]
+        public static extern
+        Int32 GetWindowLong(IntPtr hwnd, Int32 index);
+        [DllImport("user32.dll")]
+        public static extern
+            Int32 SetWindowLong(IntPtr hwnd, Int32 index, Int32 newValue);
+        public const int GWL_EXSTYLE = (-20);
+        public static void AddWindowExStyle(IntPtr hwnd, Int32 val)
+        {
+            int oldValue = GetWindowLong(hwnd, GWL_EXSTYLE);
+            if (oldValue == 0)
+            {
+                throw new System.ComponentModel.Win32Exception();
+            }
+            if (0 == SetWindowLong(hwnd, GWL_EXSTYLE, oldValue | val))
+            {
+                throw new System.ComponentModel.Win32Exception();
+            }
+        }
+        public static int WS_EX_TOOLWINDOW = 0x00000080;
+        //我把这个过程封装下：
+        public static void SetFormToolWindowStyle(System.Windows.Forms.Form form)
+        {
+            AddWindowExStyle(form.Handle, WS_EX_TOOLWINDOW);
+        }
     }
+
 }

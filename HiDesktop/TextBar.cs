@@ -13,8 +13,25 @@ namespace HiDesktop
     {
         readonly string Path;
         readonly Hashtable AppConfig;
+        /// <summary>
+        /// 让程序不显示在alt+Tab视图窗体中
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_EX_APPWINDOW = 0x40000;
+                const int WS_EX_TOOLWINDOW = 0x80;
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle &= (~WS_EX_APPWINDOW);
+                cp.ExStyle |= WS_EX_TOOLWINDOW;
+                return cp;
+            }
+        }
+        //From https://www.cnblogs.com/darkic/p/16256294.html
         public TextBar(string Path)
         {
+
             InitializeComponent();
             this.Path = Path;
             Hashtable htStandard = new Hashtable()
