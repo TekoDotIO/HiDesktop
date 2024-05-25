@@ -32,23 +32,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ExitAll.bat">
+    <None Update="BatScripts\ExitAll.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Install.bat">
+    <None Update="BatScripts\Install.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Update="Start.bat">
+    <None Update="BatScripts\Start.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="StartAndSkipLaunchPage.bat">
+    <None Update="BatScripts\StartAndSkipLaunchPage.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Uninstall.bat">
+    <None Update="BatScripts\Uninstall.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
