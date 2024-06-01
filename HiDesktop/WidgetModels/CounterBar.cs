@@ -127,10 +127,31 @@ namespace HiDesktop
             Latest = DateTime.Now;
             //MessageBox.Show(Latest.DayOfWeek.ToString());
 
+
+            
             if ((string)AppConfig["font"] != "auto")
             {
-                Setfont((string)AppConfig["font"]);
+                Setfont((string)AppConfig["font"], fontSize);
             }
+            LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
+            LabelNo2.Font = new Font(LabelNo2.Font.Name, fontSize);
+            EventText.Font = new Font(EventText.Font.Name, fontSize);
+            NumText.Font = new Font(NumText.Font.Name, fontSize);
+            //旧版字体模块，必须安装字体才能顺利调用
+
+
+            /*
+            //新版字体模块，由于读取速度过慢，刷新失败导致内存重复写入。无法正常使用。暂无解决方案。
+            string fontPath = (string)AppConfig["font"];
+            PrivateFontCollection pfc = new();
+            pfc.AddFontFile(fontPath);
+            Font f = new(pfc.Families[0], fontSize);
+            //将字体显示到控件
+            EventText.Font = f;
+            LabelNo1.Font = f;
+            LabelNo2.Font = f;
+            NumText.Font = f;
+            */
 
 
             Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
@@ -147,10 +168,7 @@ namespace HiDesktop
 
 
 
-            LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
-            LabelNo2.Font = new Font(LabelNo2.Font.Name, fontSize);
-            EventText.Font = new Font(EventText.Font.Name, fontSize);
-            NumText.Font = new Font(NumText.Font.Name, fontSize);
+            
 
 
 
@@ -270,7 +288,7 @@ namespace HiDesktop
             }
             return weekday;
         }
-        public void Setfont(string path)
+        public void Setfont(string path, float size)
         {
             try
             {
@@ -280,7 +298,7 @@ namespace HiDesktop
 
                 //定义成新的字体对象
                 FontFamily myFontFamily = new FontFamily(font.Families[0].Name, font);
-                Font myFont = new Font(myFontFamily, 56F, FontStyle.Regular);
+                Font myFont = new Font(myFontFamily, size, FontStyle.Regular);
 
                 //将字体显示到控件
                 EventText.Font = myFont;

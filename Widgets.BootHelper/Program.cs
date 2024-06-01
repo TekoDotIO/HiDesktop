@@ -26,7 +26,13 @@ namespace Widgets.BootHelper
             bool installFonts = false;
             bool skipLaunchPage = false;
             string filePath = "";
+            if (!File.Exists("./Properties/BootHelper.properties"))
+            {
+                Directory.CreateDirectory("./Properties/");
+                Directory.CreateDirectory("./Fonts/");
+                PropertiesHelper.Save("./Properties/BootHelper.properties", htStandard);
 
+            }
             var ht = PropertiesHelper.AutoCheck(htStandard, "./Properties/BootHelper.properties");
             if ((string)ht["enableScrSettings"] == "true") enableScrSettings = true;
             if ((string)ht["installFonts"] == "true") installFonts = true;
@@ -63,11 +69,18 @@ namespace Widgets.BootHelper
                 Log.SaveLog("[Helper]Font installing is not enabled.Booting Main Process...");
             }
 
+            
+
             if (skipLaunchPage)
             {
                 try
                 {
-                    Process.Start(filePath, "--SkipLaunchPage");
+                    Process p = new();
+                    p.StartInfo.WorkingDirectory = Path.GetDirectoryName(filePath);
+                    p.StartInfo.Arguments = "--SkipLaunchPage";
+                    p.StartInfo.FileName = filePath;
+                    p.Start();
+                    //Process.Start(filePath, "--SkipLaunchPage");
                     Log.SaveLog("[Helper]Launched main process with launchpage skipped.");
                 }
                 catch (Exception ex)
@@ -80,7 +93,12 @@ namespace Widgets.BootHelper
             {
                 try
                 {
-                    Process.Start(filePath);
+                    Process p = new();
+                    p.StartInfo.WorkingDirectory = Path.GetDirectoryName(filePath);
+                    //p.StartInfo.Arguments = "--SkipLaunchPage";
+                    p.StartInfo.FileName = filePath;
+                    p.Start();
+                    //Process.Start(filePath);
                     Log.SaveLog("[Helper]Launched main process with launchpage not skipped.");
                 }
                 catch (Exception ex)

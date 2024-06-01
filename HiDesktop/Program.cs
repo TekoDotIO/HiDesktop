@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using Widgets.MVP.WidgetModels;
 
 namespace Widgets.MVP
 {
@@ -109,6 +110,20 @@ namespace Widgets.MVP
             }
             Log.SaveLog("Launched all.");
         }
+
+
+
+        static void Main2(string[] args)
+        {
+            Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+            CountdownV2 cv2 = new CountdownV2();
+            cv2.ShowDialog();
+        }
+
+
+
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
