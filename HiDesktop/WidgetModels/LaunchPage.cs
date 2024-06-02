@@ -23,7 +23,7 @@ namespace HiDesktop
         {
             { "type" , "launchPage" },
             { "enableFontInstall" , "true"},
-            { "waitForEffects" , "false"},
+            { "waitForEffects" , "true"},
             { "showBootWindow" , "true"},
             { "topMost" , "true"}
         };
@@ -81,11 +81,13 @@ namespace HiDesktop
 
 
             progressBar.Value = 75;
+            if (waitForEffects) Thread.Sleep(1000);
+            ProcessText.Text = "请等待字体安装完成-Waiting for OS font... ";
             if (waitForEffects) Thread.Sleep(500);
             MainThread.Start();
             Log.SaveLog($"[LaunchPage]Thread started.");
             ProcessText.Text = "线程构建完成-Thread built... ";
-
+            
             progressBar.Value = 100;
             if (waitForEffects) Thread.Sleep(1000);
             ProcessText.Text = "启动完成-Finished";
