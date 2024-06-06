@@ -176,6 +176,7 @@ namespace HiDesktop
             LabelNo2.ForeColor = ColorTranslator.FromHtml((string)AppConfig["middleText_Color"]);
             EventText.ForeColor = ColorTranslator.FromHtml((string)AppConfig["event_Color"]);
             NumText.ForeColor = ColorTranslator.FromHtml((string)AppConfig["date_Color"]);
+            //BackColor = Color.Transparent;
 
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);

@@ -12,6 +12,7 @@ namespace Widgets.MVP
 {
     internal class Program
     {
+        public static LaunchPage launchPage;
         public static Hashtable htStandard = new Hashtable()
         {
             { "type" , "launchPage" },
@@ -23,7 +24,7 @@ namespace Widgets.MVP
         const string productName = "HiDesktop";
         static bool showBootWindow = false;
         //static bool enableFontInstall = false;
-        //static bool waitForEffects = false;
+        static bool waitForEffects = false;
         readonly Hashtable widgets = new Hashtable();
         string nowFile;
         void StartView()
@@ -53,6 +54,11 @@ namespace Widgets.MVP
             string[] properties = Directory.GetFiles("./Properties/");
             Program p = new Program();
             
+            bool enableHook = false;//允许接入启动页面
+            if (launchPage != null) 
+            {
+                enableHook = true;
+            }
             foreach (string localFile in properties)
             {
                 if (localFile.Contains(".properties"))
@@ -74,7 +80,12 @@ namespace Widgets.MVP
                                 p.nowFile = localFile;
                                 Thread View = new Thread(new ThreadStart(p.StartView));
                                 View.Start();
-                                Log.SaveLog($"Launched {localFile}");
+                                string s = $"Launched {localFile}";
+                                Log.SaveLog(s);
+                                if (enableHook)
+                                {
+                                    launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
+                                }
                             }
                             else
                             {
@@ -94,6 +105,10 @@ namespace Widgets.MVP
                                 Thread Counter = new Thread(new ThreadStart(p.StartView));
                                 Counter.Start();
                                 Log.SaveLog($"Launched {localFile}");
+                                if (enableHook)
+                                {
+                                    launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
+                                }
                             }
                             else
                             {
@@ -134,7 +149,7 @@ namespace Widgets.MVP
 
 
             //if ((string)ht["enableFontInstall"] == "true") enableFontInstall = true;
-            //if ((string)ht["waitForEffects"] == "true") waitForEffects = true;
+            if ((string)ht["waitForEffects"] == "true") waitForEffects = true;
             if ((string)ht["showBootWindow"] == "true") Program.showBootWindow = true;
 
             switch (args.Length)//读取传入的参数
@@ -162,13 +177,21 @@ namespace Widgets.MVP
                             Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
-                            if (showBootWindow) Application.Run(new LaunchPage());
+                            if (showBootWindow)
+                            {
+                                if (waitForEffects)
+                                {
+                                    Thread.Sleep(500);//等待字体响应
+                                }
+                                launchPage = new();
+                                Application.Run(launchPage);
+                            }
                             else
                             {
                                 Thread t = new(new ThreadStart(MainProcess));
                                 t.Start();
                                 Log.SaveLog("Program started with no launch pages.");
-                            };
+                            }
                             break;
                         case "--SkipLaunchPage":
                             Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");

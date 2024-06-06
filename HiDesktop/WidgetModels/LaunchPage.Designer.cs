@@ -79,6 +79,6 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.Label ProcessText;
+        public System.Windows.Forms.Label ProcessText;
     }
 }

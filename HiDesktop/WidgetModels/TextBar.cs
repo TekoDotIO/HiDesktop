@@ -100,7 +100,7 @@ namespace HiDesktop
             LabelNo1.ForeColor = ColorTranslator.FromHtml((string)AppConfig["color"]);
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
             LabelNo1.Text = (string)AppConfig["text"];
-
+            //BackColor = Color.Transparent;
 
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;
