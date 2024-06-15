@@ -30,6 +30,12 @@ namespace HiDesktop
 
         void Initialize()
         {
+
+            //ProcessText.Parent = progressBar;
+            //progressBar.Controls.Add(ProcessText);
+            //ProcessText.Location = new Point(0, 0);
+            //ProcessText.BackColor = Color.Transparent;
+            ////实现文本反馈的透明背景
             var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
             bool enableFontInstall = false;
             bool waitForEffects = false;

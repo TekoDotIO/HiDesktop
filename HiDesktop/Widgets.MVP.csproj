@@ -7,6 +7,7 @@
     <ApplicationManifest>./Properties/app.manifest</ApplicationManifest>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseWPF>False</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>

@@ -71,11 +71,7 @@ namespace Widgets.MVP
                             
                             if ((string)config["enabled"] == "true")
                             {
-                                CounterBar textBar = new CounterBar(localFile)
-                                {
-                                    BackColor = Color.Black,
-                                    TransparencyKey = Color.Black
-                                };
+                                CounterBar textBar = new CounterBar(localFile);
                                 p.widgets.Add(localFile, textBar);
                                 p.nowFile = localFile;
                                 Thread View = new Thread(new ThreadStart(p.StartView));
@@ -95,11 +91,7 @@ namespace Widgets.MVP
                         case "TextBar":
                             if ((string)config["enabled"] == "true")
                             {
-                                TextBar textBar = new TextBar(localFile)
-                                {
-                                    BackColor = Color.Black,
-                                    TransparencyKey = Color.Black
-                                };
+                                TextBar textBar = new TextBar(localFile);
                                 p.widgets.Add(localFile, textBar);
                                 p.nowFile = localFile;
                                 Thread Counter = new Thread(new ThreadStart(p.StartView));

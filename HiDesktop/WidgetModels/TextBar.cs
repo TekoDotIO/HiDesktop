@@ -45,7 +45,8 @@ namespace HiDesktop
                 { "location", "auto" },
                 { "enabled","true" },
                 { "color","#FFFFFF" },
-                { "allowMove","true" }
+                { "allowMove","true" },
+                { "TransparencyKey","#000000" }
             };
             if (!File.Exists(Path))
             {
@@ -97,10 +98,21 @@ namespace HiDesktop
             {
                 Setfont((string)AppConfig["font"]);
             }
+
+
+
+
             LabelNo1.ForeColor = ColorTranslator.FromHtml((string)AppConfig["color"]);
             LabelNo1.Font = new Font(LabelNo1.Font.Name, fontSize);
             LabelNo1.Text = (string)AppConfig["text"];
             //BackColor = Color.Transparent;
+            var tColor = ColorTranslator.FromHtml((string)AppConfig["TransparencyKey"]);
+            BackColor = tColor;
+            TransparencyKey = tColor;
+
+
+
+
 
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;

@@ -80,7 +80,8 @@ namespace HiDesktop
                 { "middleText_Color","#FFFFFF" },
                 { "event_Color","#FF0000" },
                 { "date_Color","#FF0000" },
-                { "allowMove","true" }
+                { "allowMove","true" },
+                { "TransparencyKey","#000000" }
             };
             if (!File.Exists(Path))
             {
@@ -177,6 +178,19 @@ namespace HiDesktop
             EventText.ForeColor = ColorTranslator.FromHtml((string)AppConfig["event_Color"]);
             NumText.ForeColor = ColorTranslator.FromHtml((string)AppConfig["date_Color"]);
             //BackColor = Color.Transparent;
+            var tColor = ColorTranslator.FromHtml((string)AppConfig["TransparencyKey"]);
+            BackColor = tColor;
+            TransparencyKey = tColor;
+
+
+            //
+            //var handle = Handle;
+            //var exstyle = GetWindowLong(handle, GWL_EXSTYLE);
+            //SetWindowLong(handle, GWL_EXSTYLE, new IntPtr(exstyle.ToInt32() | WS_EX_NOACTIVATE));
+
+
+
+
 
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
@@ -376,21 +390,20 @@ namespace HiDesktop
 
 
         //From https://www.cnblogs.com/pcy0/archive/2010/07/11/1775108.html
-        [DllImport("user32.dll")]
-        public static extern
-        Int32 GetWindowLong(IntPtr hwnd, Int32 index);
-        [DllImport("user32.dll")]
-        public static extern
-            Int32 SetWindowLong(IntPtr hwnd, Int32 index, Int32 newValue);
+        //Modified by 幻愿Recovery at 24/06/15. Fixed up the conlict between tool window part & cannot-be-focused part.
+        //[DllImport("user32.dll")]
+        //public static extern Int32 GetWindowLong(IntPtr hwnd, Int32 index);
+        //[DllImport("user32.dll")]
+        //public static extern Int32 SetWindowLong(IntPtr hwnd, Int32 index, Int32 newValue);
         public const int GWL_EXSTYLE = (-20);
         public static void AddWindowExStyle(IntPtr hwnd, Int32 val)
         {
-            int oldValue = GetWindowLong(hwnd, GWL_EXSTYLE);
+            int oldValue = (int)GetWindowLong(hwnd, GWL_EXSTYLE);
             if (oldValue == 0)
             {
                 throw new System.ComponentModel.Win32Exception();
             }
-            if (0 == SetWindowLong(hwnd, GWL_EXSTYLE, oldValue | val))
+            if ((IntPtr)0 == SetWindowLong(hwnd, GWL_EXSTYLE, (IntPtr)(oldValue | val)))
             {
                 throw new System.ComponentModel.Win32Exception();
             }
@@ -401,6 +414,45 @@ namespace HiDesktop
         {
             AddWindowExStyle(form.Handle, WS_EX_TOOLWINDOW);
         }
+
+
+        //Code from https://www.cnblogs.com/walterlv/p/10236434.html
+        #region Native Methods for FocusingLock
+
+        private const int WS_EX_NOACTIVATE = 0x08000000;
+        //private const int GWL_EXSTYLE = -20;
+
+        public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
+        {
+            return Environment.Is64BitProcess
+                ? GetWindowLong64(hWnd, nIndex)
+                : GetWindowLong32(hWnd, nIndex);
+        }
+
+        public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            return Environment.Is64BitProcess
+                ? SetWindowLong64(hWnd, nIndex, dwNewLong)
+                : SetWindowLong32(hWnd, nIndex, dwNewLong);
+        }
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        private static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        private static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        private static extern IntPtr SetWindowLong32(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        private static extern IntPtr SetWindowLong64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        #endregion
+
     }
+
+
+
 
 }
