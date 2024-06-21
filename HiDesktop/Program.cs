@@ -120,7 +120,7 @@ namespace Widgets.MVP
 
 
 
-        static void Main2(string[] args)
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
@@ -135,7 +135,7 @@ namespace Widgets.MVP
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main2(string[] args)
         {
             var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
 

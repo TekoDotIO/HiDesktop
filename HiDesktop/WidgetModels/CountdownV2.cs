@@ -16,9 +16,10 @@ namespace Widgets.MVP.WidgetModels
 
         public CountdownV2()
         {
+            InitializeComponent();
             SetWindowRegion();
             //From https://www.cnblogs.com/tony-brook/p/10308843.html
-            InitializeComponent();
+            
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Widgets.MVP.WidgetModels
         {
             GraphicsPath FormPath;
             Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-            FormPath = GetRoundedRectPath(rect, 50);
+            FormPath = GetRoundedRectPath(rect, 75);
             this.Region = new Region(FormPath);
 
         }
