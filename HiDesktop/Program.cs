@@ -124,8 +124,10 @@ namespace Widgets.MVP
         {
             Application.EnableVisualStyles();
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
-            CountdownV2 cv2 = new CountdownV2();
-            cv2.ShowDialog();
+            //CountdownV2 cv2 = new CountdownV2();
+            //cv2.ShowDialog();
+            var actvt = new WidgetModels.Activator();
+            actvt.ShowDialog();
         }
 
 
