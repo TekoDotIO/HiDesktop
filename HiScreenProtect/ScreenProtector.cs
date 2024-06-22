@@ -122,7 +122,7 @@ namespace HiDesktop.HiScreenProtect.MVP
                 Y = h - 50
             };
             Tips.Location = tipsLocation;
-            Tips.Text = "Each. Tech. All right reserved.\nBy 相互科技工作室";
+            Tips.Text = "teko.IO All right reserved.\nBy 相互科技工作室";
             Refresh();
             Thread.Sleep(2000);
 

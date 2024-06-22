@@ -15,6 +15,7 @@ namespace Widgets.MVP
 {
     internal class Program
     {
+        static bool activatorExists = false;
         public static LaunchPage launchPage;
         public static Hashtable htStandard = new Hashtable()
         {
@@ -110,6 +111,30 @@ namespace Widgets.MVP
                                 Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
                             }
                             break;
+                        case "Activator":
+                            if (activatorExists)
+                            {
+                                Log.SaveLog("Already exists one activated Activator. This widget can only exist 1 per OS.");
+                                break;
+                            }
+                            if ((string)config["enabled"] == "true")
+                            {
+                                WidgetModels.Activator activator = new(localFile);
+                                p.widgets.Add(localFile, activator);
+                                p.nowFile = localFile;
+                                Thread a = new Thread(new ThreadStart(p.StartView));
+                                a.Start();
+                                Log.SaveLog($"Launched {localFile}");
+                                if (enableHook)
+                                {
+                                    launchPage.ProcessText.Text = $"Activator对象成功构建:{localFile}";
+                                }
+                            }
+                            else
+                            {
+                                Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                            }
+                            break;
                         default:
                             Log.SaveLog($"Unknown program type:{localFile}");
                             break;
@@ -123,7 +148,7 @@ namespace Widgets.MVP
 
 
 
-        static void Main(string[] args)
+        static void Main2(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
@@ -143,7 +168,7 @@ namespace Widgets.MVP
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main2(string[] args)
+        static void Main(string[] args)
         {
             var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
 
@@ -174,7 +199,7 @@ namespace Widgets.MVP
                     {
                         case "--MainProcess":
 
-                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                             if (showBootWindow)
@@ -194,7 +219,7 @@ namespace Widgets.MVP
                             }
                             break;
                         case "--SkipLaunchPage":
-                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                             Thread t2 = new(new ThreadStart(MainProcess));
@@ -205,11 +230,11 @@ namespace Widgets.MVP
                             CommandRepo.ExitAll(productName);
                             CommandRepo.ExitAll("Widgets.MVP");
                             Log.SaveLog($"Killed all {productName} process.");
-                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
                             break;
                         case "--Install":
                             CommandRepo.CreateStartUpScript();
-                            Log.SaveLog("Each. Tech. 相互科技 2022 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
                             break;
                         case "--Uninstall":
                             CommandRepo.Uninstall("Widgets.MVP");

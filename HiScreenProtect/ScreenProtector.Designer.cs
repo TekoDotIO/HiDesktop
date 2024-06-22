@@ -52,7 +52,7 @@
             this.Tips.Name = "Tips";
             this.Tips.Size = new System.Drawing.Size(178, 17);
             this.Tips.TabIndex = 1;
-            this.Tips.Text = "Each. Tech. all right reserved.";
+            this.Tips.Text = "teko.IO all right reserved.";
             this.Tips.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Tips.Click += new System.EventHandler(this.label1_Click);
             // 
