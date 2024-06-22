@@ -1,12 +1,15 @@
 using HiDesktop;
 using System;
 using System.Collections;
+using System.Data.Common;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Widgets.MVP.WidgetModels;
+using Widgets.MVP.WidgetModels.ActivatorDataModel;
 
 namespace Widgets.MVP
 {
@@ -126,8 +129,11 @@ namespace Widgets.MVP
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             //CountdownV2 cv2 = new CountdownV2();
             //cv2.ShowDialog();
-            var actvt = new WidgetModels.Activator();
-            actvt.ShowDialog();
+            //var actvt = new WidgetModels.Activator();
+            //actvt.ShowDialog();
+            DbProviderFactories.RegisterFactory("System.Data.SQLite.EF6", SQLiteFactory.Instance);
+            ActivatorDbContext adc = new("./example.db");
+            adc.Initialize();
         }
 
 
