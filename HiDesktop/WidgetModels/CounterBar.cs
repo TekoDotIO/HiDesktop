@@ -93,7 +93,7 @@ namespace HiDesktop
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
             }
-            PropertiesHelper.FixProperties(htStandard, Path);
+            PropertiesHelper.AutoCheck(htStandard, Path);
             AppConfig = PropertiesHelper.Load(Path);
 
             if ((string)AppConfig["enabled"] != "true")

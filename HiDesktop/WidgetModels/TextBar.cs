@@ -61,7 +61,7 @@ namespace HiDesktop
                 PropertiesHelper.Save(Path, Config);
 
             }
-            PropertiesHelper.FixProperties(htStandard, Path);
+            PropertiesHelper.AutoCheck(htStandard, Path);
             Log.SaveLog($"[{Path}]Repaired properties");
             AppConfig = PropertiesHelper.Load(Path);
             Log.SaveLog($"[{Path}]Loaded properties");

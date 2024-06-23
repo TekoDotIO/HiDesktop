@@ -47,6 +47,9 @@ namespace Widgets.MVP
                 case TextBar _:
                     ((TextBar)widgets[nowFile]).ShowDialog();
                     break;
+                case WidgetModels.Activator _:
+                    ((WidgetModels.Activator)widgets[nowFile]).ShowDialog();
+                    break;
                 default:
                     break;
             }

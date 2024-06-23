@@ -76,7 +76,7 @@ namespace Widgets.MVP.WidgetModels
                 Hashtable Config = htStandard;
                 PropertiesHelper.Save(Path, Config);
             }
-            PropertiesHelper.FixProperties(htStandard, Path);
+            PropertiesHelper.AutoCheck(htStandard, Path);
             AppConfig = PropertiesHelper.Load(Path);
             if ((string)AppConfig["enabled"] != "true")
             {
@@ -134,7 +134,7 @@ namespace Widgets.MVP.WidgetModels
                 Log.SaveLog($"Unable to load back img:\n{ex}\n Will use color and icon instead.", "Activator", false);
                 BackColor= ColorTranslator.FromHtml((string)AppConfig["windowBackColor"]);
 
-                throw;
+                //throw;
             }
             int radius = Convert.ToInt32((string)AppConfig["radius"]);
             SetWindowRegion(radius);
