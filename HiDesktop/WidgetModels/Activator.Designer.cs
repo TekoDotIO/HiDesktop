@@ -39,6 +39,8 @@
             Name = "Activator";
             Text = "Activator";
             TopMost = true;
+            Load += Activator_Load;
+            Click += Activator_Click;
             ResumeLayout(false);
         }
 

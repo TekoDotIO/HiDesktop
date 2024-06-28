@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Widgets.MVP.Essential_Repos;
 
 namespace Widgets.MVP.WidgetModels
 {
@@ -65,7 +66,7 @@ namespace Widgets.MVP.WidgetModels
                 { "radius","40"}
 
             };
-            
+
             if (!File.Exists(Path))
             {
                 Hashtable Config = htStandard;
@@ -132,7 +133,7 @@ namespace Widgets.MVP.WidgetModels
             catch (Exception ex)
             {
                 Log.SaveLog($"Unable to load back img:\n{ex}\n Will use color and icon instead.", "Activator", false);
-                BackColor= ColorTranslator.FromHtml((string)AppConfig["windowBackColor"]);
+                BackColor = ColorTranslator.FromHtml((string)AppConfig["windowBackColor"]);
 
                 //throw;
             }
@@ -263,5 +264,15 @@ namespace Widgets.MVP.WidgetModels
         private static extern IntPtr SetWindowLong64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         #endregion
+
+        private void Activator_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Activator_Click(object sender, EventArgs e)
+        {
+            MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 2);
+        }
     }
 }
