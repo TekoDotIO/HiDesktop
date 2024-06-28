@@ -28,89 +28,90 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LabelNo1 = new System.Windows.Forms.Label();
-            this.EventText = new System.Windows.Forms.Label();
-            this.LabelNo2 = new System.Windows.Forms.Label();
-            this.NumText = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            LabelNo1 = new System.Windows.Forms.Label();
+            EventText = new System.Windows.Forms.Label();
+            LabelNo2 = new System.Windows.Forms.Label();
+            NumText = new System.Windows.Forms.Label();
+            SuspendLayout();
             // 
             // LabelNo1
             // 
-            this.LabelNo1.AutoSize = true;
-            this.LabelNo1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelNo1.Location = new System.Drawing.Point(0, 0);
-            this.LabelNo1.Margin = new System.Windows.Forms.Padding(3);
-            this.LabelNo1.Name = "LabelNo1";
-            this.LabelNo1.Size = new System.Drawing.Size(69, 35);
-            this.LabelNo1.TabIndex = 0;
-            this.LabelNo1.Text = "距离";
-            this.LabelNo1.Click += new System.EventHandler(this.LabelNo1_Click);
-            this.LabelNo1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-            this.LabelNo1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.LabelNo1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-            this.LabelNo1.Move += new System.EventHandler(this.ChangeLocation);
+            LabelNo1.AutoSize = true;
+            LabelNo1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelNo1.Location = new System.Drawing.Point(0, 0);
+            LabelNo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            LabelNo1.Name = "LabelNo1";
+            LabelNo1.Size = new System.Drawing.Size(88, 45);
+            LabelNo1.TabIndex = 0;
+            LabelNo1.Text = "距离";
+            LabelNo1.Click += LabelNo1_Click;
+            LabelNo1.MouseDoubleClick += OnMouseUp;
+            LabelNo1.MouseDown += OnMouseDown;
+            LabelNo1.MouseUp += OnMouseUp;
+            LabelNo1.Move += ChangeLocation;
             // 
             // EventText
             // 
-            this.EventText.AutoSize = true;
-            this.EventText.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EventText.Location = new System.Drawing.Point(75, 0);
-            this.EventText.Margin = new System.Windows.Forms.Padding(3);
-            this.EventText.Name = "EventText";
-            this.EventText.Size = new System.Drawing.Size(86, 35);
-            this.EventText.TabIndex = 1;
-            this.EventText.Text = "Event";
-            this.EventText.Click += new System.EventHandler(this.Label1_Click);
-            this.EventText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.EventText.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            EventText.AutoSize = true;
+            EventText.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            EventText.Location = new System.Drawing.Point(96, 0);
+            EventText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            EventText.Name = "EventText";
+            EventText.Size = new System.Drawing.Size(110, 45);
+            EventText.TabIndex = 1;
+            EventText.Text = "Event";
+            EventText.Click += Label1_Click;
+            EventText.MouseDown += OnMouseDown;
+            EventText.MouseUp += OnMouseUp;
             // 
             // LabelNo2
             // 
-            this.LabelNo2.AutoSize = true;
-            this.LabelNo2.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelNo2.Location = new System.Drawing.Point(150, 0);
-            this.LabelNo2.Margin = new System.Windows.Forms.Padding(3);
-            this.LabelNo2.Name = "LabelNo2";
-            this.LabelNo2.Size = new System.Drawing.Size(69, 35);
-            this.LabelNo2.TabIndex = 2;
-            this.LabelNo2.Text = "还有";
-            this.LabelNo2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.LabelNo2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            LabelNo2.AutoSize = true;
+            LabelNo2.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelNo2.Location = new System.Drawing.Point(193, 0);
+            LabelNo2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            LabelNo2.Name = "LabelNo2";
+            LabelNo2.Size = new System.Drawing.Size(88, 45);
+            LabelNo2.TabIndex = 2;
+            LabelNo2.Text = "还有";
+            LabelNo2.MouseDown += OnMouseDown;
+            LabelNo2.MouseUp += OnMouseUp;
             // 
             // NumText
             // 
-            this.NumText.AutoSize = true;
-            this.NumText.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.NumText.Location = new System.Drawing.Point(225, 0);
-            this.NumText.Margin = new System.Windows.Forms.Padding(3);
-            this.NumText.Name = "NumText";
-            this.NumText.Size = new System.Drawing.Size(74, 35);
-            this.NumText.TabIndex = 3;
-            this.NumText.Text = "num";
-            this.NumText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.NumText.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            NumText.AutoSize = true;
+            NumText.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            NumText.Location = new System.Drawing.Point(289, 0);
+            NumText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            NumText.Name = "NumText";
+            NumText.Size = new System.Drawing.Size(94, 45);
+            NumText.TabIndex = 3;
+            NumText.Text = "num";
+            NumText.MouseDown += OnMouseDown;
+            NumText.MouseUp += OnMouseUp;
             // 
-            // TextBar
+            // CounterBar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(584, 41);
-            this.ControlBox = false;
-            this.Controls.Add(this.NumText);
-            this.Controls.Add(this.LabelNo2);
-            this.Controls.Add(this.EventText);
-            this.Controls.Add(this.LabelNo1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.Name = "TextBar";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "TextBar";
-            this.Load += new System.EventHandler(this.TextBar_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(751, 48);
+            ControlBox = false;
+            Controls.Add(NumText);
+            Controls.Add(LabelNo2);
+            Controls.Add(EventText);
+            Controls.Add(LabelNo1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            ImeMode = System.Windows.Forms.ImeMode.Disable;
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            Name = "CounterBar";
+            ShowInTaskbar = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            Text = "TextBar";
+            Activated += CounterBar_Activated;
+            Load += TextBar_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

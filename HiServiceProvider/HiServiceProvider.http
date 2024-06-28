@@ -1,0 +1,6 @@
+@HiServiceProvider_HostAddress = http://localhost:5047
+
+GET {{HiServiceProvider_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
