@@ -272,7 +272,7 @@ namespace Widgets.MVP.WidgetModels
 
         private void Activator_Click(object sender, EventArgs e)
         {
-            MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 2);
+            MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 2, 2);
         }
     }
 }

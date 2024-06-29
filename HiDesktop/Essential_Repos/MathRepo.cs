@@ -12,7 +12,7 @@ namespace Widgets.MVP.Essential_Repos
 {
     internal class MathRepo
     {
-        public static void MoveWindowSmoothly_MethodA(Form f, int targetX, int targetY, double tm)
+        public static void MoveWindowSmoothly_MethodA(Form f, int targetX, int targetY, double tm, int timeDelay)
         {
             double t = 0;
             double xm = targetX - f.Location.X;
@@ -25,12 +25,12 @@ namespace Widgets.MVP.Essential_Repos
                 lx.Add(x + f.Location.X);
                 var y = -ym * (tm / 2 - t) / (2 * Math.Abs(tm / 2 - t)) + ym / 2 + (tm / 2 - t) * 4 * ym * Math.Pow(-Math.Abs(t - tm / 2) + tm / 2, 2) / (Math.Abs(tm / 2 - t) * 2 * Math.Pow(tm, 2));
                 ly.Add(y + f.Location.Y);
-                t += 0.02;
+                t += timeDelay / 1000;
             }
             for (int i = 0; i < ly.Count; i++)
             {
                 f.Location = new Point(Convert.ToInt32(lx[i]), Convert.ToInt32(ly[i]));
-                Thread.Sleep(2);
+                Thread.Sleep(timeDelay);
             }
         }
     }

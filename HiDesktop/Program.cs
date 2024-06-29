@@ -128,6 +128,7 @@ namespace Widgets.MVP
                                 Thread a = new Thread(new ThreadStart(p.StartView));
                                 a.Start();
                                 Log.SaveLog($"Launched {localFile}");
+                                activatorExists = true;
                                 if (enableHook)
                                 {
                                     launchPage.ProcessText.Text = $"Activator对象成功构建:{localFile}";
