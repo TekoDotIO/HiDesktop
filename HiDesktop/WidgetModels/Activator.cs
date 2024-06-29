@@ -94,6 +94,7 @@ namespace Widgets.MVP.WidgetModels
                 return;
             }
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
+            TopLevel = (string)AppConfig["topMost"] == "true";
             TopMost = (string)AppConfig["topMost"] == "true";
             Size = new Size(Convert.ToInt32((string)AppConfig["size"]), Convert.ToInt32((string)AppConfig["size"]));
             int w = SystemInformation.PrimaryMonitorSize.Width;
@@ -272,7 +273,8 @@ namespace Widgets.MVP.WidgetModels
 
         private void Activator_Click(object sender, EventArgs e)
         {
-            MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 2, 2);
+            //MathRepo.CreatePhysicalSmoothMovePointsSet(0, 400, 1, 0.02);
+            MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
         }
     }
 }
