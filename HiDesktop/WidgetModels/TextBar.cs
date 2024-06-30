@@ -25,6 +25,7 @@ namespace HiDesktop
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle &= (~WS_EX_APPWINDOW);
                 cp.ExStyle |= WS_EX_TOOLWINDOW;
+                cp.ExStyle |= 0x02000000;//解决闪屏问题，来自 https://blog.csdn.net/weixin_38211198/article/details/90724952
                 return cp;
             }
         }

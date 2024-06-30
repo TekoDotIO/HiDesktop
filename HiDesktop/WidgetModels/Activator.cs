@@ -161,8 +161,15 @@ namespace Widgets.MVP.WidgetModels
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            var previousPoint = Location; 
             base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+            if (previousPoint == Location) 
+            {
+                MessageBox.Show("Open sub-window.", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
         }
 
         /// <summary>
@@ -274,7 +281,22 @@ namespace Widgets.MVP.WidgetModels
         private void Activator_Click(object sender, EventArgs e)
         {
             //MathRepo.CreatePhysicalSmoothMovePointsSet(0, 400, 1, 0.02);
-            MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+        }
+
+        private void Activator_MouseClick(object sender, MouseEventArgs e)
+        {
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+        }
+
+        private void Activator_MouseDown(object sender, MouseEventArgs e)
+        {
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+        }
+
+        private void Activator_MouseUp(object sender, MouseEventArgs e)
+        {
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
         }
     }
 }

@@ -41,6 +41,9 @@
             TopMost = true;
             Load += Activator_Load;
             Click += Activator_Click;
+            MouseClick += Activator_MouseClick;
+            MouseDown += Activator_MouseDown;
+            MouseUp += Activator_MouseUp;
             ResumeLayout(false);
         }
 

@@ -213,6 +213,7 @@ namespace Widgets.MVP
                                     Thread.Sleep(500);//µÈ´ý×ÖÌåÏìÓ¦
                                 }
                                 launchPage = new();
+                                //launchPage.ShowDialog();
                                 Application.Run(launchPage);
                             }
                             else

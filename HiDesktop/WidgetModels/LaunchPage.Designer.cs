@@ -29,56 +29,46 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchPage));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.ProcessText = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
+            poster = new System.Windows.Forms.PictureBox();
+            ProcessText = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)poster).BeginInit();
+            SuspendLayout();
             // 
-            // pictureBox1
+            // poster
             // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // progressBar
-            // 
-            resources.ApplyResources(this.progressBar, "progressBar");
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Tag = "";
-            this.progressBar.Click += new System.EventHandler(this.progressBar1_Click);
+            poster.Image = Widgets.MVP.Properties.Resources.OpenPage;
+            resources.ApplyResources(poster, "poster");
+            poster.Name = "poster";
+            poster.TabStop = false;
+            poster.Click += pictureBox1_Click;
             // 
             // ProcessText
             // 
-            resources.ApplyResources(this.ProcessText, "ProcessText");
-            this.ProcessText.BackColor = System.Drawing.SystemColors.Control;
-            this.ProcessText.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.ProcessText.Name = "ProcessText";
-            this.ProcessText.Click += new System.EventHandler(this.label1_Click);
+            resources.ApplyResources(ProcessText, "ProcessText");
+            ProcessText.BackColor = System.Drawing.SystemColors.ControlText;
+            ProcessText.ForeColor = System.Drawing.SystemColors.Control;
+            ProcessText.Name = "ProcessText";
+            ProcessText.Click += label1_Click;
             // 
             // LaunchPage
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlText;
-            this.Controls.Add(this.ProcessText);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.pictureBox1);
-            this.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "LaunchPage";
-            this.ShowInTaskbar = false;
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.SystemColors.ControlText;
+            Controls.Add(ProcessText);
+            Controls.Add(poster);
+            Cursor = System.Windows.Forms.Cursors.AppStarting;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            Name = "LaunchPage";
+            ShowInTaskbar = false;
+            ((System.ComponentModel.ISupportInitialize)poster).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.PictureBox poster;
         public System.Windows.Forms.Label ProcessText;
     }
 }
