@@ -54,7 +54,7 @@ namespace HiDesktop
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle &= (~WS_EX_APPWINDOW);
                 cp.ExStyle |= WS_EX_TOOLWINDOW;
-                cp.ExStyle |= 0x02000000;//解决闪屏问题，来自 https://blog.csdn.net/weixin_38211198/article/details/90724952
+                //cp.ExStyle |= 0x02000000;//解决闪屏问题，来自 https://blog.csdn.net/weixin_38211198/article/details/90724952
                 return cp;
             }
         }
@@ -91,7 +91,9 @@ namespace HiDesktop
 
         void AnimeStart()
         {
-            Hide();
+            //Hide();
+
+            Refresh();
             var targetLocation = Location;
             var targetSize = Size;
             //var screenHeight = SystemInformation.PrimaryMonitorSize.Height;
@@ -100,13 +102,14 @@ namespace HiDesktop
             //maxt = 2.5;
             Size = new Size(1, Size.Height);
             Location = new Point(screenWidth / 2, Location.Y);
-            Show();
+            //Show();
             var sizeAl = MathRepo.CreatePhysicalSmoothMovePointsSet(1, targetSize.Width, maxt, 0.01);
             var xAl = MathRepo.CreatePhysicalSmoothMovePointsSet(screenWidth / 2, targetLocation.X, maxt, 0.01);
             //var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, maxt, 0.01);
             Opacity = 1;
             for (int i = 0; i < xAl.Count; i++)
             {
+                //Refresh();
                 //var a = Convert.ToDouble(((double)al[i]).ToString("0.00"));
                 //Opacity = Convert.ToDouble(((double)al[i]).ToString("0.00"));
                 Size = new Size((int)Math.Round(((double)sizeAl[i])), Size.Height);
@@ -145,10 +148,10 @@ namespace HiDesktop
             //if ((string)ht["showBootWindow"] == "true") showBootWindow = true;
             if ((string)ht["topMost"] == "true") topMost = true;
             if (topMost) this.TopMost = true;
-            //progressBar.Style = ProgressBarStyle.Marquee;
-            //progressBar.MarqueeAnimationSpeed = 10;
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.MarqueeAnimationSpeed = 10;
             //Thread.Sleep(10000);
-            //progressBar.Value = 20;
+            progressBar.Value = 20;
             ProcessText.Text = "程序正在启动-Program loading...";
             Log.SaveLog("[LaunchPage]Window launched.");
             Thread MainThread = new Thread(new ThreadStart(Program.MainProcess));
@@ -164,7 +167,7 @@ namespace HiDesktop
                     {
                         ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
                         InstallFont(file);
-                        //progressBar.Value += 55 / fontNum;
+                        progressBar.Value += 55 / fontNum;
                         Log.SaveLog($"[LaunchPage]Installed font {file}");
                         if (waitForEffects) Thread.Sleep(100);
                     }
@@ -185,7 +188,7 @@ namespace HiDesktop
 
 
 
-            //progressBar.Value = 75;
+            progressBar.Value = 75;
             if (waitForEffects) Thread.Sleep(1000);
             ProcessText.Text = "请等待字体安装完成-Waiting for OS font... ";
             if (waitForEffects) Thread.Sleep(500);
@@ -193,7 +196,7 @@ namespace HiDesktop
             Log.SaveLog($"[LaunchPage]Thread started.");
             ProcessText.Text = "线程构建完成-Thread built... ";
             
-            //progressBar.Value = 100;
+            progressBar.Value = 100;
             if (waitForEffects) Thread.Sleep(1000);
             ProcessText.Text = "启动完成-Finished";
             Log.SaveLog($"[LaunchPage]Launched MainProcess.");

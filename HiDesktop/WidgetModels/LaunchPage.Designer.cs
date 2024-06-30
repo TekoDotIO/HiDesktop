@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchPage));
             poster = new System.Windows.Forms.PictureBox();
             ProcessText = new System.Windows.Forms.Label();
+            progressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)poster).BeginInit();
             SuspendLayout();
             // 
@@ -40,7 +41,6 @@
             resources.ApplyResources(poster, "poster");
             poster.Name = "poster";
             poster.TabStop = false;
-            poster.Click += pictureBox1_Click;
             // 
             // ProcessText
             // 
@@ -50,11 +50,17 @@
             ProcessText.Name = "ProcessText";
             ProcessText.Click += label1_Click;
             // 
+            // progressBar
+            // 
+            resources.ApplyResources(progressBar, "progressBar");
+            progressBar.Name = "progressBar";
+            // 
             // LaunchPage
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            BackColor = System.Drawing.SystemColors.ControlText;
+            BackColor = System.Drawing.Color.MediumSlateBlue;
+            Controls.Add(progressBar);
             Controls.Add(ProcessText);
             Controls.Add(poster);
             Cursor = System.Windows.Forms.Cursors.AppStarting;
@@ -70,5 +76,6 @@
 
         private System.Windows.Forms.PictureBox poster;
         public System.Windows.Forms.Label ProcessText;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
