@@ -169,6 +169,10 @@ namespace Widgets.MVP.WidgetModels
             {
                 MessageBox.Show("Open sub-window.", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            else
+            {
+                MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+            }
             
         }
 
