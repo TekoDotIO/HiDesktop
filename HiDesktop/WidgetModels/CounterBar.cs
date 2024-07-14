@@ -23,7 +23,7 @@ namespace HiDesktop
         readonly string seconds;
         readonly string weekdays;
         readonly int refreshTime;
-
+        WorkStyle workStyle;
         //protected override void SetVisibleCore(bool value)
         //{
         //    base.SetVisibleCore(value);
@@ -69,6 +69,22 @@ namespace HiDesktop
             //}
         }
 
+        public enum WorkStyle
+        {
+            DayHourMinSecWork,
+            DayHourMinSec,
+            DayHourMin,
+            DayHour,
+            DayWork,
+            Day,
+            HourMinSec,
+            MinSec,
+            Sec,
+            Hour,
+            Min,
+            Work
+        }
+
         public CounterBar(string Path)
         {
             TopMost = false;
@@ -104,7 +120,8 @@ namespace HiDesktop
                 { "event_Color","#FF0000" },
                 { "date_Color","#FF0000" },
                 { "allowMove","true" },
-                { "TransparencyKey","#000000" }
+                { "TransparencyKey","#000000" },
+                { "timeCalcLevel", "DHMSW" }
             };
             if (!File.Exists(Path))
             {
@@ -214,6 +231,56 @@ namespace HiDesktop
 
 
 
+            //public enum WorkStyle
+            //{
+            //    DayHourMinSecWork,
+            //    DayHourMinSec,
+            //    DayHourMin,
+            //    DayHour,
+            //    DayWork,
+            //    Day,
+            //    HourMinSec,
+            //    MinSec,
+            //    Sec,
+            //    Hour,
+            //    Min,
+            //    Work
+            //}
+
+            var wsStr = (string)AppConfig["timeCalcLevel"];
+            switch (wsStr)
+            {
+                case "DHMSW":
+                    break;
+                case "DHMS":
+                    break;
+                case "DHM":
+                    break;
+                case "DH":
+                    break;
+                case "DW":
+                    break;
+                case "D":
+                    break;
+                case "HMS":
+                    break;
+                case "MS":
+                    break;
+                case "S":
+                    break;
+                case "H":
+                    break;
+                case "M":
+                    break;
+                case "W":
+                    break;
+                default:
+                    Log.SaveLog("Workstyle configued wrongly! Will use DHMSW style.", "CounterBar", false);
+                    break;
+            }
+
+
+
 
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
@@ -274,17 +341,14 @@ namespace HiDesktop
         {
             while (true)
             {
-                var span = Target - Latest;
-                NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{weekdays}).";
-                Thread.Sleep(refreshTime);
-                Latest = DateTime.Now;
+                Countdown_UpdateTimeOnce();
                 //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
             }
         }
         private void Countdown_UpdateTimeOnce()
         {
             var span = Target - Latest;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Target, Latest)}{weekdays}).";
+            NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{weekdays}).";
             Thread.Sleep(refreshTime);
             Latest = DateTime.Now;
         }
@@ -293,18 +357,15 @@ namespace HiDesktop
         {
             while (true)
             {
-                var span = Latest - Target;
-                NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Latest, Target)}{weekdays}).";
-                Thread.Sleep(refreshTime);
-                Latest = DateTime.Now;
+                Count_UpdateTimeOnce();
                 //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
             }
         }
         private void Count_UpdateTimeOnce()
         {
-            var span = Target - Latest;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}天 {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}小时 {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}分钟 {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}秒({GetDays(Latest, Target)}{weekdays}).";
-            Thread.Sleep(500);
+            var span = Latest - Target;
+            NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Latest, Target)}{weekdays}).";
+            Thread.Sleep(refreshTime);
             Latest = DateTime.Now;
         }
 
