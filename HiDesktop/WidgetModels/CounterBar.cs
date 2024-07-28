@@ -14,6 +14,8 @@ namespace HiDesktop
     {
 
         DateTime Latest;
+        bool enableSpace;
+        string space = " ";
         readonly DateTime Target;
         readonly string Path;
         readonly Hashtable AppConfig;
@@ -24,6 +26,8 @@ namespace HiDesktop
         readonly string weekdays;
         readonly int refreshTime;
         WorkStyle workStyle;
+        int getdays;
+        DateTime dtRecord;//用于记录打开时间，简化运算
         //protected override void SetVisibleCore(bool value)
         //{
         //    base.SetVisibleCore(value);
@@ -93,6 +97,7 @@ namespace HiDesktop
             this.ShowInTaskbar = false;
             //SetFormToolWindowStyle(this);
             this.Path = Path;
+            
             Hashtable htStandard = new Hashtable()
             {
                 { "type", "CounterBar" },
@@ -121,7 +126,8 @@ namespace HiDesktop
                 { "date_Color","#FF0000" },
                 { "allowMove","true" },
                 { "TransparencyKey","#000000" },
-                { "timeCalcLevel", "DHMSW" }
+                { "timeCalcLevel", "DHMSW" },
+                { "enableSpace","true" }
             };
             if (!File.Exists(Path))
             {
@@ -168,7 +174,11 @@ namespace HiDesktop
             Latest = DateTime.Now;
             //MessageBox.Show(Latest.DayOfWeek.ToString());
 
-
+            enableSpace = (string)AppConfig["enableSpace"] == "true";
+            if (!enableSpace)
+            {
+                space = "";
+            }
 
             if ((string)AppConfig["font"] != "auto")
             {
@@ -251,31 +261,44 @@ namespace HiDesktop
             switch (wsStr)
             {
                 case "DHMSW":
+                    workStyle = WorkStyle.DayHourMinSecWork;
                     break;
                 case "DHMS":
+                    workStyle = WorkStyle.DayHourMinSec;
                     break;
                 case "DHM":
+                    workStyle = WorkStyle.DayHourMin;
                     break;
                 case "DH":
+                    workStyle = WorkStyle.DayHour;
                     break;
                 case "DW":
+                    workStyle = WorkStyle.DayWork;
                     break;
                 case "D":
+                    workStyle = WorkStyle.Day;
                     break;
                 case "HMS":
+                    workStyle = WorkStyle.HourMinSec;
                     break;
                 case "MS":
+                    workStyle = WorkStyle.MinSec;
                     break;
                 case "S":
+                    workStyle = WorkStyle.Sec;
                     break;
                 case "H":
+                    workStyle = WorkStyle.Hour;
                     break;
                 case "M":
+                    workStyle = WorkStyle.Min;
                     break;
                 case "W":
+                    workStyle = WorkStyle.Work;
                     break;
                 default:
                     Log.SaveLog("Workstyle configued wrongly! Will use DHMSW style.", "CounterBar", false);
+                    workStyle = WorkStyle.DayHourMinSecWork;
                     break;
             }
 
@@ -286,15 +309,16 @@ namespace HiDesktop
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
 
             LabelNo2.Location = new Point(EventText.Location.X + EventText.Size.Width, LabelNo2.Location.Y);
-            if (Target > DateTime.Now)
-            {
-                Countdown_UpdateTimeOnce();
-            }
-            else
-            {
-                Count_UpdateTimeOnce();
-            }
-
+            //if (Target > DateTime.Now)
+            //{
+            //    Countdown_UpdateTimeOnce();
+            //}
+            //else
+            //{
+            //    Count_UpdateTimeOnce();
+            //}
+            Countdown_UpdateTimeOnce();
+            dtRecord = DateTime.Now;
             NumText.Location = new Point(LabelNo2.Location.X + LabelNo2.Size.Width, NumText.Location.Y);
             Size = new Size(NumText.Location.X + NumText.Size.Width, NumText.Size.Height);
             if ((string)AppConfig["location"] == "auto")
@@ -331,8 +355,23 @@ namespace HiDesktop
                 }
             }
 
+            TimeSpan span;
+            if (Target > Latest)
+            {
+                span = (Target - Latest);
+                getdays = GetDays(Target, Latest);
+                dtRecord = DateTime.Now;
+            }
+            else
+            {
+                span = Latest - Target;
+                getdays = GetDays(Latest, Target);
+                dtRecord = DateTime.Now;
+            }
+
             Thread thread;
-            thread = Target > DateTime.Now ? new Thread(new ThreadStart(Countdown_UpdateTime)) : new Thread(new ThreadStart(Count_UpdateTime));
+            //thread = Target > DateTime.Now ? new Thread(new ThreadStart(Countdown_UpdateTime)) : new Thread(new ThreadStart(Count_UpdateTime));
+            thread = new Thread(new ThreadStart(Countdown_UpdateTime));
             //?:的作用相当于if else 如果?左侧是true 则执行:左侧句 否则执行右侧句
             thread.Start();
 
@@ -347,27 +386,90 @@ namespace HiDesktop
         }
         private void Countdown_UpdateTimeOnce()
         {
-            var span = Target - Latest;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{weekdays}).";
+            TimeSpan span;
+            
+            if (Target > Latest)
+            {
+                span = (Target - Latest);
+                if (Latest.Day != dtRecord.Day)
+                {
+                    getdays = GetDays(Target, Latest);
+                    dtRecord = DateTime.Now;
+                }
+            }
+            else
+            {
+                span = Latest - Target;
+                if (Latest.Day != dtRecord.Day)
+                {
+                    getdays = GetDays(Latest, Target);
+                    dtRecord = DateTime.Now;
+                }
+            }
+            string text;
+            switch (workStyle)//i love visual studio!!!
+            {
+                case WorkStyle.DayHourMinSecWork:
+                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}{space}{getdays}{weekdays}";
+                    break;
+                case WorkStyle.DayHourMinSec:
+                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}";
+                    break;
+                case WorkStyle.DayHourMin:
+                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}";
+                    break;
+                case WorkStyle.DayHour:
+                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}";
+                    break;
+                case WorkStyle.DayWork:
+                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{getdays}{weekdays}";
+                    break;
+                case WorkStyle.Day:
+                    text = $"{Math.Floor(span.TotalDays)}{days}";
+                    break;
+                case WorkStyle.HourMinSec:
+                    text = $"{Math.Floor(span.TotalHours)}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}";
+                    break;
+                case WorkStyle.MinSec:
+                    text = $"{Math.Floor(span.TotalMinutes)}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}";
+                    break;
+                case WorkStyle.Sec:
+                    text = $"{Math.Floor(span.TotalSeconds)}{seconds}";
+                    break;
+                case WorkStyle.Hour:
+                    text = $"{Math.Floor(span.TotalHours)}{hours}";
+                    break;
+                case WorkStyle.Min:
+                    text = $"{Math.Floor(span.TotalMinutes)}{minutes}";
+                    break;
+                case WorkStyle.Work:
+                    text = $"{getdays}{weekdays}";
+                    break;
+                default:
+                    throw new Exception("Type is missing.");
+                    
+            }
+            NumText.Text = text;
+            //NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{weekdays}).";
             Thread.Sleep(refreshTime);
             Latest = DateTime.Now;
         }
 
-        private void Count_UpdateTime()
-        {
-            while (true)
-            {
-                Count_UpdateTimeOnce();
-                //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-            }
-        }
-        private void Count_UpdateTimeOnce()
-        {
-            var span = Latest - Target;
-            NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Latest, Target)}{weekdays}).";
-            Thread.Sleep(refreshTime);
-            Latest = DateTime.Now;
-        }
+        //private void Count_UpdateTime()
+        //{
+        //    while (true)
+        //    {
+        //        Count_UpdateTimeOnce();
+        //        //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+        //    }
+        //}
+        //private void Count_UpdateTimeOnce()
+        //{
+        //    var span = Latest - Target;
+        //    NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Latest, Target)}{weekdays}).";
+        //    Thread.Sleep(refreshTime);
+        //    Latest = DateTime.Now;
+        //}
 
 
         public int GetDays(DateTime dt1, DateTime dt2)

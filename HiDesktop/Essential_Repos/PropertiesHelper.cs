@@ -42,7 +42,7 @@ namespace Widgets.MVP
                 }
                 else if (kv.Length == 2)
                 {
-                    ht[kv[0].Trim()] = kv[1].Trim();
+                    ht[kv[0].Trim()] = kv[1].Trim();//Disable "Trim()" will cause error.
                 }
                 else
                 {
