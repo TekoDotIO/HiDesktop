@@ -406,49 +406,23 @@ namespace HiDesktop
                     dtRecord = DateTime.Now;
                 }
             }
-            string text;
-            switch (workStyle)//i love visual studio!!!
+
+            string text = workStyle switch//i love visual studio!!!
             {
-                case WorkStyle.DayHourMinSecWork:
-                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}{space}{getdays}{weekdays}";
-                    break;
-                case WorkStyle.DayHourMinSec:
-                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}";
-                    break;
-                case WorkStyle.DayHourMin:
-                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}";
-                    break;
-                case WorkStyle.DayHour:
-                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}";
-                    break;
-                case WorkStyle.DayWork:
-                    text = $"{Math.Floor(span.TotalDays)}{days}{space}{getdays}{weekdays}";
-                    break;
-                case WorkStyle.Day:
-                    text = $"{Math.Floor(span.TotalDays)}{days}";
-                    break;
-                case WorkStyle.HourMinSec:
-                    text = $"{Math.Floor(span.TotalHours)}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}";
-                    break;
-                case WorkStyle.MinSec:
-                    text = $"{Math.Floor(span.TotalMinutes)}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}";
-                    break;
-                case WorkStyle.Sec:
-                    text = $"{Math.Floor(span.TotalSeconds)}{seconds}";
-                    break;
-                case WorkStyle.Hour:
-                    text = $"{Math.Floor(span.TotalHours)}{hours}";
-                    break;
-                case WorkStyle.Min:
-                    text = $"{Math.Floor(span.TotalMinutes)}{minutes}";
-                    break;
-                case WorkStyle.Work:
-                    text = $"{getdays}{weekdays}";
-                    break;
-                default:
-                    throw new Exception("Type is missing.");
-                    
-            }
+                WorkStyle.DayHourMinSecWork => $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}{space}{getdays}{weekdays}",
+                WorkStyle.DayHourMinSec => $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}",
+                WorkStyle.DayHourMin => $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}",
+                WorkStyle.DayHour => $"{Math.Floor(span.TotalDays)}{days}{space}{Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours}",
+                WorkStyle.DayWork => $"{Math.Floor(span.TotalDays)}{days}{space}{getdays}{weekdays}",
+                WorkStyle.Day => $"{Math.Floor(span.TotalDays)}{days}",
+                WorkStyle.HourMinSec => $"{Math.Floor(span.TotalHours)}{hours}{space}{Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}",
+                WorkStyle.MinSec => $"{Math.Floor(span.TotalMinutes)}{minutes}{space}{Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}",
+                WorkStyle.Sec => $"{Math.Floor(span.TotalSeconds)}{seconds}",
+                WorkStyle.Hour => $"{Math.Floor(span.TotalHours)}{hours}",
+                WorkStyle.Min => $"{Math.Floor(span.TotalMinutes)}{minutes}",
+                WorkStyle.Work => $"{getdays}{weekdays}",
+                _ => throw new Exception("Type is missing."),
+            };
             NumText.Text = text;
             //NumText.Text = $"{Math.Floor(span.TotalDays)}{days} {Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24}{hours} {Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60}{minutes} {Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60}{seconds}({GetDays(Target, Latest)}{weekdays}).";
             Thread.Sleep(refreshTime);
