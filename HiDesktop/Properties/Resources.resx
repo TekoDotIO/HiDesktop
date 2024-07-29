@@ -121,4 +121,10 @@
   <data name="OpenPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenPage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DefaultActivatorIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\416405_service_setting_tool_tools_work_icon.png;System.Byte[]</value>
+  </data>
+  <data name="DefauleActvIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\416405_service_setting_tool_tools_work_icon.png;System.Byte[]</value>
+  </data>
 </root>

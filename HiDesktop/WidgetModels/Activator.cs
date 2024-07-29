@@ -12,14 +12,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Widgets.MVP.Essential_Repos;
+using Widgets.MVP.Properties;
 
 namespace Widgets.MVP.WidgetModels
 {
     public partial class Activator : Form
     {
         Hashtable AppConfig;
-
-
+        bool enableIcon = false;
+        Image definedIcon;
 
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中
@@ -63,7 +64,8 @@ namespace Widgets.MVP.WidgetModels
                 { "showControl","false"},
                 { "allowHiding","false"},
                 { "opacity","1"},//
-                { "radius","40"}
+                { "radius","40"},
+                { "edge","10"}
 
             };
 
@@ -125,6 +127,7 @@ namespace Widgets.MVP.WidgetModels
                     Location = new Point(w + 100, h - 400);
                 }
             }
+            //Image icon;
             try
             {
                 Image bm = Bitmap.FromFile((string)AppConfig["windowBackground"]);
@@ -135,13 +138,80 @@ namespace Widgets.MVP.WidgetModels
             {
                 Log.SaveLog($"Unable to load back img:\n{ex}\n Will use color and icon instead.", "Activator", false);
                 BackColor = ColorTranslator.FromHtml((string)AppConfig["windowBackColor"]);
-
+                //var defaultIcon = Properties.Resources.DefaultActivatorIcon;
+                //icon = ByteToBitmap(defaultIcon);
+                enableIcon = true;
                 //throw;
+            }
+            if (enableIcon)
+            {
+                try
+                {
+                    definedIcon = Bitmap.FromFile((string)AppConfig["icon"]);
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Unable to load icon:\n{ex}\n Will use default icon.", "Activator", false);
+                    //var defaultIcon = Properties.Resources.DefaultActivatorIcon;
+                    // defaultIcon = Bitmap.FromFile((string)AppConfig["icon"]);
+                    //icon = ByteToBitmap(defaultIcon);
+                    try
+                    {
+                        definedIcon = Bitmap.FromFile("./Resources/ActivatorDefaultIcon.png");
+                    }
+                    catch (Exception ex2)
+                    {
+                        Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex2}", "Activator", false);
+                    }
+                    
+                }
+                int edge = Convert.ToInt32((string)AppConfig["edge"]);
+                PictureBox pb = new();
+                pb.Image = definedIcon;
+                //pb.Size = new Size(definedIcon.Width, definedIcon.Height);
+                pb.Size = new Size(Width - edge * 2, Height - edge * 2);
+                pb.Location = new Point(edge, edge);
+                pb.Parent = this;
+                //pb.BackgroundImageLayout = ImageLayout.Stretch;
+                pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                //pb.Show();
+                pb.MouseDown += Pb_MouseDown;
             }
             int radius = Convert.ToInt32((string)AppConfig["radius"]);
             SetWindowRegion(radius);
+            
         }
 
+        private void Pb_MouseDown(object sender, MouseEventArgs e)
+        {
+            var previousPoint = Location;
+            //base.OnMouseDown(e);
+            FrmMain_MouseDown(this, e);
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+            if (previousPoint == Location)
+            {
+                MessageBox.Show($"Open sub-window.\n{this.Width},{this.Height}", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+            }
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Byte数组转Bitmap
+        /// </summary>
+        /// <param name="ImageByte">Byte数组</param>
+        /// <returns>Bitmap图像</returns>
+        public Bitmap ByteToBitmap(byte[] ImageByte)
+        {
+            Bitmap bitmap = null; using (MemoryStream stream = new MemoryStream(ImageByte))
+            {
+                bitmap = new Bitmap((Image)new Bitmap(stream));
+            }
+            return bitmap;
+        }//From https://www.cnblogs.com/log9527blog/p/17616377.html
 
         //原文链接：https://blog.csdn.net/electricperi/article/details/8630757
         [DllImport("user32.dll")]

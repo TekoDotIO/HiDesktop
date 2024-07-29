@@ -61,6 +61,9 @@
     <None Update="BatScripts\Uninstall.bat">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\ActivatorDefaultIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
