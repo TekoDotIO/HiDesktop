@@ -106,6 +106,7 @@ namespace HiDesktop
                 { "opacity", "1" },
                 { "topMost", "true" },
                 { "date", "2023.1.1" },
+                { "time","00:00:00" },
                 { "event", "Config your countBar in properties file.." },
                 { "location", "auto" },
                 { "enabled","true" },
@@ -159,7 +160,7 @@ namespace HiDesktop
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
             TopMost = (string)AppConfig["topMost"] == "true";
-            string[] targetStr = ((string)AppConfig["date"]).Split(".");
+            
             EventText.Text = (string)AppConfig["event"];
 
             days = (string)AppConfig["days"];
@@ -204,8 +205,9 @@ namespace HiDesktop
             NumText.Font = f;
             */
 
-
-            Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]));
+            string[] targetStr = ((string)AppConfig["date"]).Split(".");
+            string[] targetTimeStr = ((string)AppConfig["time"]).Split(":");
+            Target = new DateTime(Convert.ToInt32(targetStr[0]), Convert.ToInt32(targetStr[1]), Convert.ToInt32(targetStr[2]), Convert.ToInt32(targetTimeStr[0]), Convert.ToInt32(targetTimeStr[1]), Convert.ToInt32(targetTimeStr[2]));
             if (Target > DateTime.Now)
             {
                 LabelNo1.Text = (string)AppConfig["countdown_frontText"];
