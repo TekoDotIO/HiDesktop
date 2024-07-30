@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -258,8 +259,11 @@ namespace Widgets.MVP.WidgetModels
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
                     }
+                    //SetWindowRegion(20);
                     SetIcon(rightArrowIcon);
+                    SetWindowRegion(20);
                     statu = ActivatorStatus.Left;
+                    
                 }
                 MathRepo.MoveWindowSmoothly_MethodA(this, 5, Location.Y, 0.5, 30);
             }
@@ -276,6 +280,7 @@ namespace Widgets.MVP.WidgetModels
                         Size = new Size(Convert.ToInt32(item), Size.Height);
                     }
                     SetIcon(leftArrowIcon);
+                    SetWindowRegion(20);
                     statu = ActivatorStatus.Right;
                 }
                 MathRepo.MoveWindowSmoothly_MethodA(this, scrW - 5 - size / 2, Location.Y, 0.5, 30);
@@ -285,9 +290,16 @@ namespace Widgets.MVP.WidgetModels
                 if (statu != ActivatorStatus.None)
                 {
                     var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size / 2, size, 25, 1);
+                    //SetWindowRegion(30);
+                    //Size = new Size(Size.Width - 10, Size.Height);
+                    //Refresh();
+                    //SetWindowRegion(radius);
+                    //Thread.Sleep(500);
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
+                        SetWindowRegion(20);
+                        //Refresh();
                     }
                     SetWindowRegion(radius);
                     if (definedIcon != null) 
