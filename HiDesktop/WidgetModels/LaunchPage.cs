@@ -94,34 +94,36 @@ namespace HiDesktop
             //Hide();
 
             Refresh();
-            var targetLocation = Location;
-            var targetSize = Size;
-            //var screenHeight = SystemInformation.PrimaryMonitorSize.Height;
-            var screenWidth = SystemInformation.PrimaryMonitorSize.Width;
-            double maxt = Convert.ToDouble((string)ht["animeLength"]);
-            //maxt = 2.5;
-            Size = new Size(1, Size.Height);
-            Location = new Point(screenWidth / 2, Location.Y);
-            //Show();
-            var sizeAl = MathRepo.CreatePhysicalSmoothMovePointsSet(1, targetSize.Width, maxt, 0.01);
-            var xAl = MathRepo.CreatePhysicalSmoothMovePointsSet(screenWidth / 2, targetLocation.X, maxt, 0.01);
-            //var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, maxt, 0.01);
-            Opacity = 1;
-            for (int i = 0; i < xAl.Count; i++)
-            {
-                //Refresh();
-                //var a = Convert.ToDouble(((double)al[i]).ToString("0.00"));
-                //Opacity = Convert.ToDouble(((double)al[i]).ToString("0.00"));
-                Size = new Size((int)Math.Round(((double)sizeAl[i])), Size.Height);
-                Location = new Point((int)Math.Round(((double)xAl[i])), Location.Y);
-                //Thread.Sleep(5);
-            }
-            //foreach (var item in al)
+            //var targetLocation = Location;
+            //var targetSize = Size;
+            ////var screenHeight = SystemInformation.PrimaryMonitorSize.Height;
+            //var screenWidth = SystemInformation.PrimaryMonitorSize.Width;
+            //double maxt = Convert.ToDouble((string)ht["animeLength"]);
+            ////maxt = 2.5;
+            //Size = new Size(1, Size.Height);
+            //Location = new Point(screenWidth / 2, Location.Y);
+            ////Show();
+            //var sizeAl = MathRepo.CreatePhysicalSmoothMovePointsSet(1, targetSize.Width, maxt, 0.01);
+            //var xAl = MathRepo.CreatePhysicalSmoothMovePointsSet(screenWidth / 2, targetLocation.X, maxt, 0.01);
+            ////var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, maxt, 0.01);
+            //Opacity = 1;
+            //for (int i = 0; i < xAl.Count; i++)
             //{
-            //    var a = Convert.ToDouble(((double)item).ToString("0.00"));
-            //    Opacity = Convert.ToDouble(((double)item).ToString("0.00"));
-            //    Thread.Sleep(20);
+            //    //Refresh();
+            //    //var a = Convert.ToDouble(((double)al[i]).ToString("0.00"));
+            //    //Opacity = Convert.ToDouble(((double)al[i]).ToString("0.00"));
+            //    Size = new Size((int)Math.Round(((double)sizeAl[i])), Size.Height);
+            //    Location = new Point((int)Math.Round(((double)xAl[i])), Location.Y);
+            //    //Thread.Sleep(5);
             //}
+
+            var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, 2, 0.05);
+            foreach (var item in al)
+            {
+                var a = Convert.ToDouble(((double)item).ToString("0.00"));
+                Opacity = Convert.ToDouble(((double)item).ToString("0.00"));
+                Thread.Sleep(20);
+            }
         }
 
         protected override void OnLoad(EventArgs e)

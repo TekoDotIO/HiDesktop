@@ -65,7 +65,7 @@ namespace Widgets.MVP.WidgetModels
                 { "allowHiding","false"},
                 { "opacity","1"},//
                 { "radius","40"},
-                { "edge","10"}
+                { "edge","20"}
 
             };
 
@@ -157,7 +157,8 @@ namespace Widgets.MVP.WidgetModels
                     //icon = ByteToBitmap(defaultIcon);
                     try
                     {
-                        definedIcon = Bitmap.FromFile("./Resources/ActivatorDefaultIcon.png");
+                        //definedIcon = Bitmap.FromFile("./Resources/ActivatorDefaultIcon.png");
+                        definedIcon = Bitmap.FromFile("./Resources/def2thgen.png");
                     }
                     catch (Exception ex2)
                     {
