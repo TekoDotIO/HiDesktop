@@ -33,6 +33,10 @@ namespace Widgets.MVP.Essential_Repos
             }
             for (int i = 0; i < ly.Count; i++)
             {
+                if ((double)lx[i] == double.NaN || (double)ly[i] == double.NaN)
+                {
+                    continue;
+                }
                 f.Location = new Point(Convert.ToInt32(lx[i]), Convert.ToInt32(ly[i]));
                 Thread.Sleep(timeDelay);
             }

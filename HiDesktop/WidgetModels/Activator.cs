@@ -11,17 +11,33 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Widgets.MVP.Essential_Repos;
 using Widgets.MVP.Properties;
 
 namespace Widgets.MVP.WidgetModels
 {
+    enum ActivatorStatus
+    {
+        Left, Right, None
+    }
     public partial class Activator : Form
     {
         Hashtable AppConfig;
         bool enableIcon = false;
         Image definedIcon;
-
+        Image leftArrowIcon;
+        Image rightArrowIcon;
+        int scrW = SystemInformation.PrimaryMonitorSize.Width;
+        int scrH = SystemInformation.PrimaryMonitorSize.Height;
+        PictureBox pb;
+        Size pbSize;
+        Point pbLoc;
+        int size = 100;//窗口大小
+        int radius = 0;//圆弧角度
+        ActivatorStatus statu;//状态
+        bool enableSideHide = false;//允许贴边隐藏
+        int scrEdgeSize = 50;//贴边检测值
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中
         /// </summary>
@@ -65,7 +81,9 @@ namespace Widgets.MVP.WidgetModels
                 { "allowHiding","false"},
                 { "opacity","1"},//
                 { "radius","40"},
-                { "edge","20"}
+                { "edge","20"},
+                { "enableSideHide","true"},
+                { "scrEdgeSize","50"}
 
             };
 
@@ -99,13 +117,19 @@ namespace Widgets.MVP.WidgetModels
             TopLevel = (string)AppConfig["topMost"] == "true";
             TopMost = (string)AppConfig["topMost"] == "true";
             Size = new Size(Convert.ToInt32((string)AppConfig["size"]), Convert.ToInt32((string)AppConfig["size"]));
+            size = Convert.ToInt32((string)AppConfig["size"]);
+            enableSideHide = (string)AppConfig["enableSideHide"] == "true";
+            scrEdgeSize = Convert.ToInt32((string)AppConfig["scrEdgeSize"]);
             int w = SystemInformation.PrimaryMonitorSize.Width;
             int h = SystemInformation.PrimaryMonitorSize.Height;
             CheckForIllegalCrossThreadCalls = false;
+            StartPosition = FormStartPosition.Manual;//一定要是手动，否则后文不起作用。
             if ((string)AppConfig["location"] == "auto")
             {
 
-                Location = new Point(w + 100, h - 400);
+                Location = new Point(100, h - 400);
+                AppConfig["location"] = $"{this.Location.X},{this.Location.Y}";
+                PropertiesHelper.Save(Path, AppConfig);
             }
             else
             {
@@ -114,17 +138,22 @@ namespace Widgets.MVP.WidgetModels
                     string Location = (string)AppConfig["location"];
                     if (Location == null)
                     {
-                        this.Location = new Point(w + 100, h - 400);
+                        this.Location = new Point(100, h - 400);
+                        AppConfig["location"] = $"{this.Location.X},{this.Location.Y}";
+                        PropertiesHelper.Save(Path, AppConfig);
                     }
                     else
                     {
                         this.Location = new Point(Convert.ToInt32(Location.Split(",")[0]), Convert.ToInt32(Location.Split(",")[1]));
+                        //MessageBox.Show($"{this.Location.X},{this.Location.Y}");
                     }
 
                 }
                 catch
                 {
-                    Location = new Point(w + 100, h - 400);
+                    Location = new Point(100, h - 400);
+                    AppConfig["location"] = $"{this.Location.X},{this.Location.Y}";
+                    PropertiesHelper.Save(Path, AppConfig);
                 }
             }
             //Image icon;
@@ -167,21 +196,117 @@ namespace Widgets.MVP.WidgetModels
                     
                 }
                 int edge = Convert.ToInt32((string)AppConfig["edge"]);
-                PictureBox pb = new();
+                pb = new();
                 pb.Image = definedIcon;
                 //pb.Size = new Size(definedIcon.Width, definedIcon.Height);
                 pb.Size = new Size(Width - edge * 2, Height - edge * 2);
+                pbSize = new Size(Width - edge * 2, Height - edge * 2);
                 pb.Location = new Point(edge, edge);
+                pbLoc = new Point(edge, edge);
                 pb.Parent = this;
                 //pb.BackgroundImageLayout = ImageLayout.Stretch;
                 pb.SizeMode = PictureBoxSizeMode.StretchImage;
                 //pb.Show();
                 pb.MouseDown += Pb_MouseDown;
             }
-            int radius = Convert.ToInt32((string)AppConfig["radius"]);
+            radius = Convert.ToInt32((string)AppConfig["radius"]);
             SetWindowRegion(radius);
+            statu = ActivatorStatus.None;
+            try
+            {
+                leftArrowIcon = Bitmap.FromFile("./Resources/leftArrow.png");
+                rightArrowIcon = Bitmap.FromFile("./Resources/rightArrow.png");
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex}", "Activator", false);
+            }
+            
+            JudgeHideStatu();
             
         }
+
+        private void SetIcon(Image im)
+        {
+            if (pb == null) 
+            {
+                pb = new();
+                pb.Parent = this;
+                //pb.BackgroundImageLayout = ImageLayout.Stretch;
+                pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                pb.MouseDown += Pb_MouseDown;
+            }
+            pb.Image = im;
+            pb.Location = new Point(Size.Width / 6, Size.Height / 3);
+            pb.Size=new Size(Size.Width/6*5, Size.Height / 3);
+            
+            pb.Show();
+        }
+
+        private void JudgeHideStatu()
+        {
+            var p = Location;
+            if (p.X <= scrEdgeSize)
+            {
+                if (statu != ActivatorStatus.Left)
+                {
+                    SetWindowRegion(20);
+                    SetIcon(rightArrowIcon);
+                    Refresh();
+                    var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size, size / 2, 25, 1);
+                    foreach (var item in l)
+                    {
+                        Size = new Size(Convert.ToInt32(item), Size.Height);
+                    }
+                    SetIcon(rightArrowIcon);
+                    statu = ActivatorStatus.Left;
+                }
+                MathRepo.MoveWindowSmoothly_MethodA(this, 5, Location.Y, 0.5, 30);
+            }
+            else if (p.X >= scrW - scrEdgeSize - size) 
+            {
+                if (statu != ActivatorStatus.Right)
+                {
+                    SetWindowRegion(20);
+                    SetIcon(leftArrowIcon);
+                    Refresh();
+                    var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size, size / 2, 25, 1);
+                    foreach (var item in l)
+                    {
+                        Size = new Size(Convert.ToInt32(item), Size.Height);
+                    }
+                    SetIcon(leftArrowIcon);
+                    statu = ActivatorStatus.Right;
+                }
+                MathRepo.MoveWindowSmoothly_MethodA(this, scrW - 5 - size / 2, Location.Y, 0.5, 30);
+            }
+            else
+            {
+                if (statu != ActivatorStatus.None)
+                {
+                    var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size / 2, size, 25, 1);
+                    foreach (var item in l)
+                    {
+                        Size = new Size(Convert.ToInt32(item), Size.Height);
+                    }
+                    SetWindowRegion(radius);
+                    if (definedIcon != null) 
+                    {
+                        pb.Image = definedIcon;
+                        //pb.Size = new Size(definedIcon.Width, definedIcon.Height);
+                        pb.Size = pbSize;
+                        pb.Location = pbLoc;
+                    }
+                    else
+                    {
+                        pb.Hide();
+                    }
+                    statu = ActivatorStatus.None;
+                }
+            }
+        }
+
+
 
         private void Pb_MouseDown(object sender, MouseEventArgs e)
         {
@@ -195,7 +320,11 @@ namespace Widgets.MVP.WidgetModels
             }
             else
             {
-                MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+                //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+                if (enableSideHide)
+                {
+                    JudgeHideStatu();
+                }
             }
             //throw new NotImplementedException();
         }
@@ -242,7 +371,11 @@ namespace Widgets.MVP.WidgetModels
             }
             else
             {
-                MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+                //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+                if (enableSideHide)
+                {
+                    JudgeHideStatu();
+                }
             }
             
         }
