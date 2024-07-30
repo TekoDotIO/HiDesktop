@@ -295,10 +295,15 @@ namespace Widgets.MVP.WidgetModels
                     //Refresh();
                     //SetWindowRegion(radius);
                     //Thread.Sleep(500);
+                    Hide();
+                    Size = new Size(size, size);
+                    SetWindowRegion(20);
+                    Size = new Size(size / 2, size);
+                    Show();
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
-                        SetWindowRegion(20);
+                        //SetWindowRegion(20);//由于限定窗口区域，必须SetWindowRegion，否则动画不生效
                         //Refresh();
                     }
                     SetWindowRegion(radius);
