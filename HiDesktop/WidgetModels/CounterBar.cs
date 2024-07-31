@@ -97,7 +97,7 @@ namespace HiDesktop
             this.ShowInTaskbar = false;
             //SetFormToolWindowStyle(this);
             this.Path = Path;
-            
+
             Hashtable htStandard = new Hashtable()
             {
                 { "type", "CounterBar" },
@@ -160,7 +160,7 @@ namespace HiDesktop
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
             TopMost = (string)AppConfig["topMost"] == "true";
-            
+
             EventText.Text = (string)AppConfig["event"];
 
             days = (string)AppConfig["days"];
@@ -389,7 +389,7 @@ namespace HiDesktop
         private void Countdown_UpdateTimeOnce()
         {
             TimeSpan span;
-            
+
             if (Target > Latest)
             {
                 span = (Target - Latest);
@@ -616,6 +616,11 @@ namespace HiDesktop
         private void CounterBar_Activated(object sender, EventArgs e)
         {
             //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+        }
+
+        private void NumText_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

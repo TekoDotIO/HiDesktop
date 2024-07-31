@@ -39,7 +39,7 @@
             LabelNo1.AutoSize = true;
             LabelNo1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             LabelNo1.Location = new System.Drawing.Point(0, 0);
-            LabelNo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            LabelNo1.Margin = new System.Windows.Forms.Padding(4);
             LabelNo1.Name = "LabelNo1";
             LabelNo1.Size = new System.Drawing.Size(88, 45);
             LabelNo1.TabIndex = 0;
@@ -55,7 +55,7 @@
             EventText.AutoSize = true;
             EventText.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             EventText.Location = new System.Drawing.Point(96, 0);
-            EventText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            EventText.Margin = new System.Windows.Forms.Padding(4);
             EventText.Name = "EventText";
             EventText.Size = new System.Drawing.Size(110, 45);
             EventText.TabIndex = 1;
@@ -69,7 +69,7 @@
             LabelNo2.AutoSize = true;
             LabelNo2.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             LabelNo2.Location = new System.Drawing.Point(193, 0);
-            LabelNo2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            LabelNo2.Margin = new System.Windows.Forms.Padding(4);
             LabelNo2.Name = "LabelNo2";
             LabelNo2.Size = new System.Drawing.Size(88, 45);
             LabelNo2.TabIndex = 2;
@@ -82,11 +82,12 @@
             NumText.AutoSize = true;
             NumText.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             NumText.Location = new System.Drawing.Point(289, 0);
-            NumText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            NumText.Margin = new System.Windows.Forms.Padding(4);
             NumText.Name = "NumText";
             NumText.Size = new System.Drawing.Size(94, 45);
             NumText.TabIndex = 3;
             NumText.Text = "num";
+            NumText.Click += NumText_Click;
             NumText.MouseDown += OnMouseDown;
             NumText.MouseUp += OnMouseUp;
             // 
@@ -103,7 +104,7 @@
             Controls.Add(LabelNo1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             ImeMode = System.Windows.Forms.ImeMode.Disable;
-            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            Margin = new System.Windows.Forms.Padding(4);
             Name = "CounterBar";
             ShowInTaskbar = false;
             StartPosition = System.Windows.Forms.FormStartPosition.Manual;

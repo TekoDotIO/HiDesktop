@@ -39,6 +39,35 @@ namespace Widgets.MVP.WidgetModels
         ActivatorStatus statu;//状态
         bool enableSideHide = false;//允许贴边隐藏
         int scrEdgeSize = 50;//贴边检测值
+        ActivatorSubWindow subWindow;
+        public Hashtable htStandard = new()
+        {
+            { "type" ,"Activator" },//
+            { "enabled" ,"true" },//
+            { "size" ,"100" },//
+            { "topMost" ,"true" },//
+            { "location" ,"auto" },//
+            { "dataSource" ,"./activator.db" },
+            { "icon" , "default" },//
+            { "windowBackColor" , "#000000" },//
+            { "windowSize","auto" },//
+            { "allowMove","true"},//
+            { "windowBackground","" },//
+            { "iconSet","default"},
+            { "rightClick",""},
+            { "showTimeBar","true"},
+            { "showControl","false"},
+            { "allowHiding","false"},
+            { "opacity","1"},//
+            { "windowRadius","40"},//
+            { "radius","40"},//
+            { "edge","20"},//
+            { "enableSideHide","true"},//
+            { "scrEdgeSize","50"},//
+            { "activatorBackColor","#000000"},
+            { "activatorBackground",""},
+            { "windowForeColor","#FFFFFF"}
+        };
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中
         /// </summary>
@@ -51,6 +80,7 @@ namespace Widgets.MVP.WidgetModels
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle &= (~WS_EX_APPWINDOW);
                 cp.ExStyle |= WS_EX_TOOLWINDOW;
+                cp.ExStyle |= 0x02000000;//防止闪屏
                 return cp;
             }
         }
@@ -62,31 +92,7 @@ namespace Widgets.MVP.WidgetModels
             //SetWindowRegion(40);
 
             this.ShowInTaskbar = false;
-            Hashtable htStandard = new()
-            {
-                { "type" ,"Activator" },//
-                { "enabled" ,"true" },//
-                { "size" ,"100" },//
-                { "topMost" ,"true" },//
-                { "location" ,"auto" },//
-                { "dataSource" ,"./activator.db" },
-                { "icon" , "default" },
-                { "windowBackColor" , "#000000" },//
-                { "windowSize","auto" },
-                { "allowMove","true"},//
-                { "windowBackground","" },//
-                { "iconSet","default"},
-                { "rightClick",""},
-                { "showTimeBar","true"},
-                { "showControl","false"},
-                { "allowHiding","false"},
-                { "opacity","1"},//
-                { "radius","40"},
-                { "edge","20"},
-                { "enableSideHide","true"},
-                { "scrEdgeSize","50"}
-
-            };
+            
 
             if (!File.Exists(Path))
             {
@@ -125,6 +131,13 @@ namespace Widgets.MVP.WidgetModels
             int h = SystemInformation.PrimaryMonitorSize.Height;
             CheckForIllegalCrossThreadCalls = false;
             StartPosition = FormStartPosition.Manual;//一定要是手动，否则后文不起作用。
+
+
+
+            subWindow = new(AppConfig, this);
+            
+            
+            
             if ((string)AppConfig["location"] == "auto")
             {
 
@@ -160,14 +173,14 @@ namespace Widgets.MVP.WidgetModels
             //Image icon;
             try
             {
-                Image bm = Bitmap.FromFile((string)AppConfig["windowBackground"]);
+                Image bm = Bitmap.FromFile((string)AppConfig["activatorBackground"]);
                 BackgroundImage = bm;
                 BackgroundImageLayout = ImageLayout.Stretch;
             }
             catch (Exception ex)
             {
                 Log.SaveLog($"Unable to load back img:\n{ex}\n Will use color and icon instead.", "Activator", false);
-                BackColor = ColorTranslator.FromHtml((string)AppConfig["windowBackColor"]);
+                BackColor = ColorTranslator.FromHtml((string)AppConfig["activatorBackColor"]);
                 //var defaultIcon = Properties.Resources.DefaultActivatorIcon;
                 //icon = ByteToBitmap(defaultIcon);
                 enableIcon = true;
@@ -333,7 +346,13 @@ namespace Widgets.MVP.WidgetModels
             //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
             if (previousPoint == Location)
             {
-                MessageBox.Show($"Open sub-window.\n{this.Width},{this.Height}", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show($"Open sub-window.\n{this.Width},{this.Height}", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (subWindow == null) 
+                {
+                    subWindow = new(AppConfig, this);
+                    
+                }
+                subWindow.Show();
             }
             else
             {
@@ -384,7 +403,13 @@ namespace Widgets.MVP.WidgetModels
             //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
             if (previousPoint == Location) 
             {
-                MessageBox.Show("Open sub-window.", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Open sub-window.", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (subWindow == null)
+                {
+                    subWindow = new(AppConfig, this);
+
+                }
+                subWindow.Show();
             }
             else
             {
