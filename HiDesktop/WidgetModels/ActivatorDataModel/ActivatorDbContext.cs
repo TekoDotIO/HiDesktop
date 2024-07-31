@@ -36,7 +36,7 @@ namespace Widgets.MVP.WidgetModels.ActivatorDataModel
 
         public void Initialize()
         {
-            Database.Initialize(force: true);
+            Database.Initialize(force: false);
         }
 
 

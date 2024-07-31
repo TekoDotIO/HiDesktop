@@ -134,6 +134,7 @@ namespace Widgets.MVP.WidgetModels
                         Key = "version",
                         Value = $"{version}"
                     });
+                    dataScr.SaveChanges();
                 }
                 dataScr = new((string)AppConfig["dataSource"]);
                 await dataScr.PreloadDb();
@@ -145,7 +146,7 @@ namespace Widgets.MVP.WidgetModels
                 parentActivator = null;
                 Close();
 
-                //throw;
+                throw;
             }
         }
         /// <summary>
@@ -214,7 +215,7 @@ namespace Widgets.MVP.WidgetModels
         {
             loadingLabel.Show();
             Refresh();
-            LoadDatabaseAsync();
+            //LoadDatabaseAsync();
             
         }
 
