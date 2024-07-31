@@ -236,6 +236,9 @@ namespace Widgets.MVP.WidgetModels
                 Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex}", "Activator", false);
             }
             
+
+
+
             JudgeHideStatu();
             
         }
@@ -278,7 +281,7 @@ namespace Widgets.MVP.WidgetModels
                     statu = ActivatorStatus.Left;
                     
                 }
-                MathRepo.MoveWindowSmoothly_MethodA(this, 5, Location.Y, 0.5, 30);
+                MathRepo.MoveWindowSmoothly_MethodA(this, 5, Location.Y, 0.2, 30);
             }
             else if (p.X >= scrW - scrEdgeSize - size) 
             {
@@ -293,10 +296,10 @@ namespace Widgets.MVP.WidgetModels
                         Size = new Size(Convert.ToInt32(item), Size.Height);
                     }
                     SetIcon(leftArrowIcon);
-                    SetWindowRegion(20);
+                    //SetWindowRegion(20);
                     statu = ActivatorStatus.Right;
                 }
-                MathRepo.MoveWindowSmoothly_MethodA(this, scrW - 5 - size / 2, Location.Y, 0.5, 30);
+                MathRepo.MoveWindowSmoothly_MethodA(this, scrW - 5 - size / 2, Location.Y, 0.2, 30);
             }
             else
             {
@@ -313,11 +316,12 @@ namespace Widgets.MVP.WidgetModels
                     SetWindowRegion(20);
                     Size = new Size(size / 2, size);
                     Show();
+                    Refresh();
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
                         //SetWindowRegion(20);//由于限定窗口区域，必须SetWindowRegion，否则动画不生效
-                        //Refresh();
+                        Refresh();
                     }
                     SetWindowRegion(radius);
                     if (definedIcon != null) 
@@ -337,10 +341,45 @@ namespace Widgets.MVP.WidgetModels
         }
 
 
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            var previousPoint = Location;
+            base.OnMouseDown(e);
+            FrmMain_MouseDown(this, e);
+            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+            if (previousPoint == Location)
+            {
+                //MessageBox.Show("Open sub-window.", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (subWindow == null)
+                {
+                    subWindow = new(AppConfig, this);
 
+                }
+                if (subWindow.isAwake)
+                {
+                    subWindow.SleepForm();
+                    return;
+                }
+                subWindow.CallUpForm();
+            }
+            else
+            {
+                if (subWindow != null)
+                {
+                    subWindow.SleepForm();
+                }
+                //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
+                if (enableSideHide)
+                {
+                    JudgeHideStatu();
+                }
+            }
+
+        }
         private void Pb_MouseDown(object sender, MouseEventArgs e)
         {
             var previousPoint = Location;
+            
             //base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
             //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
@@ -352,10 +391,19 @@ namespace Widgets.MVP.WidgetModels
                     subWindow = new(AppConfig, this);
                     
                 }
-                subWindow.Show();
+                if (subWindow.isAwake)
+                {
+                    subWindow.SleepForm();
+                    return;
+                }
+                subWindow.CallUpForm();
             }
             else
             {
+                if (subWindow != null)
+                {
+                    subWindow.SleepForm();
+                }
                 //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
                 if (enableSideHide)
                 {
@@ -395,32 +443,7 @@ namespace Widgets.MVP.WidgetModels
             }
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            var previousPoint = Location; 
-            base.OnMouseDown(e);
-            FrmMain_MouseDown(this, e);
-            //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
-            if (previousPoint == Location) 
-            {
-                //MessageBox.Show("Open sub-window.", "Msgbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (subWindow == null)
-                {
-                    subWindow = new(AppConfig, this);
-
-                }
-                subWindow.Show();
-            }
-            else
-            {
-                //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
-                if (enableSideHide)
-                {
-                    JudgeHideStatu();
-                }
-            }
-            
-        }
+        
 
         /// <summary>
         /// 设置窗体的Region

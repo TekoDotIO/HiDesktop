@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Widgets.MVP.Essential_Repos;
 using Widgets.MVP.WidgetModels.ActivatorDataModel;
 
 
@@ -24,15 +25,17 @@ namespace Widgets.MVP.WidgetModels
         Hashtable AppConfig;
         Activator parentActivator;
         int radius;
-        int opacity;
+        double opacity;
         int windowSize;
         bool showTimeBar;
+        public bool isAwake = false;
         Color windowBackColor;
         Color windowForeColor;
         ActivatorDbContext dataScr;
         bool loadingDb = true;
         int scrW = SystemInformation.PrimaryMonitorSize.Width;
         int scrH = SystemInformation.PrimaryMonitorSize.Height;
+        int maxH = SystemInformation.PrimaryMonitorMaximizedWindowSize.Height;
         Label loadingLabel;
         public ActivatorSubWindow(Hashtable appConfig, Activator activator)
         {
@@ -66,7 +69,7 @@ namespace Widgets.MVP.WidgetModels
             AppConfig = appConfig;
             parentActivator = activator;
             radius = Convert.ToInt32((string)AppConfig["windowRadius"]);
-            opacity = Convert.ToInt32((string)AppConfig["opacity"]);
+            opacity = Convert.ToDouble((string)AppConfig["opacity"]);
             Opacity = opacity;
             CheckForIllegalCrossThreadCalls = false;
             StartPosition = FormStartPosition.Manual;
@@ -115,9 +118,51 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
             Thread t = new(new ThreadStart(LoadDatabaseAsync));
             t.Start();
+
+            //this.DoubleBuffered = true;//设置本窗体
+            //SetStyle(ControlStyles.UserPaint, true);
+            //SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+            //SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲
+                                                        //SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+            //UpdateStyles();
         }
 
+        public void CallUpForm()
+        {
+            Hide();
+            if (parentActivator.Location.Y + Size.Height + 20 >= maxH)
+            {
+                Location = new Point(Location.X, parentActivator.Location.Y - Size.Height + parentActivator.Height);
+            }
+            else
+            {
+                Location = new Point(Location.X, parentActivator.Location.Y);
+            }
+            if (parentActivator.Location.X < scrW / 2)
+            {
+                Location = new Point(-Size.Width, Location.Y);
+            }
+            else
+            {
+                Location = new Point(scrW, Location.Y);
+            }
+            Show();
+            if (parentActivator.Location.X < scrW / 2)
+            {
+                MathRepo.MoveWindowSmoothly_MethodA(this, parentActivator.Location.X + parentActivator.Size.Width + 10, Location.Y, 0.3, 20);
+            }
+            else
+            {
+                MathRepo.MoveWindowSmoothly_MethodA(this, parentActivator.Location.X - 10 - Size.Width, Location.Y, 0.3, 20);
+            }
 
+            if (!loadingDb)
+            {
+                loadingLabel.Visible = false;
+            }
+            isAwake = true;
+        }
 
         async Task LoadDatabase()
         {
@@ -208,7 +253,26 @@ namespace Widgets.MVP.WidgetModels
 
         private void ActivatorSubWindow_MouseLeave(object sender, EventArgs e)
         {
+            for (int i = 12; i > 0; i--)
+            {
+                Opacity -= 0.08;
+                Thread.Sleep(1);
+            }
             Hide();
+            Opacity = 1;
+            isAwake = false;
+        }
+
+        public void SleepForm()
+        {
+            for (int i = 12; i > 0; i--)
+            {
+                Opacity -= 0.08;
+                Thread.Sleep(1);
+            }
+            Hide();
+            Opacity = 1;
+            isAwake = false;
         }
 
         private void ActivatorSubWindow_Load(object sender, EventArgs e)
@@ -226,7 +290,7 @@ namespace Widgets.MVP.WidgetModels
             Refresh();
             Thread.Sleep(500);
             loadingDb = false;
-            loadingLabel.Hide();
+            loadingLabel.Visible = false;
         }
     }
 }
