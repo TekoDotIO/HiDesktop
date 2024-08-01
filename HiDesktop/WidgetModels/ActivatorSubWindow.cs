@@ -134,7 +134,6 @@ namespace Widgets.MVP.WidgetModels
 
 
 
-
         //protected override void WndProc(ref Message m)
         //{
         //    if (m.Msg == 0x0014) // 禁掉清除背景消息
@@ -356,7 +355,7 @@ namespace Widgets.MVP.WidgetModels
             nextPage.BringToFront();
             lastPage.BringToFront();
             Refresh();
-            Log.SaveLog("Test.");
+            //Log.SaveLog("Test.");
         }
 
         async Task LoadDatabase()
@@ -449,7 +448,7 @@ namespace Widgets.MVP.WidgetModels
         private void ActivatorSubWindow_MouseLeave(object sender, EventArgs e)
         {
             var p = GetMousePos();
-            if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height))) 
+            if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height)))
             {
                 for (int i = 12; i > 0; i--)
                 {
@@ -460,7 +459,7 @@ namespace Widgets.MVP.WidgetModels
                 Opacity = 1;
                 isAwake = false;
             }
-            
+
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")] //导入user32.dll函数库
@@ -480,7 +479,7 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.Show();
             Refresh();
             //LoadDatabaseAsync();
-            
+
         }
 
         async void LoadDatabaseAsync()
@@ -496,6 +495,27 @@ namespace Widgets.MVP.WidgetModels
             //CallUpForm();
             //loadingLabel.Visible = false;
             //InitializeControls();
+        }
+
+        private void ActivatorSubWindow_Deactivate(object sender, EventArgs e)
+        {
+            var p = GetMousePos();
+            if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height)))
+            {
+                for (int i = 12; i > 0; i--)
+                {
+                    Opacity -= 0.08;
+                    Thread.Sleep(1);
+                }
+                Hide();
+                Opacity = 1;
+                isAwake = false;
+            }
+        }
+
+        private void ActivatorSubWindow_Layout(object sender, LayoutEventArgs e)
+        {
+
         }
     }
 }

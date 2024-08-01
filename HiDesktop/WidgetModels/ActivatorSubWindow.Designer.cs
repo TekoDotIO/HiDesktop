@@ -42,7 +42,9 @@
             ShowInTaskbar = false;
             Text = "ActivatorSubWindow";
             TopMost = true;
+            Deactivate += ActivatorSubWindow_Deactivate;
             Load += ActivatorSubWindow_Load;
+            Layout += ActivatorSubWindow_Layout;
             MouseLeave += ActivatorSubWindow_MouseLeave;
             ResumeLayout(false);
         }
