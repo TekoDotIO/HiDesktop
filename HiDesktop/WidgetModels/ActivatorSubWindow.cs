@@ -220,10 +220,24 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.Font = new Font(loadingLabel.Font.FontFamily, 10);
             loadingLabel.AutoSize = true;
             loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
-            loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
             loadingLabel.Visible = false;
             Thread t = new(new ThreadStart(LoadDatabaseAsync));
             t.Start();
+
+            //Thread checkStatu = new(new ThreadStart(() =>
+            //{
+            //    while (true)
+            //    {
+            //        Thread.Sleep(100);
+            //        if (!loadingDb)
+            //        {
+            //            InitializeControls();
+            //            return;
+            //        }
+            //    }
+            //}));
+            //checkStatu.Start();
 
             Log.SaveLog("Loading resources...");
             try
@@ -249,6 +263,10 @@ namespace Widgets.MVP.WidgetModels
             nextPage.SizeMode = PictureBoxSizeMode.StretchImage;
             lastPage.Location = new Point(Convert.ToInt32(Width - Width * 0.618 - lastPage.Width), Width / 20);
             nextPage.Location = new Point(Convert.ToInt32(Width * 0.618), Width / 20);
+            lastPage.Click += (object sender, EventArgs e) =>
+            {
+                MessageBox.Show("");
+            };
             //lastPage.Visible = false;
             //nextPage.Visible = false;
             //lastPage.Hide();
@@ -335,8 +353,8 @@ namespace Widgets.MVP.WidgetModels
             lastPage.Show();
             //nextPage.Refresh();
             //lastPage.Refresh();
-            //nextPage.BringToFront();
-            //lastPage.BringToFront();
+            nextPage.BringToFront();
+            lastPage.BringToFront();
             Refresh();
             Log.SaveLog("Test.");
         }
@@ -356,7 +374,7 @@ namespace Widgets.MVP.WidgetModels
                         Key = "version",
                         Value = $"{version}"
                     });
-                    dataScr.SaveChanges();
+                    await dataScr.SaveChangesAsync();
                 }
                 dataScr = new((string)AppConfig["dataSource"]);
                 await dataScr.PreloadDb();
@@ -468,12 +486,16 @@ namespace Widgets.MVP.WidgetModels
         async void LoadDatabaseAsync()
         {
             await LoadDatabase();
-            loadingLabel.Text = "Complete!";
+            loadingLabel.Text = "Please re-open form!";
+            loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
             Refresh();
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             loadingDb = false;
-            loadingLabel.Visible = false;
-            InitializeControls();
+
+            SleepForm();
+            //CallUpForm();
+            //loadingLabel.Visible = false;
+            //InitializeControls();
         }
     }
 }
