@@ -225,11 +225,44 @@ namespace Widgets.MVP.WidgetModels
             Thread t = new(new ThreadStart(LoadDatabaseAsync));
             t.Start();
 
+            Log.SaveLog("Loading resources...");
+            try
+            {
+                lstPage = Bitmap.FromFile("./Resources/lstPg.png");
+                nxtPage = Bitmap.FromFile("./Resources/nxtPg.png");
+                lstPage_Disabled = Bitmap.FromFile("./Resources/lstPg_Disabled.png");
+                nxtPage_Disabled = Bitmap.FromFile("./Resources/nxtPg_Disabled.png");
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex}", "ActivatorSubWindow", false);
+            }
+            lastPage = new PictureBox();
+            nextPage = new PictureBox();
+            lastPage.Image = lstPage_Disabled;
+            nextPage.Image = nxtPage;
+            lastPage.Parent = this;
+            nextPage.Parent = this;
+            lastPage.Size = new Size(Width / 9, Width / 9);
+            nextPage.Size = new Size(Width / 9, Width / 9);
+            lastPage.SizeMode = PictureBoxSizeMode.StretchImage;
+            nextPage.SizeMode = PictureBoxSizeMode.StretchImage;
+            lastPage.Location = new Point(Convert.ToInt32(Width - Width * 0.618 - lastPage.Width), Width / 20);
+            nextPage.Location = new Point(Convert.ToInt32(Width * 0.618), Width / 20);
+            //lastPage.Visible = false;
+            //nextPage.Visible = false;
+            //lastPage.Hide();
+            //nextPage.Hide();
+            Log.SaveLog("SubWindow Initialization completed...", "ActivatorSubWindow", false);
+
+
+
+
             //this.DoubleBuffered = true;//设置本窗体
             //SetStyle(ControlStyles.UserPaint, true);
             //SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
             //SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲
-                                                        //SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            //SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             //UpdateStyles();
         }
@@ -252,7 +285,7 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.Visible = false;
             foreach (Control control in Controls)
             {
-                control.Visible = false;
+                control.Hide();
             }
             Refresh();
             if (parentActivator.Location.Y + Size.Height + 20 >= maxH)
@@ -284,11 +317,11 @@ namespace Widgets.MVP.WidgetModels
             if (!loadingDb)
             {
                 loadingLabel.Visible = false;
+                InitializeControls();
             }
             else
             {
                 loadingLabel.Visible = true;
-                InitializeControls();
             }
             isAwake = true;
         }
@@ -296,6 +329,16 @@ namespace Widgets.MVP.WidgetModels
         void InitializeControls()
         {
             //Initialize Controls...
+            nextPage.Visible = true;
+            lastPage.Visible = true;
+            nextPage.Show();
+            lastPage.Show();
+            //nextPage.Refresh();
+            //lastPage.Refresh();
+            //nextPage.BringToFront();
+            //lastPage.BringToFront();
+            Refresh();
+            Log.SaveLog("Test.");
         }
 
         async Task LoadDatabase()
@@ -387,17 +430,32 @@ namespace Widgets.MVP.WidgetModels
 
         private void ActivatorSubWindow_MouseLeave(object sender, EventArgs e)
         {
-            for (int i = 12; i > 0; i--)
+            var p = GetMousePos();
+            if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height))) 
             {
-                Opacity -= 0.08;
-                Thread.Sleep(1);
+                for (int i = 12; i > 0; i--)
+                {
+                    Opacity -= 0.08;
+                    Thread.Sleep(1);
+                }
+                Hide();
+                Opacity = 1;
+                isAwake = false;
             }
-            Hide();
-            Opacity = 1;
-            isAwake = false;
+            
         }
 
-        
+        [System.Runtime.InteropServices.DllImport("user32.dll")] //导入user32.dll函数库
+        public static extern bool GetCursorPos(out System.Drawing.Point lpPoint);//获取鼠标坐标
+
+        private Point GetMousePos()
+        {
+            System.Drawing.Point mp = new System.Drawing.Point();
+            GetCursorPos(out mp);
+            int mousex = mp.X; //鼠标当前X坐标
+            int mousey = mp.Y; //鼠标当前Y坐标
+            return new Point(mousex, mousey);
+        }
 
         private void ActivatorSubWindow_Load(object sender, EventArgs e)
         {

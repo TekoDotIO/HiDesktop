@@ -229,6 +229,20 @@ namespace Widgets.MVP.WidgetModels
                 }
             }
             //Image icon;
+
+
+            //Load resources...
+
+            Log.SaveLog("Loading resources...", "Activator", false);
+            try
+            {
+                leftArrowIcon = Bitmap.FromFile("./Resources/leftArrow.png");
+                rightArrowIcon = Bitmap.FromFile("./Resources/rightArrow.png");
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex}", "Activator", false);
+            }
             try
             {
                 Image bm = Bitmap.FromFile((string)AppConfig["activatorBackground"]);
@@ -284,15 +298,7 @@ namespace Widgets.MVP.WidgetModels
             radius = Convert.ToInt32((string)AppConfig["radius"]);
             SetWindowRegion(radius);
             statu = ActivatorStatus.None;
-            try
-            {
-                leftArrowIcon = Bitmap.FromFile("./Resources/leftArrow.png");
-                rightArrowIcon = Bitmap.FromFile("./Resources/rightArrow.png");
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex}", "Activator", false);
-            }
+            
             
 
 
