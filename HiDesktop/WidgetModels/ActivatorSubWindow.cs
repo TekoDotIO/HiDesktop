@@ -21,22 +21,127 @@ namespace Widgets.MVP.WidgetModels
 {
     public partial class ActivatorSubWindow : Form
     {
+        #region Resources
+        /// <summary>
+        /// 数据库版本信息
+        /// </summary>
         string version = "a.db.20240731.1119";
+        /// <summary>
+        /// 下一页图标
+        /// </summary>
+        Image nxtPage;
+        /// <summary>
+        /// 上一页图标
+        /// </summary>
+        Image lstPage;
+        /// <summary>
+        /// 下一页（已禁用）
+        /// </summary>
+        Image nxtPage_Disabled;
+        /// <summary>
+        /// 上一页（已禁用）
+        /// </summary>
+        Image lstPage_Disabled;
+        #endregion
+
+        #region Config
+        /// <summary>
+        /// 应用配置文件
+        /// </summary>
         Hashtable AppConfig;
-        Activator parentActivator;
+        /// <summary>
+        /// 窗体圆弧角度记忆值
+        /// </summary>
         int radius;
+        /// <summary>
+        /// 窗体透明度记忆值
+        /// </summary>
         double opacity;
+        /// <summary>
+        /// 窗体大小记忆值
+        /// </summary>
         int windowSize;
+        /// <summary>
+        /// 是否显示时间
+        /// </summary>
         bool showTimeBar;
+        /// <summary>
+        /// （状态机）窗体是否被唤醒
+        /// </summary>
         public bool isAwake = false;
+        /// <summary>
+        /// 窗体背景颜色
+        /// </summary>
         Color windowBackColor;
+        /// <summary>
+        /// 窗体内容颜色
+        /// </summary>
         Color windowForeColor;
+        /// <summary>
+        /// 用户数据库上下文
+        /// </summary>
         ActivatorDbContext dataScr;
+        /// <summary>
+        /// （状态机）是否正在加载数据库
+        /// </summary>
         bool loadingDb = true;
+        /// <summary>
+        /// 屏幕宽度
+        /// </summary>
         int scrW = SystemInformation.PrimaryMonitorSize.Width;
+        /// <summary>
+        /// 屏幕高度
+        /// </summary>
         int scrH = SystemInformation.PrimaryMonitorSize.Height;
+        /// <summary>
+        /// 窗体最大高度
+        /// </summary>
         int maxH = SystemInformation.PrimaryMonitorMaximizedWindowSize.Height;
+        #endregion
+
+        #region Controls
+        /// <summary>
+        /// 绑定的Activator
+        /// </summary>
+        Activator parentActivator;
+        /// <summary>
+        /// 加载文本
+        /// </summary>
         Label loadingLabel;
+        /// <summary>
+        /// 组件图标
+        /// </summary>
+        PictureBox itemIcon1, itemIcon2, itemIcon3, itemIcon4;
+        /// <summary>
+        /// 组件描述
+        /// </summary>
+        Label itemTxt1, itemTxt2, itemTxt3, itemTxt4;
+        /// <summary>
+        /// 时间显示
+        /// </summary>
+        Label timeBar;
+        /// <summary>
+        /// 页码显示
+        /// </summary>
+        Label pageDisplay;
+        /// <summary>
+        /// 翻页操作图标
+        /// </summary>
+        PictureBox lastPage, nextPage;
+        #endregion
+
+
+
+
+
+
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == 0x0014) // 禁掉清除背景消息
+        //        return;
+        //    base.WndProc(ref m);
+        //}
+
         public ActivatorSubWindow(Hashtable appConfig, Activator activator)
         {
             //Hashtable htStandard = new()
@@ -116,6 +221,7 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.AutoSize = true;
             loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
             loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
+            loadingLabel.Visible = false;
             Thread t = new(new ThreadStart(LoadDatabaseAsync));
             t.Start();
 
@@ -128,9 +234,27 @@ namespace Widgets.MVP.WidgetModels
             //UpdateStyles();
         }
 
+        public void SleepForm()
+        {
+            for (int i = 12; i > 0; i--)
+            {
+                Opacity -= 0.08;
+                Thread.Sleep(1);
+            }
+            Hide();
+            Opacity = 1;
+            isAwake = false;
+        }
+
         public void CallUpForm()
         {
             Hide();
+            loadingLabel.Visible = false;
+            foreach (Control control in Controls)
+            {
+                control.Visible = false;
+            }
+            Refresh();
             if (parentActivator.Location.Y + Size.Height + 20 >= maxH)
             {
                 Location = new Point(Location.X, parentActivator.Location.Y - Size.Height + parentActivator.Height);
@@ -161,7 +285,17 @@ namespace Widgets.MVP.WidgetModels
             {
                 loadingLabel.Visible = false;
             }
+            else
+            {
+                loadingLabel.Visible = true;
+                InitializeControls();
+            }
             isAwake = true;
+        }
+
+        void InitializeControls()
+        {
+            //Initialize Controls...
         }
 
         async Task LoadDatabase()
@@ -263,17 +397,7 @@ namespace Widgets.MVP.WidgetModels
             isAwake = false;
         }
 
-        public void SleepForm()
-        {
-            for (int i = 12; i > 0; i--)
-            {
-                Opacity -= 0.08;
-                Thread.Sleep(1);
-            }
-            Hide();
-            Opacity = 1;
-            isAwake = false;
-        }
+        
 
         private void ActivatorSubWindow_Load(object sender, EventArgs e)
         {
@@ -291,6 +415,7 @@ namespace Widgets.MVP.WidgetModels
             Thread.Sleep(500);
             loadingDb = false;
             loadingLabel.Visible = false;
+            InitializeControls();
         }
     }
 }

@@ -24,22 +24,80 @@ namespace Widgets.MVP.WidgetModels
     }
     public partial class Activator : Form
     {
-        Hashtable AppConfig;
-        bool enableIcon = false;
+
+        #region Resources
+        /// <summary>
+        /// 显示的图标
+        /// </summary>
         Image definedIcon;
+        /// <summary>
+        /// 向左箭头图标
+        /// </summary>
         Image leftArrowIcon;
+        /// <summary>
+        /// 向右箭头图标
+        /// </summary>
         Image rightArrowIcon;
+        #endregion
+        #region Config
+        /// <summary>
+        /// 组件配置
+        /// </summary>
+        Hashtable AppConfig;
+        /// <summary>
+        /// 屏幕宽度
+        /// </summary>
         int scrW = SystemInformation.PrimaryMonitorSize.Width;
+        /// <summary>
+        /// 屏幕高度
+        /// </summary>
         int scrH = SystemInformation.PrimaryMonitorSize.Height;
-        PictureBox pb;
+        /// <summary>
+        /// （状态机）是否允许使用图标
+        /// </summary>
+        bool enableIcon = false;
+        /// <summary>
+        /// 图标框大小记忆值
+        /// </summary>
         Size pbSize;
+        /// <summary>
+        /// 图标框位置记忆值
+        /// </summary>
         Point pbLoc;
+        /// <summary>
+        /// 窗口大小
+        /// </summary>
         int size = 100;//窗口大小
+        /// <summary>
+        /// 圆弧角度
+        /// </summary>
         int radius = 0;//圆弧角度
+        /// <summary>
+        /// 窗体贴边状态
+        /// </summary>
         ActivatorStatus statu;//状态
+        /// <summary>
+        /// 是否允许贴边隐藏
+        /// </summary>
         bool enableSideHide = false;//允许贴边隐藏
+        /// <summary>
+        /// 贴边检测值
+        /// </summary>
         int scrEdgeSize = 50;//贴边检测值
+        #endregion
+        #region Controls
+        /// <summary>
+        /// 图标显示框
+        /// </summary>
+        PictureBox pb;
+        /// <summary>
+        /// 绑定的子窗口
+        /// </summary>
         ActivatorSubWindow subWindow;
+        #endregion
+        /// <summary>
+        /// 标准示例配置文件
+        /// </summary>
         public Hashtable htStandard = new()
         {
             { "type" ,"Activator" },//
@@ -49,7 +107,7 @@ namespace Widgets.MVP.WidgetModels
             { "location" ,"auto" },//
             { "dataSource" ,"./activator.db" },
             { "icon" , "default" },//
-            { "windowBackColor" , "#000000" },//
+            { "windowBackColor" , "#1F1F1F" },//
             { "windowSize","auto" },//
             { "allowMove","true"},//
             { "windowBackground","" },//
@@ -64,7 +122,7 @@ namespace Widgets.MVP.WidgetModels
             { "edge","20"},//
             { "enableSideHide","true"},//
             { "scrEdgeSize","50"},//
-            { "activatorBackColor","#000000"},
+            { "activatorBackColor","#1F1F1F"},
             { "activatorBackground",""},
             { "windowForeColor","#FFFFFF"}
         };
