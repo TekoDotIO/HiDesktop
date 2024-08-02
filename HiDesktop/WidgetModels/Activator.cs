@@ -424,6 +424,7 @@ namespace Widgets.MVP.WidgetModels
                     subWindow.SleepForm();
                     return;
                 }
+                subWindow.stopNextAwake = false;
                 subWindow.CallUpForm();
             }
             else
@@ -431,6 +432,7 @@ namespace Widgets.MVP.WidgetModels
                 if (subWindow != null)
                 {
                     subWindow.SleepForm();
+                    subWindow.stopNextAwake = false;
                 }
                 //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
                 if (enableSideHide)
@@ -453,13 +455,17 @@ namespace Widgets.MVP.WidgetModels
                 if (subWindow == null) 
                 {
                     subWindow = new(AppConfig, this);
+
                     
                 }
                 if (subWindow.isAwake)
                 {
                     subWindow.SleepForm();
+                    subWindow.stopNextAwake = false;
+
                     return;
                 }
+                subWindow.stopNextAwake = false;
                 subWindow.CallUpForm();
             }
             else
@@ -467,6 +473,7 @@ namespace Widgets.MVP.WidgetModels
                 if (subWindow != null)
                 {
                     subWindow.SleepForm();
+                    subWindow.stopNextAwake = false;
                 }
                 //MathRepo.MoveWindowSmoothly_MethodA(this, 400, 400, 1, 20);
                 if (enableSideHide)

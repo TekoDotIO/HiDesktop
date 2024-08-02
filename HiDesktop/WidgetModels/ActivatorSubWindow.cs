@@ -45,6 +45,7 @@ namespace Widgets.MVP.WidgetModels
         #endregion
 
         #region Config
+        public bool stopNextAwake = false;
         /// <summary>
         /// 应用配置文件
         /// </summary>
@@ -298,6 +299,11 @@ namespace Widgets.MVP.WidgetModels
 
         public void CallUpForm()
         {
+            if (stopNextAwake)
+            {
+                stopNextAwake = false;
+                return;
+            }
             Hide();
             loadingLabel.Visible = false;
             foreach (Control control in Controls)
@@ -447,7 +453,7 @@ namespace Widgets.MVP.WidgetModels
 
         private void ActivatorSubWindow_MouseLeave(object sender, EventArgs e)
         {
-            var p = GetMousePos();
+            var p = Control.MousePosition;
             if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height)))
             {
                 for (int i = 12; i > 0; i--)
@@ -499,18 +505,27 @@ namespace Widgets.MVP.WidgetModels
 
         private void ActivatorSubWindow_Deactivate(object sender, EventArgs e)
         {
-            var p = GetMousePos();
-            if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height)))
-            {
-                for (int i = 12; i > 0; i--)
-                {
-                    Opacity -= 0.08;
-                    Thread.Sleep(1);
-                }
-                Hide();
-                Opacity = 1;
-                isAwake = false;
-            }
+            //if (!isAwake)
+            //{
+            //    return;
+            //}
+            //var p = Control.MousePosition;
+            //MessageBox.Show($"{p.X},{p.Y},{Location.X},{Location.X + Size.Width},{Location.Y},{Location.Y + Size.Height}");
+            //if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height)))
+            //{
+            //    isAwake = false;
+            //    for (int i = 12; i > 0; i--)
+            //    {
+            //        Opacity -= 0.08;
+            //        Thread.Sleep(1);
+            //    }
+            //    Hide();
+            //    Opacity = 1;
+
+            //}
+
+            SleepForm();
+            stopNextAwake = true;
         }
 
         private void ActivatorSubWindow_Layout(object sender, LayoutEventArgs e)
