@@ -276,23 +276,23 @@ namespace Widgets.MVP.WidgetModels
             nextPage.Size = new Size(Width / 9, Width / 9);
             lastPage.SizeMode = PictureBoxSizeMode.StretchImage;
             nextPage.SizeMode = PictureBoxSizeMode.StretchImage;
-            lastPage.Location = new Point(Convert.ToInt32(Width - Width * 0.618 - lastPage.Width), Width / 20);
-            nextPage.Location = new Point(Convert.ToInt32(Width * 0.618), Width / 20);
+            lastPage.Location = new Point(Convert.ToInt32(Width - Width * 0.618 - lastPage.Width), Width / 40);
+            nextPage.Location = new Point(Convert.ToInt32(Width * 0.618), Width / 40);
             lastPage.Click += (object sender, EventArgs e) =>
             {
-                lastPage.Hide();
+                //lastPage.Hide();
             };
-            lastPage.Visible = false;
-            nextPage.Visible = false;
-            lastPage.Hide();
-            nextPage.Hide();
+            //lastPage.Visible = false;
+            //nextPage.Visible = false;
+            //lastPage.Hide();
+            //nextPage.Hide();
             Log.SaveLog("StartInitialize : pageDisplay", "ActivatorSubWindow", output: false);
             pageDisplay = new Label()
             {
                 ForeColor = windowForeColor,
                 Parent = this,
                 //AutoSize = true,
-                Visible = false,
+                //Visible = false,
                 Size = new Size(nextPage.Location.X - (lastPage.Location.X + lastPage.Width), lastPage.Height),
                 Location = new Point(lastPage.Location.X + lastPage.Width, lastPage.Location.Y),
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -312,15 +312,15 @@ namespace Widgets.MVP.WidgetModels
             {
                 item.Parent = this;
                 item.SizeMode = PictureBoxSizeMode.StretchImage;
-                item.Hide();
+                //item.Hide();
                 item.Size = new Size(windowSize / 7 * 2, windowSize / 7 * 2);
                 item.Image = AddElementIcon;
             }
 
             itemIcon1.Location = new Point(windowSize / 7, windowSize / 7);
-            itemIcon2.Location = new Point(windowSize / 7 * 5, windowSize / 7);
-            itemIcon3.Location = new Point(windowSize / 7, windowSize / 7 * 5);
-            itemIcon4.Location = new Point(windowSize / 7 * 5, windowSize / 7 * 5);
+            itemIcon2.Location = new Point(windowSize / 7 * 4, windowSize / 7);
+            itemIcon3.Location = new Point(windowSize / 7, windowSize / 7 * 4);
+            itemIcon4.Location = new Point(windowSize / 7 * 4, windowSize / 7 * 4);
 
             itemTxt1 = new();
             itemTxt2 = new();
@@ -337,13 +337,13 @@ namespace Widgets.MVP.WidgetModels
                 item.ForeColor = windowForeColor;
                 item.Font = new Font(Font.FontFamily, lastPage.Width / 5);
                 item.Text = "新增...";
-                item.Size = new Size(itemIcon1.Width, lastPage.Width / 5);
-                item.Hide();
+                item.Size = new Size(itemIcon1.Width, lastPage.Width / 5 * 4);
+                //item.Hide();
             }
             itemTxt1.Location = new Point(windowSize / 7, windowSize / 7 + itemIcon1.Height + windowSize / 50);
-            itemTxt2.Location = new Point(windowSize / 7 * 5, windowSize / 7 + itemIcon2.Height + windowSize / 50);
-            itemTxt3.Location = new Point(windowSize / 7, windowSize / 7 * 5 + itemIcon3.Height + windowSize / 50);
-            itemTxt4.Location = new Point(windowSize / 7 * 5, windowSize / 7 * 5 + itemIcon4.Height + windowSize / 50);
+            itemTxt2.Location = new Point(windowSize / 7 * 4, windowSize / 7 + itemIcon2.Height + windowSize / 50);
+            itemTxt3.Location = new Point(windowSize / 7, windowSize / 7 * 4 + itemIcon3.Height + windowSize / 50);
+            itemTxt4.Location = new Point(windowSize / 7 * 4, windowSize / 7 * 4 + itemIcon4.Height + windowSize / 50);
 
 
             Log.SaveLog("SubWindow Initialization completed...", "ActivatorSubWindow", false);
@@ -597,6 +597,10 @@ namespace Widgets.MVP.WidgetModels
             loadingDb = false;
 
             Hide();
+            //SleepForm();
+
+
+
             //CallUpForm();
             //loadingLabel.Visible = false;
             //InitializeControls();

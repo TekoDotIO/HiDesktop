@@ -303,8 +303,8 @@ namespace Widgets.MVP.WidgetModels
 
 
             subWindow = new(AppConfig, this);
-            subWindow.Show();
-            subWindow.Hide();
+            //subWindow.Show();
+            //subWindow.Hide();
             JudgeHideStatu();
             
         }
