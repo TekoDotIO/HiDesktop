@@ -308,6 +308,7 @@ namespace Widgets.MVP.WidgetModels
             itemIcons[1] = itemIcon2;
             itemIcons[2] = itemIcon3;
             itemIcons[3] = itemIcon4;
+            int i = 0;
             foreach (var item in itemIcons)
             {
                 item.Parent = this;
@@ -315,6 +316,9 @@ namespace Widgets.MVP.WidgetModels
                 //item.Hide();
                 item.Size = new Size(windowSize / 7 * 2, windowSize / 7 * 2);
                 item.Image = AddElementIcon;
+                OperationHandler oh = new(i);
+                item.Click += oh.ExecuteOperation;
+                i += 1;
             }
 
             itemIcon1.Location = new Point(windowSize / 7, windowSize / 7);
@@ -455,8 +459,44 @@ namespace Widgets.MVP.WidgetModels
 
             Refresh();
             //Log.SaveLog("Test.");
+            var c = dataScr.Repo.Count();
+            if (c == 0)
+            {
+                foreach (var item in itemIcons)
+                {
+                    item.Image = AddElementIcon;
+                }
+                foreach (var item in itemTxts)
+                {
+                    item.Text = "添加...";
+                }
+                nextPage.Image = nxtPage_Disabled;
+                lastPage.Image = lstPage_Disabled;
+            }
+            else
+            {
+                var maxID = dataScr.Repo.Max(p => p.ID);
+            }
+            
+
 
         }
+
+        class OperationHandler
+        {
+            public int ID { get; set; }
+            public OperationHandler(int id)
+            {
+                ID = id;
+            }
+            public void ExecuteOperation(object sender, EventArgs e)
+            {
+
+            }
+        }
+
+        
+
 
         void LoadDatabase()
         {
