@@ -98,6 +98,10 @@ namespace Widgets.MVP.WidgetModels
         /// 窗体最大高度
         /// </summary>
         int maxH = SystemInformation.PrimaryMonitorMaximizedWindowSize.Height;
+        /// <summary>
+        /// 添加元素图标
+        /// </summary>
+        Image AddElementIcon;
         #endregion
 
         #region Controls
@@ -113,10 +117,16 @@ namespace Widgets.MVP.WidgetModels
         /// 组件图标
         /// </summary>
         PictureBox itemIcon1, itemIcon2, itemIcon3, itemIcon4;
+
+        PictureBox[] itemIcons = new PictureBox[4];
+
         /// <summary>
         /// 组件描述
         /// </summary>
         Label itemTxt1, itemTxt2, itemTxt3, itemTxt4;
+
+        Label[] itemTxts = new Label[4];
+
         /// <summary>
         /// 时间显示
         /// </summary>
@@ -176,7 +186,7 @@ namespace Widgets.MVP.WidgetModels
             radius = Convert.ToInt32((string)AppConfig["windowRadius"]);
             opacity = Convert.ToDouble((string)AppConfig["opacity"]);
             Opacity = opacity;
-            CheckForIllegalCrossThreadCalls = false;
+            //CheckForIllegalCrossThreadCalls = false;
             StartPosition = FormStartPosition.Manual;
             TopMost = (string)AppConfig["topMost"] == "true";
             windowForeColor = ColorTranslator.FromHtml((string)AppConfig["windowForeColor"]);
@@ -212,6 +222,7 @@ namespace Widgets.MVP.WidgetModels
                 }
             }
             Size = new Size(windowSize, showTimeBar ? windowSize / 4 * 5 : windowSize);
+            Log.SaveLog("StartInitialize : loadingLabel", "ActivatorSubWindow", output: false);
             SetWindowRegion(radius);
             loadingLabel = new();
             loadingLabel.Parent = this;
@@ -222,9 +233,11 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
             //loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
             loadingLabel.Visible = false;
-            Thread t = new(new ThreadStart(LoadDatabaseAsync));
+            Log.SaveLog("Initialized : loadingLabel", "ActivatorSubWindow", output: false);
+            Thread t = new(new ThreadStart(LoadDatabasePreload));
+            Log.SaveLog("StartInitialize : Database EF construction", "ActivatorSubWindow", output: false);
             t.Start();
-
+            //Log.SaveLog("StartInitialize : ", "ActivatorSubWindow", output: false);
             //Thread checkStatu = new(new ThreadStart(() =>
             //{
             //    while (true)
@@ -239,18 +252,20 @@ namespace Widgets.MVP.WidgetModels
             //}));
             //checkStatu.Start();
 
-            Log.SaveLog("Loading resources...");
+            Log.SaveLog("StartInitialize : Resources", "ActivatorSubWindow", output: false);
             try
             {
                 lstPage = Bitmap.FromFile("./Resources/lstPg.png");
                 nxtPage = Bitmap.FromFile("./Resources/nxtPg.png");
                 lstPage_Disabled = Bitmap.FromFile("./Resources/lstPg_Disabled.png");
                 nxtPage_Disabled = Bitmap.FromFile("./Resources/nxtPg_Disabled.png");
+                AddElementIcon = Bitmap.FromFile("./Resources/AddElement.png");
             }
             catch (Exception ex)
             {
                 Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex}", "ActivatorSubWindow", false);
             }
+            Log.SaveLog("StartInitialize : PageIcons", "ActivatorSubWindow", output: false);
             lastPage = new PictureBox();
             nextPage = new PictureBox();
             lastPage.Image = lstPage_Disabled;
@@ -265,12 +280,72 @@ namespace Widgets.MVP.WidgetModels
             nextPage.Location = new Point(Convert.ToInt32(Width * 0.618), Width / 20);
             lastPage.Click += (object sender, EventArgs e) =>
             {
-                MessageBox.Show("");
+                lastPage.Hide();
             };
-            //lastPage.Visible = false;
-            //nextPage.Visible = false;
-            //lastPage.Hide();
-            //nextPage.Hide();
+            lastPage.Visible = false;
+            nextPage.Visible = false;
+            lastPage.Hide();
+            nextPage.Hide();
+            Log.SaveLog("StartInitialize : pageDisplay", "ActivatorSubWindow", output: false);
+            pageDisplay = new Label()
+            {
+                ForeColor = windowForeColor,
+                Parent = this,
+                //AutoSize = true,
+                Visible = false,
+                Size = new Size(nextPage.Location.X - (lastPage.Location.X + lastPage.Width), lastPage.Height),
+                Location = new Point(lastPage.Location.X + lastPage.Width, lastPage.Location.Y),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font(Font.FontFamily, lastPage.Width / 5),
+                Text = "Page / Page"
+            };
+
+            itemIcon1 = new();
+            itemIcon2 = new();
+            itemIcon3 = new();
+            itemIcon4 = new();
+            itemIcons[0] = itemIcon1;
+            itemIcons[1] = itemIcon2;
+            itemIcons[2] = itemIcon3;
+            itemIcons[3] = itemIcon4;
+            foreach (var item in itemIcons)
+            {
+                item.Parent = this;
+                item.SizeMode = PictureBoxSizeMode.StretchImage;
+                item.Hide();
+                item.Size = new Size(windowSize / 7 * 2, windowSize / 7 * 2);
+                item.Image = AddElementIcon;
+            }
+
+            itemIcon1.Location = new Point(windowSize / 7, windowSize / 7);
+            itemIcon2.Location = new Point(windowSize / 7 * 5, windowSize / 7);
+            itemIcon3.Location = new Point(windowSize / 7, windowSize / 7 * 5);
+            itemIcon4.Location = new Point(windowSize / 7 * 5, windowSize / 7 * 5);
+
+            itemTxt1 = new();
+            itemTxt2 = new();
+            itemTxt3 = new();
+            itemTxt4 = new();
+            itemTxts[0] = itemTxt1;
+            itemTxts[1] = itemTxt2;
+            itemTxts[2] = itemTxt3;
+            itemTxts[3] = itemTxt4;
+            foreach (var item in itemTxts)
+            {
+                item.Parent = this;
+                item.TextAlign = ContentAlignment.MiddleCenter;
+                item.ForeColor = windowForeColor;
+                item.Font = new Font(Font.FontFamily, lastPage.Width / 5);
+                item.Text = "新增...";
+                item.Size = new Size(itemIcon1.Width, lastPage.Width / 5);
+                item.Hide();
+            }
+            itemTxt1.Location = new Point(windowSize / 7, windowSize / 7 + itemIcon1.Height + windowSize / 50);
+            itemTxt2.Location = new Point(windowSize / 7 * 5, windowSize / 7 + itemIcon2.Height + windowSize / 50);
+            itemTxt3.Location = new Point(windowSize / 7, windowSize / 7 * 5 + itemIcon3.Height + windowSize / 50);
+            itemTxt4.Location = new Point(windowSize / 7 * 5, windowSize / 7 * 5 + itemIcon4.Height + windowSize / 50);
+
+
             Log.SaveLog("SubWindow Initialization completed...", "ActivatorSubWindow", false);
 
 
@@ -351,6 +426,7 @@ namespace Widgets.MVP.WidgetModels
 
         void InitializeControls()
         {
+            //RecreateHandle();
             //Initialize Controls...
             nextPage.Visible = true;
             lastPage.Visible = true;
@@ -360,33 +436,56 @@ namespace Widgets.MVP.WidgetModels
             //lastPage.Refresh();
             nextPage.BringToFront();
             lastPage.BringToFront();
+            pageDisplay.Visible = true;
+            pageDisplay.Show();
+            pageDisplay.BringToFront();
+
+            foreach (var item in itemIcons)
+            {
+                item.Show();
+                item.Visible = true;
+                item.BringToFront();
+            }
+            foreach (var item in itemTxts)
+            {
+                item.Show();
+                item.Visible = true;
+                item.BringToFront();
+            }
+
             Refresh();
             //Log.SaveLog("Test.");
+
         }
 
-        async Task LoadDatabase()
+        void LoadDatabase()
         {
             try
             {
                 DbProviderFactories.RegisterFactory("System.Data.SQLite.EF6", SQLiteFactory.Instance);
                 if (!File.Exists((string)AppConfig["dataSource"]))
                 {
+                    Log.SaveLog("Database not exists. Creating...", "ActivatorSubWindow", output: false);
                     dataScr = new((string)AppConfig["dataSource"]);
                     dataScr.Initialize();
-                    await dataScr.PreloadDb();
+                    Log.SaveLog("Start database preload...", "ActivatorSubWindow", output: false);
+                    dataScr.PreloadDb();
+                    Log.SaveLog("Database preloaded.", "ActivatorSubWindow", output: false);
                     dataScr.Config.Add(new ActivatorDataModel.Models.Config
                     {
                         Key = "version",
                         Value = $"{version}"
                     });
-                    await dataScr.SaveChangesAsync();
+                    dataScr.SaveChanges();
                 }
                 dataScr = new((string)AppConfig["dataSource"]);
-                await dataScr.PreloadDb();
+                Log.SaveLog("Start database preload...", "ActivatorSubWindow", output: false);
+                dataScr.PreloadDb();
+                Log.SaveLog("Database preloaded.", "ActivatorSubWindow", output: false);
             }
             catch (Exception ex)
             {
-                Log.SaveLog($"Fatal error: Unable to load activator database.Disabling Activator...\n{ex}", "Activator", false);
+                Log.SaveLog($"Fatal error: Unable to load activator database.Disabling Activator...\n{ex}", "ActivatorSubWindow", false);
                 parentActivator.Close();
                 parentActivator = null;
                 Close();
@@ -488,16 +587,16 @@ namespace Widgets.MVP.WidgetModels
 
         }
 
-        async void LoadDatabaseAsync()
+        void LoadDatabasePreload()
         {
-            await LoadDatabase();
+            LoadDatabase();
             loadingLabel.Text = "Please re-open form!";
             loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
             Refresh();
             Thread.Sleep(1000);
             loadingDb = false;
 
-            SleepForm();
+            Hide();
             //CallUpForm();
             //loadingLabel.Visible = false;
             //InitializeControls();

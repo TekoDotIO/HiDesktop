@@ -60,7 +60,17 @@ namespace Widgets.MVP.WidgetModels.ActivatorDataModel
         /// 异步预加载数据库对象
         /// </summary>
         /// <returns></returns>
-        public async Task PreloadDb()
+        public void PreloadDb()
+        {
+            object _ = Config.ToList();
+            _ = Repo.ToList();
+
+        }
+        /// <summary>
+        /// 异步预加载数据库对象
+        /// </summary>
+        /// <returns></returns>
+        public async Task PreloadDbAsync()
         {
             Task preloadTask = Task.Run(() => {
                 object _ = Config.ToList();

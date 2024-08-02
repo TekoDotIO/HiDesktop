@@ -33,25 +33,52 @@ namespace Widgets.MVP
         string nowFile;
         void StartView()
         {
-
-            switch (widgets[nowFile])
+            try
             {
-                case CounterBar _:
-                    if (!((CounterBar)widgets[nowFile]).IsDisposed)
+                switch (widgets[nowFile])
+                {
+                    case CounterBar _:
+                        if (!((CounterBar)widgets[nowFile]).IsDisposed)
+                        {
+                            //throw new Exception("This is a simulating FATAL exception...");
+                            ((CounterBar)widgets[nowFile]).ShowDialog();
+                            
+                        }
+                        break;
+                    case TextBar _:
+                        ((TextBar)widgets[nowFile]).ShowDialog();
+                        break;
+                    case WidgetModels.Activator _:
+                        ((WidgetModels.Activator)widgets[nowFile]).ShowDialog();
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception e)
+            {
+                var item = (Form)widgets[nowFile];
+                if (item != null)
+                {
+                    if (!item.IsDisposed)
                     {
-
-                        ((CounterBar)widgets[nowFile]).ShowDialog();
-
+                        item.TopMost = false;
                     }
-                    break;
-                case TextBar _:
-                    ((TextBar)widgets[nowFile]).ShowDialog();
-                    break;
-                case WidgetModels.Activator _:
-                    ((WidgetModels.Activator)widgets[nowFile]).ShowDialog();
-                    break;
-                default:
-                    break;
+                }
+
+                Log.SaveLog($"Main program fatal exception:\n{e}", $"HiDesktopMain: {nowFile}", false);
+                var r = MessageBox.Show($"主程序执行时出现致命错误！\n出错的程序模块已终止，我们对造成的不便表示歉意。\n\n如果您是用户，请将此信息和日志信息反馈给开发者：\n\n异常文件：{nowFile}\n异常信息：{e}\n\n如果您想亲自调试程序，请点击“是”，如果您想退出当前模块，请点击“否”。", $"HiDesktop - 异常捕获：{nowFile}", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (r == DialogResult.Yes)
+                {
+                    throw;
+                }
+                else
+                {
+                    return;
+                }
+                
             }
         }
         public static void MainProcess()

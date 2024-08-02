@@ -281,6 +281,7 @@ namespace Widgets.MVP.WidgetModels
                     }
                     
                 }
+                Log.SaveLog("Start Initializing: PictureBox", "Activator", output: false);
                 int edge = Convert.ToInt32((string)AppConfig["edge"]);
                 pb = new();
                 pb.Image = definedIcon;
@@ -298,11 +299,12 @@ namespace Widgets.MVP.WidgetModels
             radius = Convert.ToInt32((string)AppConfig["radius"]);
             SetWindowRegion(radius);
             statu = ActivatorStatus.None;
-            
-            
 
 
 
+            subWindow = new(AppConfig, this);
+            subWindow.Show();
+            subWindow.Hide();
             JudgeHideStatu();
             
         }
@@ -456,7 +458,7 @@ namespace Widgets.MVP.WidgetModels
                 {
                     subWindow = new(AppConfig, this);
 
-                    
+
                 }
                 if (subWindow.isAwake)
                 {
