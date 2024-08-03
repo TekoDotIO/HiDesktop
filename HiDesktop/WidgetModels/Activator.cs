@@ -124,7 +124,12 @@ namespace Widgets.MVP.WidgetModels
             { "scrEdgeSize","50"},//
             { "activatorBackColor","#1F1F1F"},
             { "activatorBackground",""},
-            { "windowForeColor","#FFFFFF"}
+            { "windowForeColor","#FFFFFF"},
+            { "preloadTips","Pre-loading database..."},
+            { "closingTips","Please re-open form!"},
+            { "emptyItemTxt","Add..."},
+            { "emptyItemIcon","default"},
+            { "emptyItemAction","HiDesktop://command?action=NewActivatorShortcut"}
         };
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中
@@ -302,7 +307,7 @@ namespace Widgets.MVP.WidgetModels
 
 
 
-            subWindow = new(AppConfig, this);
+            //subWindow = new(AppConfig, this);
             //subWindow.Show();
             //subWindow.Hide();
             JudgeHideStatu();

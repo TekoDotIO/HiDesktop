@@ -42,6 +42,10 @@ namespace Widgets.MVP.WidgetModels
         /// 上一页（已禁用）
         /// </summary>
         Image lstPage_Disabled;
+        /// <summary>
+        /// 添加元素图标
+        /// </summary>
+        Image EmptyElementIcon;
         #endregion
 
         #region Config
@@ -99,9 +103,26 @@ namespace Widgets.MVP.WidgetModels
         /// </summary>
         int maxH = SystemInformation.PrimaryMonitorMaximizedWindowSize.Height;
         /// <summary>
-        /// 添加元素图标
+        /// 预加载提示
         /// </summary>
-        Image AddElementIcon;
+        string preloadTips;
+        /// <summary>
+        /// 预加载后窗口关闭提示
+        /// </summary>
+        string closingTips;
+        /// <summary>
+        /// 空项文本
+        /// </summary>
+        string emptyItemTxt;
+        /// <summary>
+        /// 空项图标
+        /// </summary>
+        string emptyItemIcon;
+
+        /// <summary>
+        /// 空项操作
+        /// </summary>
+        string emptyItemAction;
         #endregion
 
         #region Controls
@@ -190,6 +211,7 @@ namespace Widgets.MVP.WidgetModels
             StartPosition = FormStartPosition.Manual;
             TopMost = (string)AppConfig["topMost"] == "true";
             windowForeColor = ColorTranslator.FromHtml((string)AppConfig["windowForeColor"]);
+            showTimeBar = (string)AppConfig["showTimeBar"] == "true";
             try
             {
                 Image bm = Bitmap.FromFile((string)AppConfig["windowBackground"]);
@@ -221,13 +243,21 @@ namespace Widgets.MVP.WidgetModels
                     windowSize = scrH / 3;
                 }
             }
-            Size = new Size(windowSize, showTimeBar ? windowSize / 4 * 5 : windowSize);
+            Size = new Size(windowSize, showTimeBar ? windowSize / 7 * 8 : windowSize);
             Log.SaveLog("StartInitialize : loadingLabel", "ActivatorSubWindow", output: false);
             SetWindowRegion(radius);
+
+            preloadTips = (string)AppConfig["preloadTips"];
+            closingTips = (string)AppConfig["closingTips"];
+            emptyItemTxt = (string)AppConfig["emptyItemTxt"];
+            emptyItemIcon = (string)AppConfig["emptyItemIcon"];
+            emptyItemAction = (string)AppConfig["emptyItemAction"];
+
             loadingLabel = new();
             loadingLabel.Parent = this;
             loadingLabel.ForeColor = windowForeColor;
-            loadingLabel.Text = "Pre-Loading database...";
+            loadingLabel.Text = preloadTips;
+            // loadingDb.Text = "Ciallo~";
             loadingLabel.Font = new Font(loadingLabel.Font.FontFamily, 10);
             loadingLabel.AutoSize = true;
             loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
@@ -255,11 +285,37 @@ namespace Widgets.MVP.WidgetModels
             Log.SaveLog("StartInitialize : Resources", "ActivatorSubWindow", output: false);
             try
             {
+                if (emptyItemIcon!="default")
+                {
+                    EmptyElementIcon = Bitmap.FromFile(emptyItemIcon);
+                }
+                else
+                {
+                    EmptyElementIcon = Bitmap.FromFile("./Resources/AddElement.png");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                
+                try
+                {
+                    EmptyElementIcon = Bitmap.FromFile("./Resources/AddElement.png");
+
+                }
+                catch (Exception ex2)
+                {
+                    Log.SaveLog($"App package has been illegaly modified! Cannot load default activator icon:\n{ex2}", "ActivatorSubWindow", false);
+                }
+                Log.SaveLog($"Error when loading emptyItemIcon:\n{ex}", "ActivatorSubWindow", false);
+            }
+            try
+            {
                 lstPage = Bitmap.FromFile("./Resources/lstPg.png");
                 nxtPage = Bitmap.FromFile("./Resources/nxtPg.png");
                 lstPage_Disabled = Bitmap.FromFile("./Resources/lstPg_Disabled.png");
                 nxtPage_Disabled = Bitmap.FromFile("./Resources/nxtPg_Disabled.png");
-                AddElementIcon = Bitmap.FromFile("./Resources/AddElement.png");
+
             }
             catch (Exception ex)
             {
@@ -315,7 +371,7 @@ namespace Widgets.MVP.WidgetModels
                 item.SizeMode = PictureBoxSizeMode.StretchImage;
                 //item.Hide();
                 item.Size = new Size(windowSize / 7 * 2, windowSize / 7 * 2);
-                item.Image = AddElementIcon;
+                item.Image = EmptyElementIcon;
                 OperationHandler oh = new(i);
                 item.Click += oh.ExecuteOperation;
                 i += 1;
@@ -340,7 +396,7 @@ namespace Widgets.MVP.WidgetModels
                 item.TextAlign = ContentAlignment.MiddleCenter;
                 item.ForeColor = windowForeColor;
                 item.Font = new Font(Font.FontFamily, lastPage.Width / 5);
-                item.Text = "新增...";
+                item.Text = emptyItemTxt;
                 item.Size = new Size(itemIcon1.Width, lastPage.Width / 5 * 4);
                 //item.Hide();
             }
@@ -464,11 +520,11 @@ namespace Widgets.MVP.WidgetModels
             {
                 foreach (var item in itemIcons)
                 {
-                    item.Image = AddElementIcon;
+                    item.Image = EmptyElementIcon;
                 }
                 foreach (var item in itemTxts)
                 {
-                    item.Text = "添加...";
+                    item.Text = emptyItemTxt;
                 }
                 nextPage.Image = nxtPage_Disabled;
                 lastPage.Image = lstPage_Disabled;
@@ -518,10 +574,15 @@ namespace Widgets.MVP.WidgetModels
                     });
                     dataScr.SaveChanges();
                 }
-                dataScr = new((string)AppConfig["dataSource"]);
-                Log.SaveLog("Start database preload...", "ActivatorSubWindow", output: false);
-                dataScr.PreloadDb();
-                Log.SaveLog("Database preloaded.", "ActivatorSubWindow", output: false);
+                else
+                {
+                    dataScr = new((string)AppConfig["dataSource"]);
+                    Log.SaveLog("Start database preload...", "ActivatorSubWindow", output: false);
+                    dataScr.PreloadDb();
+                    Log.SaveLog("Database preloaded.", "ActivatorSubWindow", output: false);
+                }
+
+                
             }
             catch (Exception ex)
             {
@@ -630,14 +691,14 @@ namespace Widgets.MVP.WidgetModels
         void LoadDatabasePreload()
         {
             LoadDatabase();
-            loadingLabel.Text = "Please re-open form!";
+            loadingLabel.Text = closingTips;
             loadingLabel.Location = new Point(windowSize / 2 - loadingLabel.Size.Width / 2, windowSize / 2 - loadingLabel.Height / 2);
             Refresh();
             Thread.Sleep(1000);
             loadingDb = false;
 
-            Hide();
-            //SleepForm();
+            //Hide();
+            SleepForm();
 
 
 
