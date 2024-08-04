@@ -697,8 +697,8 @@ namespace Widgets.MVP.WidgetModels
             Thread.Sleep(1000);
             loadingDb = false;
 
-            //Hide();
-            SleepForm();
+            Hide();
+            //SleepForm();
 
 
 

@@ -1,4 +1,5 @@
 using HiDesktop;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Data.Common;
@@ -8,8 +9,12 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 using Widgets.MVP.WidgetModels;
 using Widgets.MVP.WidgetModels.ActivatorDataModel;
+using Windows.Services.Maps;
+using System.IO.Pipes;
+using System.Text;
 
 namespace Widgets.MVP
 {
@@ -29,6 +34,7 @@ namespace Widgets.MVP
         static bool showBootWindow = false;
         //static bool enableFontInstall = false;
         static bool waitForEffects = false;
+        static string UriName = "HiDesktop";
         readonly Hashtable widgets = new Hashtable();
         string nowFile;
         void StartView()
@@ -175,6 +181,50 @@ namespace Widgets.MVP
 
             }
             Log.SaveLog("Launched all.");
+            Log.SaveLog("Start building Pipes service...");
+            while (true)
+            {
+                // 定义命名管道名称
+                string pipeName = "ActivatorUriTransPipe";
+
+                // 创建命名管道服务器
+                NamedPipeServerStream pipeServer = new NamedPipeServerStream(
+                    pipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte);
+
+                Log.SaveLog("Waiting for connection", pipeName, false);
+
+                // 等待连接
+                pipeServer.WaitForConnection();
+
+                Log.SaveLog("Connected.", pipeName, false);
+
+                try
+                {
+                    // 接收数据
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = pipeServer.Read(buffer, 0, buffer.Length);
+
+                    // 将接收到的字节转换为字符串
+                    string receivedString = Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
+                    Log.SaveLog("Received URI: " + receivedString, pipeName, false);
+
+                    // 在这里可以根据接收到的数据进行相应操作
+                    // 例如，解析数据，调用相应的函数等
+                    ActivatorUriProcessor a = new();
+                    a.Url = receivedString;
+                    a.Process();
+
+                    // 回复消息给应用程序B
+                    byte[] responseBuffer = Encoding.UTF8.GetBytes("DONE");
+                    pipeServer.Write(responseBuffer, 0, responseBuffer.Length);
+                }
+                finally
+                {
+                    // 关闭管道
+                    pipeServer.Close();
+                }
+
+            }
         }
 
 
@@ -266,11 +316,29 @@ namespace Widgets.MVP
                             break;
                         case "--Install":
                             CommandRepo.CreateStartUpScript();
+                            Log.SaveLog("准备创建URL Scheme...Creating URL Scheme");
+                            CommandRepo.RegisterCustomURLScheme(UriName);
                             Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
                             break;
                         case "--Uninstall":
                             CommandRepo.Uninstall("Widgets.MVP");
+                            Log.SaveLog("准备删除URL Scheme...Deleting URL Scheme");
+                            CommandRepo.RemoveCustomURLScheme(UriName);
                             CommandRepo.Uninstall(productName);
+                            break;
+                        case "--RegURL":
+                            Log.SaveLog("准备创建Activator URL Scheme...Creating URL Scheme");
+                            CommandRepo.RegisterCustomURLScheme(UriName);
+                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
+                            break;
+                        case "--UnRegURL":
+                            Log.SaveLog("准备删除Activator URL Scheme...Deleting URL Scheme");
+                            CommandRepo.RemoveCustomURLScheme(UriName);
+                            break;
+                        default:
+                            ActivatorUriProcessor a = new();
+                            a.Url = args[0];
+                            a.TransportToMainProgram();
                             break;
                     }
                     break;
@@ -279,5 +347,6 @@ namespace Widgets.MVP
 
 
         }
+        
     }
 }

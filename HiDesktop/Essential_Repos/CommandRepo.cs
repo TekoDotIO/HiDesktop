@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Win32;
+using System.Diagnostics;
 using System.IO;
 
 namespace Widgets.MVP
@@ -6,6 +7,32 @@ namespace Widgets.MVP
     public class CommandRepo
     {
         public string ProductName;
+        public static void RegisterCustomURLScheme(string appName)
+        {
+            //string keyName = $"Software\\Classes\\{appName}";
+            using (RegistryKey key = Registry.ClassesRoot.CreateSubKey(appName))
+            {
+                key.SetValue("", $"{appName}");
+                key.SetValue("URL Protocol", appName);
+                using RegistryKey commandKey = key.CreateSubKey("shell\\open\\command");
+                commandKey.SetValue("", Process.GetCurrentProcess().MainModule.FileName + " \"%1\"");
+            }
+        }
+
+        public static void RemoveCustomURLScheme(string appName)
+        {
+            //string keyName = $"Software\\Classes\\{appName}";
+            Registry.ClassesRoot.DeleteSubKeyTree(appName);
+            //using (RegistryKey key = )
+            //{
+            //    key.SetValue("", $"{appName}");
+            //    key.SetValue("URL Protocol", appName);
+            //    using (RegistryKey commandKey = key.CreateSubKey("shell\\open\\command"))
+            //    {
+            //        commandKey.SetValue("", Process.GetCurrentProcess().MainModule.FileName + " \"%1\"");
+            //    }
+            //}
+        }
         public static void CreateStartUpScript()
         {
             string CdPath = Directory.GetCurrentDirectory();
