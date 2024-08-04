@@ -17,10 +17,15 @@ namespace Widgets.MVP.WidgetModels
         public ActivatorUriProcessor()
         {
 
-            
-            
         }
-        public void TransportToMainProgram()
+        public ActivatorUriProcessor(string url)
+        {
+            Url = url;
+        }
+        /// <summary>
+        /// 将URL传输给主程序
+        /// </summary>
+        public void TransportToMainProgram()//Code by GPT-4o
         {
             if (!CommandRepo.IsMultiProcess("Widgets.MVP"))
             {
@@ -75,6 +80,9 @@ namespace Widgets.MVP.WidgetModels
             Console.ReadKey();
         }
     
+        /// <summary>
+        /// 处理URL
+        /// </summary>
         public void Process()
         {
             MessageBox.Show(Url);

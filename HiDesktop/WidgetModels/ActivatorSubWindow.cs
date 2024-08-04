@@ -123,6 +123,8 @@ namespace Widgets.MVP.WidgetModels
         /// 空项操作
         /// </summary>
         string emptyItemAction;
+
+        int currentPageNum = 1;
         #endregion
 
         #region Controls
@@ -336,7 +338,11 @@ namespace Widgets.MVP.WidgetModels
             nextPage.Location = new Point(Convert.ToInt32(Width * 0.618), Width / 40);
             lastPage.Click += (object sender, EventArgs e) =>
             {
-                //lastPage.Hide();
+                LastPage();
+            };
+            nextPage.Click += (object sender, EventArgs e) =>
+            {
+                NextPage();
             };
             //lastPage.Visible = false;
             //nextPage.Visible = false;
@@ -404,6 +410,35 @@ namespace Widgets.MVP.WidgetModels
             itemTxt2.Location = new Point(windowSize / 7 * 4, windowSize / 7 + itemIcon2.Height + windowSize / 50);
             itemTxt3.Location = new Point(windowSize / 7, windowSize / 7 * 4 + itemIcon3.Height + windowSize / 50);
             itemTxt4.Location = new Point(windowSize / 7 * 4, windowSize / 7 * 4 + itemIcon4.Height + windowSize / 50);
+
+            
+
+            //if (showTimeBar)
+            //{
+            //    timeBar = new Label()
+            //    {
+            //        ForeColor = windowForeColor,
+            //        Parent = this,
+            //        AutoSize = true,
+            //        //Visible = false,
+            //        //TextAlign = ContentAlignment.MiddleCenter,
+            //        Font = new Font(Font.FontFamily, lastPage.Width / 5),
+            //        Text = DateTime.Now.ToString("HH:mm")
+            //    };
+            //    timeBar.AutoSize = false;
+            //    timeBar.Location = new Point(windowSize / 7 * 6 + windowSize / 7 / 2 + timeBar.Size.Height / 2, windowSize / 20);
+            //    Thread timeUpdateThread = new(new ThreadStart(() =>
+            //    {
+            //        this.Invoke((MethodInvoker)delegate ()
+            //        {
+            //            this.Refresh();
+            //            timeBar.Text = DateTime.Now.ToString("HH:mm");
+            //            Thread.Sleep(1000);
+            //        });
+            //    }));
+            //    timeUpdateThread.Start();
+            //}
+
 
 
             Log.SaveLog("SubWindow Initialization completed...", "ActivatorSubWindow", false);
@@ -486,6 +521,10 @@ namespace Widgets.MVP.WidgetModels
 
         void InitializeControls()
         {
+            if (showTimeBar)
+            {
+                timeBar.Show();
+            }
             //RecreateHandle();
             //Initialize Controls...
             nextPage.Visible = true;
@@ -528,14 +567,83 @@ namespace Widgets.MVP.WidgetModels
                 }
                 nextPage.Image = nxtPage_Disabled;
                 lastPage.Image = lstPage_Disabled;
+                pageDisplay.Text = "0 / 0";
             }
             else
             {
-                var maxID = dataScr.Repo.Max(p => p.ID);
+                LoadElements();
+
             }
             
 
 
+        }
+
+
+        void LoadElements()
+        {
+            var maxID = dataScr.Repo.Max(p => p.ID);
+            var maxPageID = Math.Ceiling(((Convert.ToDouble(maxID) + 1) / 4));
+            if (currentPageNum == 1)
+            {
+                lastPage.Image = lstPage_Disabled;
+            }
+            else
+            {
+                lastPage.Image = lstPage;
+            }
+            if (currentPageNum == maxPageID)
+            {
+                nextPage.Image = nxtPage_Disabled;
+            }
+            else
+            {
+                nextPage.Image = nxtPage;
+            }
+            pageDisplay.Text = $"{currentPageNum} / {maxPageID}";
+            for (int i = 0; i < 4; i++)
+            {
+                var obj = dataScr.Repo.FirstOrDefault(p => p.ID == currentPageNum * 4 - 3 + i);
+                if (obj == null) 
+                {
+                    itemTxts[i].Text = emptyItemTxt;
+                    itemIcons[i].Image = EmptyElementIcon;
+                }
+                else
+                {
+                    try
+                    {
+                        Image image = Bitmap.FromFile(obj.Icon);
+                        string description = obj.Description;
+                        itemTxts[i].Text = description;
+                        itemIcons[i].Image = image;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.SaveLog($"Error when loading element at page {currentPageNum} obj {i}.Ex:\n{ex}", "ActivatorSubWindow");
+                        //throw;
+                    }
+                }
+            }
+        }
+
+        void NextPage()
+        {
+            if (nextPage.Image != nxtPage_Disabled)
+            {
+                currentPageNum += 1;
+                
+            }
+            LoadElements();
+        }
+
+        void LastPage()
+        {
+            if (lastPage.Image != lstPage_Disabled)
+            {
+                currentPageNum -= 1;
+            }
+            LoadElements();
         }
 
         class OperationHandler
@@ -685,7 +793,39 @@ namespace Widgets.MVP.WidgetModels
             loadingLabel.Show();
             Refresh();
             //LoadDatabaseAsync();
+            if (showTimeBar)
+            {
+                timeBar = new Label()
+                {
+                    ForeColor = windowForeColor,
+                    Parent = this,
+                    AutoSize = true,
+                    //Visible = false,
+                    //TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font(Font.FontFamily, lastPage.Width / 3),
+                    Text = DateTime.Now.ToString("HH:mm")
+                };
+                timeBar.Hide();
+                //timeBar.AutoSize = false;
+                timeBar.Location = new Point(windowSize / 10, windowSize + windowSize / 7 / 2 - timeBar.Size.Height);
+                Thread timeUpdateThread = new(new ThreadStart(() =>
+                {
+                    while (true)
+                    {
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            this.Refresh();
+                            timeBar.Text = DateTime.Now.ToString("HH:mm");
+                            
 
+                        });
+                        Thread.Sleep(1000);
+                    }
+                   
+                }));
+                timeUpdateThread.IsBackground = true;
+                timeUpdateThread.Start();
+            }
         }
 
         void LoadDatabasePreload()
