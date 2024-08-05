@@ -43,7 +43,7 @@ namespace Widgets.MVP.WidgetModels
         /// <summary>
         /// 组件配置
         /// </summary>
-        Hashtable AppConfig;
+        public Hashtable AppConfig;
         /// <summary>
         /// 屏幕宽度
         /// </summary>
@@ -84,6 +84,10 @@ namespace Widgets.MVP.WidgetModels
         /// 贴边检测值
         /// </summary>
         int scrEdgeSize = 50;//贴边检测值
+        /// <summary>
+        /// 配置文件路径
+        /// </summary>
+        string Path;
         #endregion
         #region Controls
         /// <summary>
@@ -93,7 +97,7 @@ namespace Widgets.MVP.WidgetModels
         /// <summary>
         /// 绑定的子窗口
         /// </summary>
-        ActivatorSubWindow subWindow;
+        public ActivatorSubWindow subWindow;
         #endregion
         /// <summary>
         /// 标准示例配置文件
@@ -150,7 +154,7 @@ namespace Widgets.MVP.WidgetModels
         //From https://www.cnblogs.com/darkic/p/16256294.html
         public Activator(string Path)
         {
-
+            this.Path = Path;
             InitializeComponent();
             //SetWindowRegion(40);
 
@@ -409,6 +413,28 @@ namespace Widgets.MVP.WidgetModels
                     statu = ActivatorStatus.None;
                 }
             }
+        }
+
+
+
+        public void SaveLocation()
+        {
+            AppConfig["location"] = $"{this.Location.X},{this.Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+        }
+
+        public void SildeAndHide()
+        {
+            if (Location.X < scrW / 2)
+            {
+                MathRepo.MoveWindowSmoothly_MethodA(this, 0, Location.Y, 0.5, 30);
+                
+            }
+            else
+            {
+                MathRepo.MoveWindowSmoothly_MethodA(this, scrW, Location.Y, 0.5, 30);
+            }
+            JudgeHideStatu();
         }
 
 

@@ -123,8 +123,14 @@ namespace Widgets.MVP.WidgetModels
         /// 空项操作
         /// </summary>
         string emptyItemAction;
-
+        /// <summary>
+        /// 当前页码
+        /// </summary>
         int currentPageNum = 1;
+        /// <summary>
+        /// 是否已创建句柄
+        /// </summary>
+        public bool hasBooted = false;
         #endregion
 
         #region Controls
@@ -222,7 +228,7 @@ namespace Widgets.MVP.WidgetModels
             }
             catch (Exception ex)
             {
-                Log.SaveLog($"Unable to load back img:\n{ex}\n Will use color instead.", "Activator", false);
+                Log.SaveLog($"Unable to load back img:\n{ex}\n Will use color instead.", "ActivatorSubWindow", false);
                 windowBackColor = ColorTranslator.FromHtml((string)AppConfig["windowBackColor"]);
 
                 BackColor = windowBackColor;
@@ -517,6 +523,7 @@ namespace Widgets.MVP.WidgetModels
                 loadingLabel.Visible = true;
             }
             isAwake = true;
+            hasBooted = true;
         }
 
         void InitializeControls()
