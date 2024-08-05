@@ -93,6 +93,7 @@ namespace Widgets.MVP
 
             Directory.CreateDirectory("./Properties/");
             string[] properties = Directory.GetFiles("./Properties/");
+            //MessageBox.Show(Path.GetFullPath("./Properties/"));
             Program p = new Program();
             
             bool enableHook = false;//允许接入启动页面
@@ -260,7 +261,7 @@ namespace Widgets.MVP
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
 
@@ -350,6 +351,8 @@ namespace Widgets.MVP
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                             ActivatorUriProcessor a = new();
+                            Directory.SetCurrentDirectory(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName));
+                            //Process.GetCurrentProcess().StartInfo.WorkingDirectory = Path.GetDirectoryName(Process.GetCurrentProcess().StartInfo.FileName);
                             a.Url = args[0];
                             a.TransportToMainProgram();
                             break;

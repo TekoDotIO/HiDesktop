@@ -30,7 +30,13 @@ namespace Widgets.MVP.WidgetModels
         {
             if (!CommandRepo.IsMultiProcess("Widgets.MVP"))
             {
-                MessageBox.Show("Please first activate a Widgets.MVP process...", "No Processors Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var r = MessageBox.Show("Please first activate a Widgets.MVP process...\nDo you want to boot Widgets.MVP? \n(This command won't be executed.)", "No Processors Found", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (r == DialogResult.Yes)
+                {
+                    string[] arg = new string[1];
+                    arg[0] = "--MainProcess";
+                    Program.Main(arg);
+                }
                 return;
             }
             Uri uri = new Uri(Url);
