@@ -133,7 +133,8 @@ namespace Widgets.MVP.WidgetModels
             { "closingTips","Please re-open form!"},
             { "emptyItemTxt","Add..."},
             { "emptyItemIcon","default"},
-            { "emptyItemAction","HiDesktop://command?action=NewActivatorShortcut"}
+            { "emptyItemAction","HiDesktop://activator?action=NewActivatorShortcut"},
+            { "additionalPageIfFull","true"},
         };
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中

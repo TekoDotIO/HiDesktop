@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Widgets.MVP.WidgetModels.ActivatorDataModel.Models
 {
-    internal class Repo
+    public class Repo
     {
         /// <summary>
         /// 项索引（主键）

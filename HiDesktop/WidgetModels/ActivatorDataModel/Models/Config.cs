@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Widgets.MVP.WidgetModels.ActivatorDataModel.Models
 {
-    internal class Config
+    public class Config
     {
         /// <summary>
         /// 配置项索引（主键）

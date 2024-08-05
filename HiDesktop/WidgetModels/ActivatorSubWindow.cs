@@ -85,7 +85,7 @@ namespace Widgets.MVP.WidgetModels
         /// <summary>
         /// 用户数据库上下文
         /// </summary>
-        ActivatorDbContext dataScr;
+        public ActivatorDbContext dataScr;
         /// <summary>
         /// （状态机）是否正在加载数据库
         /// </summary>
@@ -131,6 +131,11 @@ namespace Widgets.MVP.WidgetModels
         /// 是否已创建句柄
         /// </summary>
         public bool hasBooted = false;
+        /// <summary>
+        /// 假如占满是否多页
+        /// </summary>
+        bool additionalPageIfFull = true;
+        bool enableAutoClose = true;
         #endregion
 
         #region Controls
@@ -214,6 +219,7 @@ namespace Widgets.MVP.WidgetModels
             parentActivator = activator;
             radius = Convert.ToInt32((string)AppConfig["windowRadius"]);
             opacity = Convert.ToDouble((string)AppConfig["opacity"]);
+            additionalPageIfFull = (string)AppConfig["additionalPageIfFull"] == "true";
             Opacity = opacity;
             //CheckForIllegalCrossThreadCalls = false;
             StartPosition = FormStartPosition.Manual;
@@ -350,6 +356,9 @@ namespace Widgets.MVP.WidgetModels
             {
                 NextPage();
             };
+
+            
+
             //lastPage.Visible = false;
             //nextPage.Visible = false;
             //lastPage.Hide();
@@ -417,7 +426,10 @@ namespace Widgets.MVP.WidgetModels
             itemTxt3.Location = new Point(windowSize / 7, windowSize / 7 * 4 + itemIcon3.Height + windowSize / 50);
             itemTxt4.Location = new Point(windowSize / 7 * 4, windowSize / 7 * 4 + itemIcon4.Height + windowSize / 50);
 
-            
+            itemIcon1.Click += ElementNo1Click;
+            itemIcon2.Click += ElementNo2Click;
+            itemIcon3.Click += ElementNo3Click;
+            itemIcon4.Click += ElementNo4Click;
 
             //if (showTimeBar)
             //{
@@ -463,6 +475,7 @@ namespace Widgets.MVP.WidgetModels
 
         public void SleepForm()
         {
+            if (!enableAutoClose) return;
             for (int i = 12; i > 0; i--)
             {
                 Opacity -= 0.08;
@@ -586,11 +599,52 @@ namespace Widgets.MVP.WidgetModels
 
         }
 
+        void ElementNo1Click(object sender, EventArgs e)
+        {
+            BootElementAction(1);
+        }
+
+        void ElementNo2Click(object sender, EventArgs e)
+        {
+            BootElementAction(2);
+        }
+        void ElementNo3Click(object sender, EventArgs e)
+        {
+            BootElementAction(3);
+        }
+        void ElementNo4Click(object sender, EventArgs e)
+        {
+            BootElementAction(4);
+        }
+
+        void BootElementAction(int num)
+        {
+            enableAutoClose = false;
+            int ID = currentPageNum * 4 - 4 + num;
+            var elementEfObj = dataScr.Repo.FirstOrDefault(p => p.ID == ID);
+            string action = emptyItemAction;
+            if (elementEfObj != null)
+            {
+                action = elementEfObj.Action + $"&id={ID}";
+            }
+            try
+            {
+                ActivatorUriProcessor a = new(action);
+                a.Process();
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"Error when processing element action from db. At Loc:Page={currentPageNum},ElementID={num}.(Db ID={ID}),\nEx:\n{ex}","ActivatorSubWindow");
+                MessageBox.Show($"Error when processing element action from db. At Loc:Page={currentPageNum},ElementID={num}.(Db ID={ID}),\nEx:\n{ex}", "ActivatorSubWindow", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //throw;
+            }
+            enableAutoClose = true;
+        }
 
         void LoadElements()
         {
             var maxID = dataScr.Repo.Max(p => p.ID);
-            var maxPageID = Math.Ceiling(((Convert.ToDouble(maxID) + 1) / 4));
+            var maxPageID = Math.Ceiling(((Convert.ToDouble(maxID) + (additionalPageIfFull ? 1 : 0)) / 4));
             if (currentPageNum == 1)
             {
                 lastPage.Image = lstPage_Disabled;
@@ -768,6 +822,7 @@ namespace Widgets.MVP.WidgetModels
 
         private void ActivatorSubWindow_MouseLeave(object sender, EventArgs e)
         {
+            if (!enableAutoClose) return;
             var p = Control.MousePosition;
             if (!((Location.X <= p.X && p.X <= Location.X + Size.Width) && (Location.Y <= p.Y && p.Y <= Location.Y + Size.Height)))
             {

@@ -207,6 +207,37 @@ namespace Widgets.MVP.WidgetModels
                 case "hide":
                     Program.activatedActivator.SildeAndHide();
                     break;
+                case "NewActivatorShortcut":
+                    string id = "";
+                    string description = "";
+                    string icon = "";
+                    string action = "";
+                    if (args.AllKeys.Contains("id"))
+                    {
+                        id = args["id"];
+                    }
+                    if (args.AllKeys.Contains("description"))
+                    {
+                        description = args["description"];
+                    }
+                    if (args.AllKeys.Contains("icon"))
+                    {
+                        icon = args["icon"];
+                    }
+                    if (args.AllKeys.Contains("action"))
+                    {
+                        action = args["action"];
+                    }
+                    ActivatorObjectEditor a = new()
+                    {
+                        dataSrc = Program.activatedActivator.subWindow.dataScr,
+                        ID = id,
+                        description = description,
+                        imgPath = icon,
+                        action = action
+                    };
+                    a.ShowDialog();
+                    break;
                 default:
                     Log.SaveLog($"Not a legal hidesktop://activator command protocol input:{args["action"]}.", className);
                     throw new System.Exception($"Not a legal hidesktop://activator command protocol input:{args["action"]}.");

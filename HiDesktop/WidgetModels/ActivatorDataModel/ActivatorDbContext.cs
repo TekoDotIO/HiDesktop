@@ -13,7 +13,7 @@ using SQLite.CodeFirst;
 
 namespace Widgets.MVP.WidgetModels.ActivatorDataModel
 {
-    internal class ActivatorDbContext : DbContext
+    public class ActivatorDbContext : DbContext
     {
         public DbSet<Config> Config { get; set; }
         public DbSet<Repo> Repo { get; set; }
