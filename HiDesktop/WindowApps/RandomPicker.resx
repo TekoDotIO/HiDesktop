@@ -1,0 +1,1870 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Subtitle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Subtitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 65</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Subtitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="Subtitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>236, 17</value>
+  </data>
+  <data name="Subtitle.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="Subtitle.Text" xml:space="preserve">
+    <value>从预设列表或随机数范围中随机挑选项目。</value>
+  </data>
+  <data name="&gt;&gt;Subtitle.Name" xml:space="preserve">
+    <value>Subtitle</value>
+  </data>
+  <data name="&gt;&gt;Subtitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Subtitle.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Subtitle.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="Title.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Title.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="Title.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 23</value>
+  </data>
+  <data name="Title.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="Title.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 36</value>
+  </data>
+  <data name="Title.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="Title.Text" xml:space="preserve">
+    <value>随机选取程序</value>
+  </data>
+  <data name="&gt;&gt;Title.Name" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="&gt;&gt;Title.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Title.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Title.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="CopyrightLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CopyrightLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 424</value>
+  </data>
+  <data name="CopyrightLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="CopyrightLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>309, 17</value>
+  </data>
+  <data name="CopyrightLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="CopyrightLabel.Text" xml:space="preserve">
+    <value>此程序是HiDesktop应用的一部分 - teko.IO 版权所有。</value>
+  </data>
+  <data name="&gt;&gt;CopyrightLabel.Name" xml:space="preserve">
+    <value>CopyrightLabel</value>
+  </data>
+  <data name="&gt;&gt;CopyrightLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CopyrightLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CopyrightLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.Name" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.Parent" xml:space="preserve">
+    <value>AppPages</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.Name" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.Parent" xml:space="preserve">
+    <value>AppPages</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AppPages.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 87</value>
+  </data>
+  <data name="AppPages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>764, 334</value>
+  </data>
+  <data name="AppPages.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;AppPages.Name" xml:space="preserve">
+    <value>AppPages</value>
+  </data>
+  <data name="&gt;&gt;AppPages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AppPages.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;AppPages.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.Name" xml:space="preserve">
+    <value>RanNumDisplayFontSizeApply</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.Name" xml:space="preserve">
+    <value>RanNumHistoryBtn</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.Name" xml:space="preserve">
+    <value>RanNumDisplayFontSizeBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.Name" xml:space="preserve">
+    <value>RanNumGenerateBtn</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.Name" xml:space="preserve">
+    <value>RanNumDisplayFontSize</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.Name" xml:space="preserve">
+    <value>RanNumAnimate</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.Name" xml:space="preserve">
+    <value>RanNumNumBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.Name" xml:space="preserve">
+    <value>RanNumNum</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.Name" xml:space="preserve">
+    <value>RanNumExceptBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.Name" xml:space="preserve">
+    <value>RanNumExcept</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.Name" xml:space="preserve">
+    <value>RanNumMaxBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.Name" xml:space="preserve">
+    <value>RanNumMax</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.Name" xml:space="preserve">
+    <value>RanNumMinBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.Name" xml:space="preserve">
+    <value>RanNumMin</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.Name" xml:space="preserve">
+    <value>RanNumAddToExcept</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.Name" xml:space="preserve">
+    <value>RanNumDisplay</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.Name" xml:space="preserve">
+    <value>RanNumResultDisplayLabel</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="RanNumPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="RanNumPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="RanNumPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>756, 304</value>
+  </data>
+  <data name="RanNumPage.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RanNumPage.Text" xml:space="preserve">
+    <value>随机数选取</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.Name" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.Parent" xml:space="preserve">
+    <value>AppPages</value>
+  </data>
+  <data name="&gt;&gt;RanNumPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.Name" xml:space="preserve">
+    <value>RanDbSettingBtn</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.Name" xml:space="preserve">
+    <value>RanDbExceptTagBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.Name" xml:space="preserve">
+    <value>RanDbExceptTag</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.Name" xml:space="preserve">
+    <value>aRanDbDisplayFontSizeApplyBtn</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.Name" xml:space="preserve">
+    <value>RanDbHistory</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.Name" xml:space="preserve">
+    <value>RanDbGenerateBtn</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.Name" xml:space="preserve">
+    <value>RanDbDisplayFontSize</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.Name" xml:space="preserve">
+    <value>RanDbAnimate</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.Name" xml:space="preserve">
+    <value>RanDbNumBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.Name" xml:space="preserve">
+    <value>RanDbNum</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.Name" xml:space="preserve">
+    <value>RanDbExceptNameBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.Name" xml:space="preserve">
+    <value>RanDbExceptName</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.Name" xml:space="preserve">
+    <value>RanDbDisplayFontSizeBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.Name" xml:space="preserve">
+    <value>RanDbSettingText</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.Name" xml:space="preserve">
+    <value>RanDbAddToExcept</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.Name" xml:space="preserve">
+    <value>RanDbDisplay</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.Name" xml:space="preserve">
+    <value>RanDbResultDisplayText</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="RanDbPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="RanDbPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="RanDbPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>756, 304</value>
+  </data>
+  <data name="RanDbPage.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RanDbPage.Text" xml:space="preserve">
+    <value>数据库项目选取</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.Name" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.Parent" xml:space="preserve">
+    <value>AppPages</value>
+  </data>
+  <data name="&gt;&gt;RanDbPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RanNumResultDisplayLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumResultDisplayLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 12</value>
+  </data>
+  <data name="RanNumResultDisplayLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="RanNumResultDisplayLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RanNumResultDisplayLabel.Text" xml:space="preserve">
+    <value>结果展示：</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.Name" xml:space="preserve">
+    <value>RanNumResultDisplayLabel</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumResultDisplayLabel.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="RanNumDisplay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumDisplay.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 26.25pt, style=Bold</value>
+  </data>
+  <data name="RanNumDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 63</value>
+  </data>
+  <data name="RanNumDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 46</value>
+  </data>
+  <data name="RanNumDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RanNumDisplay.Text" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="RanNumDisplay.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.Name" xml:space="preserve">
+    <value>RanNumDisplay</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplay.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="RanNumAddToExcept.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumAddToExcept.Location" type="System.Drawing.Point, System.Drawing">
+    <value>419, 40</value>
+  </data>
+  <data name="RanNumAddToExcept.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 21</value>
+  </data>
+  <data name="RanNumAddToExcept.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="RanNumAddToExcept.Text" xml:space="preserve">
+    <value>将结果添加到排除列表</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.Name" xml:space="preserve">
+    <value>RanNumAddToExcept</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumAddToExcept.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="RanNumMin.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumMin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 14</value>
+  </data>
+  <data name="RanNumMin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 17</value>
+  </data>
+  <data name="RanNumMin.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="RanNumMin.Text" xml:space="preserve">
+    <value>最小值</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.Name" xml:space="preserve">
+    <value>RanNumMin</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMin.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="RanNumMinBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>415, 9</value>
+  </data>
+  <data name="RanNumMinBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 23</value>
+  </data>
+  <data name="RanNumMinBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="RanNumMinBox.Text" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="RanNumMinBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.Name" xml:space="preserve">
+    <value>RanNumMinBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMinBox.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="RanNumMaxBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>536, 9</value>
+  </data>
+  <data name="RanNumMaxBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 23</value>
+  </data>
+  <data name="RanNumMaxBox.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="RanNumMaxBox.Text" xml:space="preserve">
+    <value>40</value>
+  </data>
+  <data name="RanNumMaxBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.Name" xml:space="preserve">
+    <value>RanNumMaxBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMaxBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="RanNumMax.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumMax.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanNumMax.Location" type="System.Drawing.Point, System.Drawing">
+    <value>486, 12</value>
+  </data>
+  <data name="RanNumMax.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 17</value>
+  </data>
+  <data name="RanNumMax.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="RanNumMax.Text" xml:space="preserve">
+    <value>最大值</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.Name" xml:space="preserve">
+    <value>RanNumMax</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumMax.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="RanNumExcept.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumExcept.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 41</value>
+  </data>
+  <data name="RanNumExcept.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 17</value>
+  </data>
+  <data name="RanNumExcept.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="RanNumExcept.Text" xml:space="preserve">
+    <value>排除值</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.Name" xml:space="preserve">
+    <value>RanNumExcept</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumExcept.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="RanNumExceptBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 63</value>
+  </data>
+  <data name="RanNumExceptBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumExceptBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="RanNumExceptBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 147</value>
+  </data>
+  <data name="RanNumExceptBox.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.Name" xml:space="preserve">
+    <value>RanNumExceptBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumExceptBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="RanNumNumBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>666, 9</value>
+  </data>
+  <data name="RanNumNumBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 23</value>
+  </data>
+  <data name="RanNumNumBox.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="RanNumNumBox.Text" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RanNumNumBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.Name" xml:space="preserve">
+    <value>RanNumNumBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumNumBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="RanNumNum.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumNum.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanNumNum.Location" type="System.Drawing.Point, System.Drawing">
+    <value>604, 12</value>
+  </data>
+  <data name="RanNumNum.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="RanNumNum.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="RanNumNum.Text" xml:space="preserve">
+    <value>抽取个数</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.Name" xml:space="preserve">
+    <value>RanNumNum</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumNum.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="RanNumAnimate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumAnimate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanNumAnimate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 216</value>
+  </data>
+  <data name="RanNumAnimate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="RanNumAnimate.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="RanNumAnimate.Text" xml:space="preserve">
+    <value>动画效果</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.Name" xml:space="preserve">
+    <value>RanNumAnimate</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumAnimate.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="RanNumGenerateBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 243</value>
+  </data>
+  <data name="RanNumGenerateBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 44</value>
+  </data>
+  <data name="RanNumGenerateBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="RanNumGenerateBtn.Text" xml:space="preserve">
+    <value>天选时刻！</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.Name" xml:space="preserve">
+    <value>RanNumGenerateBtn</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumGenerateBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RanNumHistoryBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanNumHistoryBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 11</value>
+  </data>
+  <data name="RanNumHistoryBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="RanNumHistoryBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="RanNumHistoryBtn.Text" xml:space="preserve">
+    <value>历史结果</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.Name" xml:space="preserve">
+    <value>RanNumHistoryBtn</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumHistoryBtn.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="fullScreenBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fullScreenBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>563, 43</value>
+  </data>
+  <data name="fullScreenBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="fullScreenBox.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="fullScreenBox.Text" xml:space="preserve">
+    <value>全屏展示</value>
+  </data>
+  <data name="&gt;&gt;fullScreenBox.Name" xml:space="preserve">
+    <value>fullScreenBox</value>
+  </data>
+  <data name="&gt;&gt;fullScreenBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fullScreenBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;fullScreenBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="darkModeBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="darkModeBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>644, 43</value>
+  </data>
+  <data name="darkModeBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="darkModeBox.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="darkModeBox.Text" xml:space="preserve">
+    <value>暗黑模式</value>
+  </data>
+  <data name="&gt;&gt;darkModeBox.Name" xml:space="preserve">
+    <value>darkModeBox</value>
+  </data>
+  <data name="&gt;&gt;darkModeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;darkModeBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;darkModeBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="fontSizeTimesTitle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fontSizeTimesTitle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="fontSizeTimesTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>560, 70</value>
+  </data>
+  <data name="fontSizeTimesTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="fontSizeTimesTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="fontSizeTimesTitle.Text" xml:space="preserve">
+    <value>字号缩放倍数</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesTitle.Name" xml:space="preserve">
+    <value>fontSizeTimesTitle</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesTitle.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesTitle.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="fontSizeTimesBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>646, 67</value>
+  </data>
+  <data name="fontSizeTimesBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 23</value>
+  </data>
+  <data name="fontSizeTimesBox.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="fontSizeTimesBox.Text" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesBox.Name" xml:space="preserve">
+    <value>fontSizeTimesBox</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;fontSizeTimesBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="fontSizeApplyBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="fontSizeApplyBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>717, 67</value>
+  </data>
+  <data name="fontSizeApplyBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 23</value>
+  </data>
+  <data name="fontSizeApplyBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="fontSizeApplyBtn.Text" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="&gt;&gt;fontSizeApplyBtn.Name" xml:space="preserve">
+    <value>fontSizeApplyBtn</value>
+  </data>
+  <data name="&gt;&gt;fontSizeApplyBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fontSizeApplyBtn.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;fontSizeApplyBtn.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RanNumDisplayFontSizeApply.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanNumDisplayFontSizeApply.Location" type="System.Drawing.Point, System.Drawing">
+    <value>627, 214</value>
+  </data>
+  <data name="RanNumDisplayFontSizeApply.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 23</value>
+  </data>
+  <data name="RanNumDisplayFontSizeApply.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="RanNumDisplayFontSizeApply.Text" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.Name" xml:space="preserve">
+    <value>RanNumDisplayFontSizeApply</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeApply.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RanNumDisplayFontSizeBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>556, 214</value>
+  </data>
+  <data name="RanNumDisplayFontSizeBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 23</value>
+  </data>
+  <data name="RanNumDisplayFontSizeBox.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="RanNumDisplayFontSizeBox.Text" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="RanNumDisplayFontSizeBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.Name" xml:space="preserve">
+    <value>RanNumDisplayFontSizeBox</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSizeBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RanNumDisplayFontSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanNumDisplayFontSize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanNumDisplayFontSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>470, 217</value>
+  </data>
+  <data name="RanNumDisplayFontSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="RanNumDisplayFontSize.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="RanNumDisplayFontSize.Text" xml:space="preserve">
+    <value>展示区域字号</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.Name" xml:space="preserve">
+    <value>RanNumDisplayFontSize</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.Parent" xml:space="preserve">
+    <value>RanNumPage</value>
+  </data>
+  <data name="&gt;&gt;RanNumDisplayFontSize.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="aRanDbDisplayFontSizeApplyBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="aRanDbDisplayFontSizeApplyBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>628, 218</value>
+  </data>
+  <data name="aRanDbDisplayFontSizeApplyBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 23</value>
+  </data>
+  <data name="aRanDbDisplayFontSizeApplyBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="aRanDbDisplayFontSizeApplyBtn.Text" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.Name" xml:space="preserve">
+    <value>aRanDbDisplayFontSizeApplyBtn</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RanDbHistory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbHistory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>235, 15</value>
+  </data>
+  <data name="RanDbHistory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="RanDbHistory.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="RanDbHistory.Text" xml:space="preserve">
+    <value>历史结果</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.Name" xml:space="preserve">
+    <value>RanDbHistory</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbHistory.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RanDbGenerateBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbGenerateBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 247</value>
+  </data>
+  <data name="RanDbGenerateBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 44</value>
+  </data>
+  <data name="RanDbGenerateBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="RanDbGenerateBtn.Text" xml:space="preserve">
+    <value>天选时刻！</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.Name" xml:space="preserve">
+    <value>RanDbGenerateBtn</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbGenerateBtn.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="RanDbDisplayFontSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbDisplayFontSize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbDisplayFontSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>471, 221</value>
+  </data>
+  <data name="RanDbDisplayFontSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="RanDbDisplayFontSize.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="RanDbDisplayFontSize.Text" xml:space="preserve">
+    <value>展示区域字号</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.Name" xml:space="preserve">
+    <value>RanDbDisplayFontSize</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSize.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="RanDbAnimate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbAnimate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbAnimate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 220</value>
+  </data>
+  <data name="RanDbAnimate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="RanDbAnimate.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="RanDbAnimate.Text" xml:space="preserve">
+    <value>动画效果</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.Name" xml:space="preserve">
+    <value>RanDbAnimate</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbAnimate.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="RanDbNumBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>667, 13</value>
+  </data>
+  <data name="RanDbNumBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 23</value>
+  </data>
+  <data name="RanDbNumBox.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="RanDbNumBox.Text" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RanDbNumBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.Name" xml:space="preserve">
+    <value>RanDbNumBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbNumBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="RanDbNum.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbNum.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbNum.Location" type="System.Drawing.Point, System.Drawing">
+    <value>605, 16</value>
+  </data>
+  <data name="RanDbNum.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="RanDbNum.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="RanDbNum.Text" xml:space="preserve">
+    <value>抽取个数</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.Name" xml:space="preserve">
+    <value>RanDbNum</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbNum.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="RanDbExceptNameBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 67</value>
+  </data>
+  <data name="RanDbExceptNameBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbExceptNameBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="RanDbExceptNameBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 58</value>
+  </data>
+  <data name="RanDbExceptNameBox.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.Name" xml:space="preserve">
+    <value>RanDbExceptNameBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptNameBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="RanDbExceptName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbExceptName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbExceptName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 45</value>
+  </data>
+  <data name="RanDbExceptName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="RanDbExceptName.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="RanDbExceptName.Text" xml:space="preserve">
+    <value>排除名称</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.Name" xml:space="preserve">
+    <value>RanDbExceptName</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptName.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="RanDbDisplayFontSizeBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>557, 218</value>
+  </data>
+  <data name="RanDbDisplayFontSizeBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 23</value>
+  </data>
+  <data name="RanDbDisplayFontSizeBox.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="RanDbDisplayFontSizeBox.Text" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="RanDbDisplayFontSizeBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.Name" xml:space="preserve">
+    <value>RanDbDisplayFontSizeBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplayFontSizeBox.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="RanDbSettingText.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbSettingText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbSettingText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 18</value>
+  </data>
+  <data name="RanDbSettingText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="RanDbSettingText.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="RanDbSettingText.Text" xml:space="preserve">
+    <value>数据库设置</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.Name" xml:space="preserve">
+    <value>RanDbSettingText</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingText.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="RanDbAddToExcept.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbAddToExcept.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbAddToExcept.Location" type="System.Drawing.Point, System.Drawing">
+    <value>431, 42</value>
+  </data>
+  <data name="RanDbAddToExcept.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 21</value>
+  </data>
+  <data name="RanDbAddToExcept.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="RanDbAddToExcept.Text" xml:space="preserve">
+    <value>将结果添加到排除列表</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.Name" xml:space="preserve">
+    <value>RanDbAddToExcept</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbAddToExcept.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="RanDbDisplay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbDisplay.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 26.25pt, style=Bold</value>
+  </data>
+  <data name="RanDbDisplay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 67</value>
+  </data>
+  <data name="RanDbDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 46</value>
+  </data>
+  <data name="RanDbDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="RanDbDisplay.Text" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="RanDbDisplay.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.Name" xml:space="preserve">
+    <value>RanDbDisplay</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbDisplay.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="RanDbResultDisplayText.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbResultDisplayText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbResultDisplayText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 16</value>
+  </data>
+  <data name="RanDbResultDisplayText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="RanDbResultDisplayText.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="RanDbResultDisplayText.Text" xml:space="preserve">
+    <value>结果展示：</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.Name" xml:space="preserve">
+    <value>RanDbResultDisplayText</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbResultDisplayText.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="RanDbExceptTagBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 149</value>
+  </data>
+  <data name="RanDbExceptTagBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbExceptTagBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="RanDbExceptTagBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 68</value>
+  </data>
+  <data name="RanDbExceptTagBox.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.Name" xml:space="preserve">
+    <value>RanDbExceptTagBox</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTagBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RanDbExceptTag.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RanDbExceptTag.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbExceptTag.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 127</value>
+  </data>
+  <data name="RanDbExceptTag.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="RanDbExceptTag.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="RanDbExceptTag.Text" xml:space="preserve">
+    <value>排除标签</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.Name" xml:space="preserve">
+    <value>RanDbExceptTag</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbExceptTag.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RanDbSettingBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>443, 13</value>
+  </data>
+  <data name="RanDbSettingBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 23</value>
+  </data>
+  <data name="RanDbSettingBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="RanDbSettingBtn.Text" xml:space="preserve">
+    <value>转到</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.Name" xml:space="preserve">
+    <value>RanDbSettingBtn</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbSettingBtn.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ExitBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ExitBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>695, 421</value>
+  </data>
+  <data name="ExitBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 23</value>
+  </data>
+  <data name="ExitBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="ExitBtn.Text" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="&gt;&gt;ExitBtn.Name" xml:space="preserve">
+    <value>ExitBtn</value>
+  </data>
+  <data name="&gt;&gt;ExitBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExitBtn.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ExitBtn.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>800, 450</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>随机选取 - HiDesktop</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>RandomPicker</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

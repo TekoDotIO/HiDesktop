@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Widgets.MVP.Essential_Repos;
+using Widgets.MVP.WindowApps;
 
 namespace Widgets.MVP.WidgetModels
 {
@@ -138,6 +139,10 @@ namespace Widgets.MVP.WidgetModels
                     Type shellType = Type.GetTypeFromProgID("Shell.Application");
                     object shellObject = System.Activator.CreateInstance(shellType);
                     shellType.InvokeMember("ToggleDesktop", System.Reflection.BindingFlags.InvokeMethod, null, shellObject, null);
+                    break;
+                case "randomPicker":
+                    RandomPicker rp = new();
+                    rp.Show();
                     break;
                 default:
                     Log.SaveLog($"Not a legal hidesktop://command protocol input:{args["action"]}.", className);

@@ -51,58 +51,66 @@
             // 
             label1.AutoSize = true;
             label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 19.8000011F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            label1.Location = new System.Drawing.Point(30, 23);
+            label1.Location = new System.Drawing.Point(23, 20);
+            label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(190, 45);
+            label1.Size = new System.Drawing.Size(150, 36);
             label1.TabIndex = 0;
             label1.Text = "项目编辑器";
+            label1.Click += label1_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(38, 76);
+            label2.Location = new System.Drawing.Point(30, 65);
+            label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(234, 20);
+            label2.Size = new System.Drawing.Size(188, 17);
             label2.TabIndex = 1;
             label2.Text = "键入项目属性以编辑数据库内容。";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(38, 126);
+            label3.Location = new System.Drawing.Point(30, 107);
+            label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(24, 20);
+            label3.Size = new System.Drawing.Size(21, 17);
             label3.TabIndex = 2;
             label3.Text = "ID";
             // 
             // idBox
             // 
-            idBox.Location = new System.Drawing.Point(83, 123);
+            idBox.Location = new System.Drawing.Point(65, 105);
+            idBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             idBox.Name = "idBox";
-            idBox.Size = new System.Drawing.Size(204, 27);
+            idBox.Size = new System.Drawing.Size(160, 23);
             idBox.TabIndex = 3;
             // 
             // descriptionBox
             // 
-            descriptionBox.Location = new System.Drawing.Point(499, 123);
+            descriptionBox.Location = new System.Drawing.Point(388, 105);
+            descriptionBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             descriptionBox.Name = "descriptionBox";
-            descriptionBox.Size = new System.Drawing.Size(254, 27);
+            descriptionBox.Size = new System.Drawing.Size(198, 23);
             descriptionBox.TabIndex = 5;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(454, 126);
+            label4.Location = new System.Drawing.Point(353, 107);
+            label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(39, 20);
+            label4.Size = new System.Drawing.Size(32, 17);
             label4.TabIndex = 4;
             label4.Text = "描述";
             // 
             // iconBox
             // 
-            iconBox.Location = new System.Drawing.Point(83, 153);
+            iconBox.Location = new System.Drawing.Point(65, 130);
+            iconBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             iconBox.Name = "iconBox";
-            iconBox.Size = new System.Drawing.Size(668, 27);
+            iconBox.Size = new System.Drawing.Size(520, 23);
             iconBox.TabIndex = 7;
             iconBox.KeyDown += iconBox_KeyDown;
             iconBox.KeyPress += iconBox_KeyPress;
@@ -110,43 +118,48 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(38, 156);
+            label5.Location = new System.Drawing.Point(30, 133);
+            label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(39, 20);
+            label5.Size = new System.Drawing.Size(32, 17);
             label5.TabIndex = 6;
             label5.Text = "图标";
             // 
             // actionBox
             // 
-            actionBox.Location = new System.Drawing.Point(83, 186);
+            actionBox.Location = new System.Drawing.Point(65, 158);
+            actionBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             actionBox.Multiline = true;
             actionBox.Name = "actionBox";
-            actionBox.Size = new System.Drawing.Size(670, 157);
+            actionBox.Size = new System.Drawing.Size(522, 134);
             actionBox.TabIndex = 9;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(38, 189);
+            label6.Location = new System.Drawing.Point(30, 161);
+            label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(39, 20);
+            label6.Size = new System.Drawing.Size(32, 17);
             label6.TabIndex = 8;
             label6.Text = "动作";
             // 
             // tips
             // 
             tips.AutoSize = true;
-            tips.Location = new System.Drawing.Point(38, 358);
+            tips.Location = new System.Drawing.Point(30, 304);
+            tips.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             tips.Name = "tips";
-            tips.Size = new System.Drawing.Size(99, 20);
+            tips.Size = new System.Drawing.Size(80, 17);
             tips.TabIndex = 10;
             tips.Text = "数据库状态：";
             // 
             // saveBtn
             // 
-            saveBtn.Location = new System.Drawing.Point(83, 393);
+            saveBtn.Location = new System.Drawing.Point(65, 334);
+            saveBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             saveBtn.Name = "saveBtn";
-            saveBtn.Size = new System.Drawing.Size(94, 29);
+            saveBtn.Size = new System.Drawing.Size(73, 25);
             saveBtn.TabIndex = 12;
             saveBtn.Text = "保存";
             saveBtn.UseVisualStyleBackColor = true;
@@ -154,9 +167,10 @@
             // 
             // cancelBtn
             // 
-            cancelBtn.Location = new System.Drawing.Point(183, 393);
+            cancelBtn.Location = new System.Drawing.Point(142, 334);
+            cancelBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             cancelBtn.Name = "cancelBtn";
-            cancelBtn.Size = new System.Drawing.Size(94, 29);
+            cancelBtn.Size = new System.Drawing.Size(73, 25);
             cancelBtn.TabIndex = 13;
             cancelBtn.Text = "关闭";
             cancelBtn.UseVisualStyleBackColor = true;
@@ -165,26 +179,29 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(293, 397);
+            label8.Location = new System.Drawing.Point(228, 337);
+            label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(382, 20);
+            label8.Size = new System.Drawing.Size(309, 17);
             label8.TabIndex = 14;
             label8.Text = "此程序是HiDesktop应用的一部分 - teko.IO 版权所有。";
             // 
             // iconDisplay
             // 
-            iconDisplay.Location = new System.Drawing.Point(671, 23);
+            iconDisplay.Location = new System.Drawing.Point(522, 20);
+            iconDisplay.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             iconDisplay.Name = "iconDisplay";
-            iconDisplay.Size = new System.Drawing.Size(80, 80);
+            iconDisplay.Size = new System.Drawing.Size(62, 68);
             iconDisplay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             iconDisplay.TabIndex = 15;
             iconDisplay.TabStop = false;
             // 
             // loadFromDbBtn
             // 
-            loadFromDbBtn.Location = new System.Drawing.Point(293, 123);
+            loadFromDbBtn.Location = new System.Drawing.Point(228, 105);
+            loadFromDbBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             loadFromDbBtn.Name = "loadFromDbBtn";
-            loadFromDbBtn.Size = new System.Drawing.Size(155, 29);
+            loadFromDbBtn.Size = new System.Drawing.Size(121, 25);
             loadFromDbBtn.TabIndex = 16;
             loadFromDbBtn.Text = "从数据库加载";
             loadFromDbBtn.UseVisualStyleBackColor = true;
@@ -192,9 +209,9 @@
             // 
             // ActivatorObjectEditor
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
+            ClientSize = new System.Drawing.Size(622, 382);
             Controls.Add(loadFromDbBtn);
             Controls.Add(iconDisplay);
             Controls.Add(label8);
@@ -212,6 +229,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             Name = "ActivatorObjectEditor";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "HiDesktop  - Activator Object Editor";
