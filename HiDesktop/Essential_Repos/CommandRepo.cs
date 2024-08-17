@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Widgets.MVP
+namespace Widgets.MVP.Essential_Repos
 {
     public class CommandRepo
     {

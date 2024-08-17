@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using Widgets.MVP;
+using Widgets.MVP.Essential_Repos;
 
 namespace HiDesktop
 {

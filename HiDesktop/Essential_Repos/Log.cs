@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Widgets.MVP
+namespace Widgets.MVP.Essential_Repos
 {
     //日志模块更新信息：20220726.a
     /// <summary>

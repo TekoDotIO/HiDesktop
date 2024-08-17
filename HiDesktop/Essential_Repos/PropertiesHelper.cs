@@ -14,7 +14,7 @@ using System.Text;
 //Completed at 2022/08/28 12:14
 
 
-namespace Widgets.MVP
+namespace Widgets.MVP.Essential_Repos
 {
     public class PropertiesHelper
     {

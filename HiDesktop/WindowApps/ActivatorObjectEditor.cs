@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Widgets.MVP.Essential_Repos;
 using Widgets.MVP.WidgetModels.ActivatorDataModel.Models;
 
 namespace Widgets.MVP.WidgetModels
@@ -82,6 +83,10 @@ namespace Widgets.MVP.WidgetModels
                 }
                 Invoke((MethodInvoker)delegate ()
                 {
+                    idBox.Text = ID;
+                    descriptionBox.Text = description;
+                    actionBox.Text = action;
+                    iconBox.Text = imgPath;
                     tips.Text = "数据库连接成功！";
                     tips.ForeColor = Color.Green;
                     Enabled = true;
@@ -164,7 +169,7 @@ namespace Widgets.MVP.WidgetModels
                 }
                 if (r == DialogResult.Cancel)
                 {
-                    e.Cancel = false;
+                    e.Cancel = true;
                 }
             }
 

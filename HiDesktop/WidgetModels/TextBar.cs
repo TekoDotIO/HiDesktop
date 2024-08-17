@@ -5,7 +5,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Widgets.MVP;
+using Widgets.MVP.Essential_Repos;
 
 namespace HiDesktop
 {

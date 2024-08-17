@@ -625,7 +625,11 @@ namespace Widgets.MVP.WidgetModels
             string action = emptyItemAction;
             if (elementEfObj != null)
             {
-                action = elementEfObj.Action + $"&id={ID}";
+                action = elementEfObj.Action;
+            }
+            else
+            {
+                action = emptyItemAction + $"&id={ID}";
             }
             try
             {
