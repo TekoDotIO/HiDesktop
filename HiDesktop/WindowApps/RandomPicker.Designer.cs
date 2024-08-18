@@ -34,29 +34,28 @@
             CopyrightLabel = new System.Windows.Forms.Label();
             AppPages = new System.Windows.Forms.TabControl();
             RanNumPage = new System.Windows.Forms.TabPage();
-            RanDbPage = new System.Windows.Forms.TabPage();
-            RanNumResultDisplayLabel = new System.Windows.Forms.Label();
-            RanNumDisplay = new System.Windows.Forms.Label();
-            RanNumAddToExcept = new System.Windows.Forms.CheckBox();
-            RanNumMin = new System.Windows.Forms.Label();
-            RanNumMinBox = new System.Windows.Forms.TextBox();
-            RanNumMaxBox = new System.Windows.Forms.TextBox();
-            RanNumMax = new System.Windows.Forms.Label();
-            RanNumExcept = new System.Windows.Forms.Label();
-            RanNumExceptBox = new System.Windows.Forms.TextBox();
+            RanNumDisplayFontSizeApply = new System.Windows.Forms.Button();
+            RanNumHistoryBtn = new System.Windows.Forms.Button();
+            RanNumDisplayFontSizeBox = new System.Windows.Forms.TextBox();
+            RanNumGenerateBtn = new System.Windows.Forms.Button();
+            RanNumDisplayFontSize = new System.Windows.Forms.Label();
+            RanNumAnimate = new System.Windows.Forms.CheckBox();
             RanNumNumBox = new System.Windows.Forms.TextBox();
             RanNumNum = new System.Windows.Forms.Label();
-            RanNumAnimate = new System.Windows.Forms.CheckBox();
-            RanNumGenerateBtn = new System.Windows.Forms.Button();
-            RanNumHistoryBtn = new System.Windows.Forms.Button();
-            fullScreenBox = new System.Windows.Forms.CheckBox();
-            darkModeBox = new System.Windows.Forms.CheckBox();
-            fontSizeTimesTitle = new System.Windows.Forms.Label();
-            fontSizeTimesBox = new System.Windows.Forms.TextBox();
-            fontSizeApplyBtn = new System.Windows.Forms.Button();
-            RanNumDisplayFontSizeApply = new System.Windows.Forms.Button();
-            RanNumDisplayFontSizeBox = new System.Windows.Forms.TextBox();
-            RanNumDisplayFontSize = new System.Windows.Forms.Label();
+            RanNumExceptBox = new System.Windows.Forms.TextBox();
+            RanNumExcept = new System.Windows.Forms.Label();
+            RanNumMaxBox = new System.Windows.Forms.TextBox();
+            RanNumMax = new System.Windows.Forms.Label();
+            RanNumMinBox = new System.Windows.Forms.TextBox();
+            RanNumMin = new System.Windows.Forms.Label();
+            RanNumAddToExcept = new System.Windows.Forms.CheckBox();
+            RanNumDisplay = new System.Windows.Forms.Label();
+            RanNumResultDisplayLabel = new System.Windows.Forms.Label();
+            RanDbPage = new System.Windows.Forms.TabPage();
+            RanDbEnableWeight = new System.Windows.Forms.CheckBox();
+            RanDbSettingBtn = new System.Windows.Forms.Button();
+            RanDbExceptTagBox = new System.Windows.Forms.TextBox();
+            RanDbExceptTag = new System.Windows.Forms.Label();
             aRanDbDisplayFontSizeApplyBtn = new System.Windows.Forms.Button();
             RanDbHistory = new System.Windows.Forms.Button();
             RanDbGenerateBtn = new System.Windows.Forms.Button();
@@ -71,9 +70,11 @@
             RanDbAddToExcept = new System.Windows.Forms.CheckBox();
             RanDbDisplay = new System.Windows.Forms.Label();
             RanDbResultDisplayText = new System.Windows.Forms.Label();
-            RanDbExceptTagBox = new System.Windows.Forms.TextBox();
-            RanDbExceptTag = new System.Windows.Forms.Label();
-            RanDbSettingBtn = new System.Windows.Forms.Button();
+            fullScreenBox = new System.Windows.Forms.CheckBox();
+            darkModeBox = new System.Windows.Forms.CheckBox();
+            fontSizeTimesTitle = new System.Windows.Forms.Label();
+            fontSizeTimesBox = new System.Windows.Forms.TextBox();
+            fontSizeApplyBtn = new System.Windows.Forms.Button();
             ExitBtn = new System.Windows.Forms.Button();
             AppPages.SuspendLayout();
             RanNumPage.SuspendLayout();
@@ -126,8 +127,106 @@
             RanNumPage.Name = "RanNumPage";
             RanNumPage.UseVisualStyleBackColor = true;
             // 
+            // RanNumDisplayFontSizeApply
+            // 
+            RanNumDisplayFontSizeApply.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(RanNumDisplayFontSizeApply, "RanNumDisplayFontSizeApply");
+            RanNumDisplayFontSizeApply.Name = "RanNumDisplayFontSizeApply";
+            RanNumDisplayFontSizeApply.UseVisualStyleBackColor = false;
+            // 
+            // RanNumHistoryBtn
+            // 
+            RanNumHistoryBtn.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(RanNumHistoryBtn, "RanNumHistoryBtn");
+            RanNumHistoryBtn.Name = "RanNumHistoryBtn";
+            RanNumHistoryBtn.UseVisualStyleBackColor = false;
+            // 
+            // RanNumDisplayFontSizeBox
+            // 
+            resources.ApplyResources(RanNumDisplayFontSizeBox, "RanNumDisplayFontSizeBox");
+            RanNumDisplayFontSizeBox.Name = "RanNumDisplayFontSizeBox";
+            // 
+            // RanNumGenerateBtn
+            // 
+            RanNumGenerateBtn.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(RanNumGenerateBtn, "RanNumGenerateBtn");
+            RanNumGenerateBtn.Name = "RanNumGenerateBtn";
+            RanNumGenerateBtn.UseVisualStyleBackColor = false;
+            // 
+            // RanNumDisplayFontSize
+            // 
+            resources.ApplyResources(RanNumDisplayFontSize, "RanNumDisplayFontSize");
+            RanNumDisplayFontSize.Name = "RanNumDisplayFontSize";
+            // 
+            // RanNumAnimate
+            // 
+            resources.ApplyResources(RanNumAnimate, "RanNumAnimate");
+            RanNumAnimate.Checked = true;
+            RanNumAnimate.CheckState = System.Windows.Forms.CheckState.Checked;
+            RanNumAnimate.Name = "RanNumAnimate";
+            RanNumAnimate.UseVisualStyleBackColor = true;
+            // 
+            // RanNumNumBox
+            // 
+            resources.ApplyResources(RanNumNumBox, "RanNumNumBox");
+            RanNumNumBox.Name = "RanNumNumBox";
+            // 
+            // RanNumNum
+            // 
+            resources.ApplyResources(RanNumNum, "RanNumNum");
+            RanNumNum.Name = "RanNumNum";
+            // 
+            // RanNumExceptBox
+            // 
+            resources.ApplyResources(RanNumExceptBox, "RanNumExceptBox");
+            RanNumExceptBox.Name = "RanNumExceptBox";
+            // 
+            // RanNumExcept
+            // 
+            resources.ApplyResources(RanNumExcept, "RanNumExcept");
+            RanNumExcept.Name = "RanNumExcept";
+            // 
+            // RanNumMaxBox
+            // 
+            resources.ApplyResources(RanNumMaxBox, "RanNumMaxBox");
+            RanNumMaxBox.Name = "RanNumMaxBox";
+            // 
+            // RanNumMax
+            // 
+            resources.ApplyResources(RanNumMax, "RanNumMax");
+            RanNumMax.Name = "RanNumMax";
+            // 
+            // RanNumMinBox
+            // 
+            resources.ApplyResources(RanNumMinBox, "RanNumMinBox");
+            RanNumMinBox.Name = "RanNumMinBox";
+            // 
+            // RanNumMin
+            // 
+            resources.ApplyResources(RanNumMin, "RanNumMin");
+            RanNumMin.Name = "RanNumMin";
+            // 
+            // RanNumAddToExcept
+            // 
+            resources.ApplyResources(RanNumAddToExcept, "RanNumAddToExcept");
+            RanNumAddToExcept.Checked = true;
+            RanNumAddToExcept.CheckState = System.Windows.Forms.CheckState.Checked;
+            RanNumAddToExcept.Name = "RanNumAddToExcept";
+            RanNumAddToExcept.UseVisualStyleBackColor = true;
+            // 
+            // RanNumDisplay
+            // 
+            resources.ApplyResources(RanNumDisplay, "RanNumDisplay");
+            RanNumDisplay.Name = "RanNumDisplay";
+            // 
+            // RanNumResultDisplayLabel
+            // 
+            resources.ApplyResources(RanNumResultDisplayLabel, "RanNumResultDisplayLabel");
+            RanNumResultDisplayLabel.Name = "RanNumResultDisplayLabel";
+            // 
             // RanDbPage
             // 
+            RanDbPage.Controls.Add(RanDbEnableWeight);
             RanDbPage.Controls.Add(RanDbSettingBtn);
             RanDbPage.Controls.Add(RanDbExceptTagBox);
             RanDbPage.Controls.Add(RanDbExceptTag);
@@ -149,146 +248,55 @@
             RanDbPage.Name = "RanDbPage";
             RanDbPage.UseVisualStyleBackColor = true;
             // 
-            // RanNumResultDisplayLabel
+            // RanDbEnableWeight
             // 
-            resources.ApplyResources(RanNumResultDisplayLabel, "RanNumResultDisplayLabel");
-            RanNumResultDisplayLabel.Name = "RanNumResultDisplayLabel";
+            resources.ApplyResources(RanDbEnableWeight, "RanDbEnableWeight");
+            RanDbEnableWeight.Checked = true;
+            RanDbEnableWeight.CheckState = System.Windows.Forms.CheckState.Checked;
+            RanDbEnableWeight.Name = "RanDbEnableWeight";
+            RanDbEnableWeight.UseVisualStyleBackColor = true;
             // 
-            // RanNumDisplay
+            // RanDbSettingBtn
             // 
-            resources.ApplyResources(RanNumDisplay, "RanNumDisplay");
-            RanNumDisplay.Name = "RanNumDisplay";
+            RanDbSettingBtn.BackColor = System.Drawing.SystemColors.Control;
+            RanDbSettingBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(RanDbSettingBtn, "RanDbSettingBtn");
+            RanDbSettingBtn.Name = "RanDbSettingBtn";
+            RanDbSettingBtn.UseVisualStyleBackColor = false;
             // 
-            // RanNumAddToExcept
+            // RanDbExceptTagBox
             // 
-            resources.ApplyResources(RanNumAddToExcept, "RanNumAddToExcept");
-            RanNumAddToExcept.Checked = true;
-            RanNumAddToExcept.CheckState = System.Windows.Forms.CheckState.Checked;
-            RanNumAddToExcept.Name = "RanNumAddToExcept";
-            RanNumAddToExcept.UseVisualStyleBackColor = true;
+            resources.ApplyResources(RanDbExceptTagBox, "RanDbExceptTagBox");
+            RanDbExceptTagBox.Name = "RanDbExceptTagBox";
             // 
-            // RanNumMin
+            // RanDbExceptTag
             // 
-            resources.ApplyResources(RanNumMin, "RanNumMin");
-            RanNumMin.Name = "RanNumMin";
-            // 
-            // RanNumMinBox
-            // 
-            resources.ApplyResources(RanNumMinBox, "RanNumMinBox");
-            RanNumMinBox.Name = "RanNumMinBox";
-            // 
-            // RanNumMaxBox
-            // 
-            resources.ApplyResources(RanNumMaxBox, "RanNumMaxBox");
-            RanNumMaxBox.Name = "RanNumMaxBox";
-            // 
-            // RanNumMax
-            // 
-            resources.ApplyResources(RanNumMax, "RanNumMax");
-            RanNumMax.Name = "RanNumMax";
-            // 
-            // RanNumExcept
-            // 
-            resources.ApplyResources(RanNumExcept, "RanNumExcept");
-            RanNumExcept.Name = "RanNumExcept";
-            // 
-            // RanNumExceptBox
-            // 
-            resources.ApplyResources(RanNumExceptBox, "RanNumExceptBox");
-            RanNumExceptBox.Name = "RanNumExceptBox";
-            // 
-            // RanNumNumBox
-            // 
-            resources.ApplyResources(RanNumNumBox, "RanNumNumBox");
-            RanNumNumBox.Name = "RanNumNumBox";
-            // 
-            // RanNumNum
-            // 
-            resources.ApplyResources(RanNumNum, "RanNumNum");
-            RanNumNum.Name = "RanNumNum";
-            // 
-            // RanNumAnimate
-            // 
-            resources.ApplyResources(RanNumAnimate, "RanNumAnimate");
-            RanNumAnimate.Checked = true;
-            RanNumAnimate.CheckState = System.Windows.Forms.CheckState.Checked;
-            RanNumAnimate.Name = "RanNumAnimate";
-            RanNumAnimate.UseVisualStyleBackColor = true;
-            // 
-            // RanNumGenerateBtn
-            // 
-            resources.ApplyResources(RanNumGenerateBtn, "RanNumGenerateBtn");
-            RanNumGenerateBtn.Name = "RanNumGenerateBtn";
-            RanNumGenerateBtn.UseVisualStyleBackColor = true;
-            // 
-            // RanNumHistoryBtn
-            // 
-            resources.ApplyResources(RanNumHistoryBtn, "RanNumHistoryBtn");
-            RanNumHistoryBtn.Name = "RanNumHistoryBtn";
-            RanNumHistoryBtn.UseVisualStyleBackColor = true;
-            // 
-            // fullScreenBox
-            // 
-            resources.ApplyResources(fullScreenBox, "fullScreenBox");
-            fullScreenBox.Name = "fullScreenBox";
-            fullScreenBox.UseVisualStyleBackColor = true;
-            // 
-            // darkModeBox
-            // 
-            resources.ApplyResources(darkModeBox, "darkModeBox");
-            darkModeBox.Name = "darkModeBox";
-            darkModeBox.UseVisualStyleBackColor = true;
-            darkModeBox.CheckedChanged += DarkModeBox_CheckedChanged;
-            // 
-            // fontSizeTimesTitle
-            // 
-            resources.ApplyResources(fontSizeTimesTitle, "fontSizeTimesTitle");
-            fontSizeTimesTitle.Name = "fontSizeTimesTitle";
-            // 
-            // fontSizeTimesBox
-            // 
-            resources.ApplyResources(fontSizeTimesBox, "fontSizeTimesBox");
-            fontSizeTimesBox.Name = "fontSizeTimesBox";
-            // 
-            // fontSizeApplyBtn
-            // 
-            resources.ApplyResources(fontSizeApplyBtn, "fontSizeApplyBtn");
-            fontSizeApplyBtn.Name = "fontSizeApplyBtn";
-            fontSizeApplyBtn.UseVisualStyleBackColor = true;
-            // 
-            // RanNumDisplayFontSizeApply
-            // 
-            resources.ApplyResources(RanNumDisplayFontSizeApply, "RanNumDisplayFontSizeApply");
-            RanNumDisplayFontSizeApply.Name = "RanNumDisplayFontSizeApply";
-            RanNumDisplayFontSizeApply.UseVisualStyleBackColor = true;
-            // 
-            // RanNumDisplayFontSizeBox
-            // 
-            resources.ApplyResources(RanNumDisplayFontSizeBox, "RanNumDisplayFontSizeBox");
-            RanNumDisplayFontSizeBox.Name = "RanNumDisplayFontSizeBox";
-            // 
-            // RanNumDisplayFontSize
-            // 
-            resources.ApplyResources(RanNumDisplayFontSize, "RanNumDisplayFontSize");
-            RanNumDisplayFontSize.Name = "RanNumDisplayFontSize";
+            resources.ApplyResources(RanDbExceptTag, "RanDbExceptTag");
+            RanDbExceptTag.Name = "RanDbExceptTag";
             // 
             // aRanDbDisplayFontSizeApplyBtn
             // 
+            aRanDbDisplayFontSizeApplyBtn.BackColor = System.Drawing.SystemColors.Control;
+            aRanDbDisplayFontSizeApplyBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             resources.ApplyResources(aRanDbDisplayFontSizeApplyBtn, "aRanDbDisplayFontSizeApplyBtn");
             aRanDbDisplayFontSizeApplyBtn.Name = "aRanDbDisplayFontSizeApplyBtn";
-            aRanDbDisplayFontSizeApplyBtn.UseVisualStyleBackColor = true;
+            aRanDbDisplayFontSizeApplyBtn.UseVisualStyleBackColor = false;
             // 
             // RanDbHistory
             // 
+            RanDbHistory.BackColor = System.Drawing.SystemColors.Control;
+            RanDbHistory.ForeColor = System.Drawing.SystemColors.ControlText;
             resources.ApplyResources(RanDbHistory, "RanDbHistory");
             RanDbHistory.Name = "RanDbHistory";
-            RanDbHistory.UseVisualStyleBackColor = true;
+            RanDbHistory.UseVisualStyleBackColor = false;
             // 
             // RanDbGenerateBtn
             // 
+            RanDbGenerateBtn.BackColor = System.Drawing.SystemColors.Control;
+            RanDbGenerateBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             resources.ApplyResources(RanDbGenerateBtn, "RanDbGenerateBtn");
             RanDbGenerateBtn.Name = "RanDbGenerateBtn";
-            RanDbGenerateBtn.UseVisualStyleBackColor = true;
+            RanDbGenerateBtn.UseVisualStyleBackColor = false;
             // 
             // RanDbDisplayFontSize
             // 
@@ -340,6 +348,7 @@
             RanDbAddToExcept.CheckState = System.Windows.Forms.CheckState.Checked;
             RanDbAddToExcept.Name = "RanDbAddToExcept";
             RanDbAddToExcept.UseVisualStyleBackColor = true;
+            RanDbAddToExcept.CheckedChanged += RanDbAddToExcept_CheckedChanged;
             // 
             // RanDbDisplay
             // 
@@ -351,21 +360,34 @@
             resources.ApplyResources(RanDbResultDisplayText, "RanDbResultDisplayText");
             RanDbResultDisplayText.Name = "RanDbResultDisplayText";
             // 
-            // RanDbExceptTagBox
+            // fullScreenBox
             // 
-            resources.ApplyResources(RanDbExceptTagBox, "RanDbExceptTagBox");
-            RanDbExceptTagBox.Name = "RanDbExceptTagBox";
+            resources.ApplyResources(fullScreenBox, "fullScreenBox");
+            fullScreenBox.Name = "fullScreenBox";
+            fullScreenBox.UseVisualStyleBackColor = true;
             // 
-            // RanDbExceptTag
+            // darkModeBox
             // 
-            resources.ApplyResources(RanDbExceptTag, "RanDbExceptTag");
-            RanDbExceptTag.Name = "RanDbExceptTag";
+            resources.ApplyResources(darkModeBox, "darkModeBox");
+            darkModeBox.Name = "darkModeBox";
+            darkModeBox.UseVisualStyleBackColor = true;
+            darkModeBox.CheckedChanged += DarkModeBox_CheckedChanged;
             // 
-            // RanDbSettingBtn
+            // fontSizeTimesTitle
             // 
-            resources.ApplyResources(RanDbSettingBtn, "RanDbSettingBtn");
-            RanDbSettingBtn.Name = "RanDbSettingBtn";
-            RanDbSettingBtn.UseVisualStyleBackColor = true;
+            resources.ApplyResources(fontSizeTimesTitle, "fontSizeTimesTitle");
+            fontSizeTimesTitle.Name = "fontSizeTimesTitle";
+            // 
+            // fontSizeTimesBox
+            // 
+            resources.ApplyResources(fontSizeTimesBox, "fontSizeTimesBox");
+            fontSizeTimesBox.Name = "fontSizeTimesBox";
+            // 
+            // fontSizeApplyBtn
+            // 
+            resources.ApplyResources(fontSizeApplyBtn, "fontSizeApplyBtn");
+            fontSizeApplyBtn.Name = "fontSizeApplyBtn";
+            fontSizeApplyBtn.UseVisualStyleBackColor = true;
             // 
             // ExitBtn
             // 
@@ -446,5 +468,6 @@
         private System.Windows.Forms.Label RanDbResultDisplayText;
         private System.Windows.Forms.Button RanDbSettingBtn;
         private System.Windows.Forms.Button ExitBtn;
+        private System.Windows.Forms.CheckBox RanDbEnableWeight;
     }
 }

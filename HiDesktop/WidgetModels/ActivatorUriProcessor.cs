@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Widgets.MVP.Essential_Repos;
 using Widgets.MVP.WindowApps;
+using System.Threading;
 
 namespace Widgets.MVP.WidgetModels
 {
@@ -142,7 +143,11 @@ namespace Widgets.MVP.WidgetModels
                     break;
                 case "randomPicker":
                     RandomPicker rp = new();
-                    rp.Show();
+                    Thread t = new(new ThreadStart(() =>
+                    {
+                        rp.ShowDialog();
+                    }));
+                    t.Start();
                     break;
                 default:
                     Log.SaveLog($"Not a legal hidesktop://command protocol input:{args["action"]}.", className);
