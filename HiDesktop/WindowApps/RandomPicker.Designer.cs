@@ -72,9 +72,6 @@
             RanDbResultDisplayText = new System.Windows.Forms.Label();
             fullScreenBox = new System.Windows.Forms.CheckBox();
             darkModeBox = new System.Windows.Forms.CheckBox();
-            fontSizeTimesTitle = new System.Windows.Forms.Label();
-            fontSizeTimesBox = new System.Windows.Forms.TextBox();
-            fontSizeApplyBtn = new System.Windows.Forms.Button();
             ExitBtn = new System.Windows.Forms.Button();
             AppPages.SuspendLayout();
             RanNumPage.SuspendLayout();
@@ -365,6 +362,7 @@
             resources.ApplyResources(fullScreenBox, "fullScreenBox");
             fullScreenBox.Name = "fullScreenBox";
             fullScreenBox.UseVisualStyleBackColor = true;
+            fullScreenBox.CheckedChanged += fullScreenBox_CheckedChanged;
             // 
             // darkModeBox
             // 
@@ -372,22 +370,6 @@
             darkModeBox.Name = "darkModeBox";
             darkModeBox.UseVisualStyleBackColor = true;
             darkModeBox.CheckedChanged += DarkModeBox_CheckedChanged;
-            // 
-            // fontSizeTimesTitle
-            // 
-            resources.ApplyResources(fontSizeTimesTitle, "fontSizeTimesTitle");
-            fontSizeTimesTitle.Name = "fontSizeTimesTitle";
-            // 
-            // fontSizeTimesBox
-            // 
-            resources.ApplyResources(fontSizeTimesBox, "fontSizeTimesBox");
-            fontSizeTimesBox.Name = "fontSizeTimesBox";
-            // 
-            // fontSizeApplyBtn
-            // 
-            resources.ApplyResources(fontSizeApplyBtn, "fontSizeApplyBtn");
-            fontSizeApplyBtn.Name = "fontSizeApplyBtn";
-            fontSizeApplyBtn.UseVisualStyleBackColor = true;
             // 
             // ExitBtn
             // 
@@ -400,17 +382,14 @@
             resources.ApplyResources(this, "$this");
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             Controls.Add(ExitBtn);
-            Controls.Add(fontSizeApplyBtn);
-            Controls.Add(fontSizeTimesBox);
-            Controls.Add(fontSizeTimesTitle);
             Controls.Add(darkModeBox);
             Controls.Add(fullScreenBox);
             Controls.Add(AppPages);
             Controls.Add(CopyrightLabel);
             Controls.Add(Subtitle);
             Controls.Add(Title);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             Name = "RandomPicker";
+            Resize += RandomPicker_Resize;
             AppPages.ResumeLayout(false);
             RanNumPage.ResumeLayout(false);
             RanNumPage.PerformLayout();
@@ -444,9 +423,6 @@
         private System.Windows.Forms.Button RanNumGenerateBtn;
         private System.Windows.Forms.CheckBox fullScreenBox;
         private System.Windows.Forms.CheckBox darkModeBox;
-        private System.Windows.Forms.Label fontSizeTimesTitle;
-        private System.Windows.Forms.TextBox fontSizeTimesBox;
-        private System.Windows.Forms.Button fontSizeApplyBtn;
         private System.Windows.Forms.Button RanNumDisplayFontSizeApply;
         private System.Windows.Forms.TextBox RanNumDisplayFontSizeBox;
         private System.Windows.Forms.Label RanNumDisplayFontSize;
