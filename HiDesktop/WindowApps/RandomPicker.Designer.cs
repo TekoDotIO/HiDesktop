@@ -34,6 +34,8 @@
             CopyrightLabel = new System.Windows.Forms.Label();
             AppPages = new System.Windows.Forms.TabControl();
             RanNumPage = new System.Windows.Forms.TabPage();
+            RanNumMemClear = new System.Windows.Forms.Button();
+            RanNumDisplay = new System.Windows.Forms.Label();
             RanNumDisplayFontSizeApply = new System.Windows.Forms.Button();
             RanNumHistoryBtn = new System.Windows.Forms.Button();
             RanNumDisplayFontSizeBox = new System.Windows.Forms.TextBox();
@@ -49,7 +51,6 @@
             RanNumMinBox = new System.Windows.Forms.TextBox();
             RanNumMin = new System.Windows.Forms.Label();
             RanNumAddToExcept = new System.Windows.Forms.CheckBox();
-            RanNumDisplay = new System.Windows.Forms.Label();
             RanNumResultDisplayLabel = new System.Windows.Forms.Label();
             RanDbPage = new System.Windows.Forms.TabPage();
             RanDbEnableWeight = new System.Windows.Forms.CheckBox();
@@ -73,6 +74,7 @@
             fullScreenBox = new System.Windows.Forms.CheckBox();
             darkModeBox = new System.Windows.Forms.CheckBox();
             ExitBtn = new System.Windows.Forms.Button();
+            RanDbMemClear = new System.Windows.Forms.Button();
             AppPages.SuspendLayout();
             RanNumPage.SuspendLayout();
             RanDbPage.SuspendLayout();
@@ -103,6 +105,8 @@
             // 
             // RanNumPage
             // 
+            RanNumPage.Controls.Add(RanNumMemClear);
+            RanNumPage.Controls.Add(RanNumDisplay);
             RanNumPage.Controls.Add(RanNumDisplayFontSizeApply);
             RanNumPage.Controls.Add(RanNumHistoryBtn);
             RanNumPage.Controls.Add(RanNumDisplayFontSizeBox);
@@ -118,11 +122,25 @@
             RanNumPage.Controls.Add(RanNumMinBox);
             RanNumPage.Controls.Add(RanNumMin);
             RanNumPage.Controls.Add(RanNumAddToExcept);
-            RanNumPage.Controls.Add(RanNumDisplay);
             RanNumPage.Controls.Add(RanNumResultDisplayLabel);
             resources.ApplyResources(RanNumPage, "RanNumPage");
             RanNumPage.Name = "RanNumPage";
             RanNumPage.UseVisualStyleBackColor = true;
+            RanNumPage.Click += RanNumPage_Click;
+            // 
+            // RanNumMemClear
+            // 
+            RanNumMemClear.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(RanNumMemClear, "RanNumMemClear");
+            RanNumMemClear.Name = "RanNumMemClear";
+            RanNumMemClear.UseVisualStyleBackColor = false;
+            RanNumMemClear.Click += RanNumMemClear_Click;
+            // 
+            // RanNumDisplay
+            // 
+            resources.ApplyResources(RanNumDisplay, "RanNumDisplay");
+            RanNumDisplay.Name = "RanNumDisplay";
+            RanNumDisplay.Click += label1_Click;
             // 
             // RanNumDisplayFontSizeApply
             // 
@@ -130,6 +148,7 @@
             resources.ApplyResources(RanNumDisplayFontSizeApply, "RanNumDisplayFontSizeApply");
             RanNumDisplayFontSizeApply.Name = "RanNumDisplayFontSizeApply";
             RanNumDisplayFontSizeApply.UseVisualStyleBackColor = false;
+            RanNumDisplayFontSizeApply.Click += RanNumDisplayFontSizeApply_Click_1;
             // 
             // RanNumHistoryBtn
             // 
@@ -137,6 +156,7 @@
             resources.ApplyResources(RanNumHistoryBtn, "RanNumHistoryBtn");
             RanNumHistoryBtn.Name = "RanNumHistoryBtn";
             RanNumHistoryBtn.UseVisualStyleBackColor = false;
+            RanNumHistoryBtn.Click += RanNumHistoryBtn_Click;
             // 
             // RanNumDisplayFontSizeBox
             // 
@@ -149,6 +169,7 @@
             resources.ApplyResources(RanNumGenerateBtn, "RanNumGenerateBtn");
             RanNumGenerateBtn.Name = "RanNumGenerateBtn";
             RanNumGenerateBtn.UseVisualStyleBackColor = false;
+            RanNumGenerateBtn.Click += RanNumGenerateBtn_Click;
             // 
             // RanNumDisplayFontSize
             // 
@@ -211,11 +232,6 @@
             RanNumAddToExcept.Name = "RanNumAddToExcept";
             RanNumAddToExcept.UseVisualStyleBackColor = true;
             // 
-            // RanNumDisplay
-            // 
-            resources.ApplyResources(RanNumDisplay, "RanNumDisplay");
-            RanNumDisplay.Name = "RanNumDisplay";
-            // 
             // RanNumResultDisplayLabel
             // 
             resources.ApplyResources(RanNumResultDisplayLabel, "RanNumResultDisplayLabel");
@@ -223,6 +239,7 @@
             // 
             // RanDbPage
             // 
+            RanDbPage.Controls.Add(RanDbMemClear);
             RanDbPage.Controls.Add(RanDbEnableWeight);
             RanDbPage.Controls.Add(RanDbSettingBtn);
             RanDbPage.Controls.Add(RanDbExceptTagBox);
@@ -376,6 +393,14 @@
             resources.ApplyResources(ExitBtn, "ExitBtn");
             ExitBtn.Name = "ExitBtn";
             ExitBtn.UseVisualStyleBackColor = true;
+            ExitBtn.Click += ExitBtn_Click_1;
+            // 
+            // RanDbMemClear
+            // 
+            RanDbMemClear.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(RanDbMemClear, "RanDbMemClear");
+            RanDbMemClear.Name = "RanDbMemClear";
+            RanDbMemClear.UseVisualStyleBackColor = false;
             // 
             // RandomPicker
             // 
@@ -389,6 +414,7 @@
             Controls.Add(Subtitle);
             Controls.Add(Title);
             Name = "RandomPicker";
+            Load += RandomPicker_Load;
             Resize += RandomPicker_Resize;
             AppPages.ResumeLayout(false);
             RanNumPage.ResumeLayout(false);
@@ -404,13 +430,11 @@
         private System.Windows.Forms.Label Subtitle;
         private System.Windows.Forms.Label Title;
         private System.Windows.Forms.Label CopyrightLabel;
-        private System.Windows.Forms.TabControl AppPages;
         private System.Windows.Forms.TabPage RanNumPage;
         private System.Windows.Forms.TabPage RanDbPage;
         private System.Windows.Forms.TextBox RanNumMinBox;
         private System.Windows.Forms.Label RanNumMin;
         private System.Windows.Forms.CheckBox RanNumAddToExcept;
-        private System.Windows.Forms.Label RanNumDisplay;
         private System.Windows.Forms.Label RanNumResultDisplayLabel;
         private System.Windows.Forms.TextBox RanNumMaxBox;
         private System.Windows.Forms.Label RanNumMax;
@@ -445,5 +469,9 @@
         private System.Windows.Forms.Button RanDbSettingBtn;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.CheckBox RanDbEnableWeight;
+        public System.Windows.Forms.TabControl AppPages;
+        private System.Windows.Forms.Label RanNumDisplay;
+        private System.Windows.Forms.Button RanNumMemClear;
+        private System.Windows.Forms.Button RanDbMemClear;
     }
 }

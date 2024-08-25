@@ -1,12 +1,16 @@
-﻿using System;
+﻿//using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Widgets.MVP.Essential_Repos;
 
 namespace Widgets.MVP.WindowApps
 {
@@ -255,6 +259,189 @@ namespace Widgets.MVP.WindowApps
                 FormBorderStyle = FormBorderStyle.Sizable;
                 this.WindowState = FormWindowState.Normal;
             }
+        }
+
+
+
+        class RandintPicker
+        {
+            public static RandomPicker Parent;
+            public static string HistoryStr = "";
+            public static void ShowHistory()
+            {
+                Parent.RanNumDisplay.Text = HistoryStr;
+            }
+            public static void Generate()
+            {
+                try
+                {
+                    int minium = Convert.ToInt32(Parent.RanNumMinBox.Text);
+                    int maxium = Convert.ToInt32(Parent.RanNumMaxBox.Text);
+                    int num = Convert.ToInt32(Parent.RanNumNumBox.Text);
+                    bool animate = Parent.RanNumAnimate.Checked;
+                    bool addToExcept = Parent.RanNumAddToExcept.Checked;
+                    string exceptions = Parent.RanNumExceptBox.Text;
+                    var except = exceptions.Split(",");
+                    string result = "";
+                    if (animate)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            Random r = new();
+                            int n = r.Next(minium, maxium);
+                            int t = 0;
+                            while (except.Contains(n.ToString()))
+                            {
+                                n = r.Next(minium, maxium);
+                                //Parent.RanNumDisplay.Text = n.ToString();
+
+                                t++;
+                                if (t > 5)
+                                {
+                                    break;
+                                }
+                            }
+                            Parent.RanNumDisplay.Text = n.ToString();
+                            Parent.RanNumDisplay.Refresh();
+                            Thread.Sleep(25);
+                        }
+                    }
+                    bool flag = false;
+                    for (int i = minium; i < maxium; i++)
+                    {
+                        if (!except.Contains(i.ToString()))
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag)
+                    {
+                        if (num > maxium - minium - (exceptions.Trim() == "" ? 0 : except.Count()))
+                        {
+                            flag = false;
+                        }
+                    }
+                    if (!flag)
+                    {
+                        throw new Exception("所剩项目不足以进行抽取！No enough choices.");
+                    }
+                    for (int i = 0; i < num; i++)
+                    {
+                        Random r = new();
+                        int n = r.Next(minium, maxium);
+                        while (except.Contains(n.ToString()))
+                        {
+                            n = r.Next(minium, maxium);
+                            //Parent.RanNumDisplay.Text = n.ToString();
+                        }
+                        result = result == "" ? n.ToString() : result + "," + n.ToString();
+                        string[] ex2 = new string[except.Count() + 1];
+                        int q = 0;
+                        foreach (var item in except)
+                        {
+                            ex2[q] = item;
+                            q++;
+                        }
+                        ex2[except.Count()] = n.ToString();
+                        except = ex2;
+
+                    }
+                    Parent.RanNumDisplay.Text = result;
+                    if (addToExcept)
+                    {
+                        Parent.RanNumExceptBox.Text = Parent.RanNumExceptBox.Text.Trim() == "" ? result : Parent.RanNumExceptBox.Text + "," + result;
+                    }
+                    HistoryStr = HistoryStr == "" ? result : HistoryStr + "," + result;
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when generating. Ex:{ex}", "RandomPicker");
+                    var r = MessageBox.Show($"抽取时发生错误！请检查参数！\n详细信息：\n{ex}\n\n如需调试，请点击“是”。", "随机选取程序 - 错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (r == DialogResult.Yes)
+                    {
+                        throw;
+                    }
+
+                }
+            }
+            public static void ApplyFontSize()
+            {
+                try
+                {
+                    int fontSize = Convert.ToInt32(Parent.RanNumDisplayFontSizeBox.Text);
+                    Parent.RanNumDisplay.Font = new(Parent.RanNumDisplay.Font.FontFamily, fontSize);
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when applying font. Ex:{ex}", "RandomPicker");
+                    var r = MessageBox.Show($"应用字体时发生错误！请检查参数！\n详细信息：\n{ex}\n\n如需调试，请点击“是”。", "随机选取程序 - 错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (r == DialogResult.Yes)
+                    {
+                        throw;
+                    }
+
+
+                }
+
+            }
+        }
+        class DBRandPicker
+        {
+            public static RandomPicker Parent;
+            static string HistoryStr = "";
+            public static void ShowHistory()
+            {
+                Parent.RanDbDisplay.Text = HistoryStr;
+            }
+        }
+
+        private void RandomPicker_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RanNumDisplay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RanNumPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RanNumHistoryBtn_Click(object sender, EventArgs e)
+        {
+            RandintPicker.Parent = this;
+            RandintPicker.ShowHistory();
+        }
+
+        private void RanNumGenerateBtn_Click(object sender, EventArgs e)
+        {
+            RandintPicker.Parent = this;
+            RandintPicker.Generate();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExitBtn_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void RanNumDisplayFontSizeApply_Click_1(object sender, EventArgs e)
+        {
+            RandintPicker.Parent = this;
+            RandintPicker.ApplyFontSize();
+        }
+
+        private void RanNumMemClear_Click(object sender, EventArgs e)
+        {
+            RandintPicker.HistoryStr = "";
         }
     }
 
