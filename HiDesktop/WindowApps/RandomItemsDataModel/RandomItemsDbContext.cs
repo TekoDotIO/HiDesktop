@@ -1,28 +1,28 @@
-﻿using System;
+﻿using SQLite.CodeFirst;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SQLite;
 using System.Threading.Tasks;
 using System.Data.SQLite.EF6;
-using System.Data.Entity;
-using System.Data.SQLite;
 using System.Data.Entity.Core;
-using Widgets.MVP.WidgetModels.ActivatorDataModel.Models;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using SQLite.CodeFirst;
+using System.Linq;
+using System.Text;
+using Widgets.MVP.WindowApps.RandomItemsDataModel.Models;
 
-namespace Widgets.MVP.WidgetModels.ActivatorDataModel
+namespace Widgets.MVP.WindowApps.RandomItemsDataModel
 {
-    public class ActivatorDbContext : DbContext
+    public class RandomItemsDbContext : DbContext
     {
         public DbSet<Config> Config { get; set; }
-        public DbSet<Repo> Repo { get; set; }
+        public DbSet<Items> Items { get; set; }
         public string path;
         /// <summary>
         /// 初始化实体链接
         /// </summary>
         /// <param name="path">数据库路径</param>
-        public ActivatorDbContext(string path) : base(new SQLiteConnection()
+        public RandomItemsDbContext(string path) : base(new SQLiteConnection()
         {
             ConnectionString = new SQLiteConnectionStringBuilder()
             { DataSource = path, ForeignKeys = true }
@@ -47,9 +47,9 @@ namespace Widgets.MVP.WidgetModels.ActivatorDataModel
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Config>().HasKey(c => c.ID);
-            modelBuilder.Entity<Repo>().HasKey(c => c.ID);
+            modelBuilder.Entity<Items>().HasKey(c => c.ID);
             // 其他实体类的主键定义
-            var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<ActivatorDbContext>(modelBuilder);
+            var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<RandomItemsDbContext>(modelBuilder);
             Database.SetInitializer(sqliteConnectionInitializer);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
@@ -63,21 +63,8 @@ namespace Widgets.MVP.WidgetModels.ActivatorDataModel
         public void PreloadDb()
         {
             object _ = Config.ToList();
-            _ = Repo.ToList();
+            _ = Items.ToList();
 
-        }
-        /// <summary>
-        /// 异步预加载数据库对象
-        /// </summary>
-        /// <returns></returns>
-        public async Task PreloadDbAsync()
-        {
-            Task preloadTask = Task.Run(() => {
-                object _ = Config.ToList();
-                _ = Repo.ToList();
-            });
-
-            await preloadTask;
         }
     }
 }
