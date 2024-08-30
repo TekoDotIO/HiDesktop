@@ -16,5 +16,19 @@ namespace Widgets.MVP.WindowApps
         {
             InitializeComponent();
         }
+
+        private void TestConnectBtn_Click(object sender, EventArgs e)
+        {
+            if (UseExcelBox.Checked)
+            {
+                //use excel.
+
+            }
+            else
+            {
+                //use sqlite.
+                MessageBox.Show("SQLite模块正在开发，敬请期待。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

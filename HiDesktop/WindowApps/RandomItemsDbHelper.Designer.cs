@@ -28,158 +28,317 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
-            textBox1 = new System.Windows.Forms.TextBox();
-            button1 = new System.Windows.Forms.Button();
+            Title = new System.Windows.Forms.Label();
+            Subtitle = new System.Windows.Forms.Label();
+            PathLabel = new System.Windows.Forms.Label();
+            PathBox = new System.Windows.Forms.TextBox();
+            ApplyBtn = new System.Windows.Forms.Button();
+            TestConnectBtn = new System.Windows.Forms.Button();
+            DataTabs = new System.Windows.Forms.TabControl();
+            DataPreviewPage = new System.Windows.Forms.TabPage();
+            PreviewBox = new System.Windows.Forms.DataGridView();
+            EditorPage = new System.Windows.Forms.TabPage();
             button2 = new System.Windows.Forms.Button();
-            tabControl1 = new System.Windows.Forms.TabControl();
-            tabPage1 = new System.Windows.Forms.TabPage();
-            tabPage2 = new System.Windows.Forms.TabPage();
-            label4 = new System.Windows.Forms.Label();
-            checkBox1 = new System.Windows.Forms.CheckBox();
-            tabControl1.SuspendLayout();
+            button1 = new System.Windows.Forms.Button();
+            EditorTipsLabel = new System.Windows.Forms.Label();
+            EditorPoolWeight = new System.Windows.Forms.TextBox();
+            EditorPoolWeightLabel = new System.Windows.Forms.Label();
+            EditorTags = new System.Windows.Forms.TextBox();
+            EditorTagsLabel = new System.Windows.Forms.Label();
+            EditorName = new System.Windows.Forms.TextBox();
+            EditorNameLabel = new System.Windows.Forms.Label();
+            EditorID = new System.Windows.Forms.TextBox();
+            EditorIDLabel = new System.Windows.Forms.Label();
+            TipLabel = new System.Windows.Forms.Label();
+            UseExcelBox = new System.Windows.Forms.CheckBox();
+            EditorSaveBtn = new System.Windows.Forms.Button();
+            DataTabs.SuspendLayout();
+            DataPreviewPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PreviewBox).BeginInit();
+            EditorPage.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // Title
             // 
-            label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            label1.Location = new System.Drawing.Point(28, 24);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(220, 39);
-            label1.TabIndex = 0;
-            label1.Text = "数据库连接选项";
+            Title.AutoSize = true;
+            Title.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            Title.Location = new System.Drawing.Point(28, 24);
+            Title.Name = "Title";
+            Title.Size = new System.Drawing.Size(220, 39);
+            Title.TabIndex = 0;
+            Title.Text = "数据库连接选项";
             // 
-            // label2
+            // Subtitle
             // 
-            label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label2.Location = new System.Drawing.Point(33, 67);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(314, 21);
-            label2.TabIndex = 1;
-            label2.Text = "选择一个随机项数据库，然后编辑或启用。";
+            Subtitle.AutoSize = true;
+            Subtitle.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Subtitle.Location = new System.Drawing.Point(33, 67);
+            Subtitle.Name = "Subtitle";
+            Subtitle.Size = new System.Drawing.Size(314, 21);
+            Subtitle.TabIndex = 1;
+            Subtitle.Text = "选择一个随机项数据库，然后编辑或启用。";
             // 
-            // label3
+            // PathLabel
             // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(33, 122);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(68, 17);
-            label3.TabIndex = 2;
-            label3.Text = "数据库路径";
+            PathLabel.AutoSize = true;
+            PathLabel.Location = new System.Drawing.Point(33, 122);
+            PathLabel.Name = "PathLabel";
+            PathLabel.Size = new System.Drawing.Size(68, 17);
+            PathLabel.TabIndex = 2;
+            PathLabel.Text = "数据库路径";
             // 
-            // textBox1
+            // PathBox
             // 
-            textBox1.Location = new System.Drawing.Point(107, 119);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(588, 23);
-            textBox1.TabIndex = 3;
+            PathBox.Location = new System.Drawing.Point(107, 119);
+            PathBox.Name = "PathBox";
+            PathBox.Size = new System.Drawing.Size(588, 23);
+            PathBox.TabIndex = 3;
             // 
-            // button1
+            // ApplyBtn
             // 
-            button1.Location = new System.Drawing.Point(469, 533);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(226, 23);
-            button1.TabIndex = 4;
-            button1.Text = "应用数据库到随机选取程序";
-            button1.UseVisualStyleBackColor = true;
+            ApplyBtn.Location = new System.Drawing.Point(469, 533);
+            ApplyBtn.Name = "ApplyBtn";
+            ApplyBtn.Size = new System.Drawing.Size(226, 23);
+            ApplyBtn.TabIndex = 4;
+            ApplyBtn.Text = "应用数据库到随机选取程序";
+            ApplyBtn.UseVisualStyleBackColor = true;
+            // 
+            // TestConnectBtn
+            // 
+            TestConnectBtn.Location = new System.Drawing.Point(33, 148);
+            TestConnectBtn.Name = "TestConnectBtn";
+            TestConnectBtn.Size = new System.Drawing.Size(105, 23);
+            TestConnectBtn.TabIndex = 5;
+            TestConnectBtn.Text = "测试连接";
+            TestConnectBtn.UseVisualStyleBackColor = true;
+            TestConnectBtn.Click += TestConnectBtn_Click;
+            // 
+            // DataTabs
+            // 
+            DataTabs.Controls.Add(DataPreviewPage);
+            DataTabs.Controls.Add(EditorPage);
+            DataTabs.Location = new System.Drawing.Point(33, 177);
+            DataTabs.Name = "DataTabs";
+            DataTabs.SelectedIndex = 0;
+            DataTabs.Size = new System.Drawing.Size(662, 350);
+            DataTabs.TabIndex = 6;
+            // 
+            // DataPreviewPage
+            // 
+            DataPreviewPage.Controls.Add(PreviewBox);
+            DataPreviewPage.Location = new System.Drawing.Point(4, 26);
+            DataPreviewPage.Name = "DataPreviewPage";
+            DataPreviewPage.Padding = new System.Windows.Forms.Padding(3);
+            DataPreviewPage.Size = new System.Drawing.Size(654, 320);
+            DataPreviewPage.TabIndex = 0;
+            DataPreviewPage.Text = "数据预览";
+            DataPreviewPage.UseVisualStyleBackColor = true;
+            // 
+            // PreviewBox
+            // 
+            PreviewBox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            PreviewBox.Location = new System.Drawing.Point(0, 0);
+            PreviewBox.Name = "PreviewBox";
+            PreviewBox.RowTemplate.Height = 25;
+            PreviewBox.Size = new System.Drawing.Size(654, 320);
+            PreviewBox.TabIndex = 0;
+            // 
+            // EditorPage
+            // 
+            EditorPage.Controls.Add(EditorSaveBtn);
+            EditorPage.Controls.Add(button2);
+            EditorPage.Controls.Add(button1);
+            EditorPage.Controls.Add(EditorTipsLabel);
+            EditorPage.Controls.Add(EditorPoolWeight);
+            EditorPage.Controls.Add(EditorPoolWeightLabel);
+            EditorPage.Controls.Add(EditorTags);
+            EditorPage.Controls.Add(EditorTagsLabel);
+            EditorPage.Controls.Add(EditorName);
+            EditorPage.Controls.Add(EditorNameLabel);
+            EditorPage.Controls.Add(EditorID);
+            EditorPage.Controls.Add(EditorIDLabel);
+            EditorPage.Location = new System.Drawing.Point(4, 26);
+            EditorPage.Name = "EditorPage";
+            EditorPage.Padding = new System.Windows.Forms.Padding(3);
+            EditorPage.Size = new System.Drawing.Size(654, 320);
+            EditorPage.TabIndex = 1;
+            EditorPage.Text = "快速编辑";
+            EditorPage.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(33, 148);
+            button2.Location = new System.Drawing.Point(300, 52);
             button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(105, 23);
-            button2.TabIndex = 5;
-            button2.Text = "测试连接";
+            button2.Size = new System.Drawing.Size(163, 23);
+            button2.TabIndex = 10;
+            button2.Text = "以Name为依据读取";
             button2.UseVisualStyleBackColor = true;
             // 
-            // tabControl1
+            // button1
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new System.Drawing.Point(33, 177);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new System.Drawing.Size(662, 350);
-            tabControl1.TabIndex = 6;
+            button1.Location = new System.Drawing.Point(300, 23);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(163, 23);
+            button1.TabIndex = 9;
+            button1.Text = "以ID为依据读取";
+            button1.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // EditorTipsLabel
             // 
-            tabPage1.Location = new System.Drawing.Point(4, 26);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            tabPage1.Size = new System.Drawing.Size(654, 320);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "数据预览";
-            tabPage1.UseVisualStyleBackColor = true;
+            EditorTipsLabel.Location = new System.Drawing.Point(43, 198);
+            EditorTipsLabel.Name = "EditorTipsLabel";
+            EditorTipsLabel.Size = new System.Drawing.Size(547, 44);
+            EditorTipsLabel.TabIndex = 8;
+            EditorTipsLabel.Text = "说明：ID - 项编号，用于检索与定位项；Name - 项名称，用于结果展示与检索；Tags - 项标签，用于快速定位和排除某些项；PoolWeight - 卡池概率权重，即抽取概率的倍率。";
             // 
-            // tabPage2
+            // EditorPoolWeight
             // 
-            tabPage2.Location = new System.Drawing.Point(4, 26);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(654, 320);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "快速编辑";
-            tabPage2.UseVisualStyleBackColor = true;
+            EditorPoolWeight.Location = new System.Drawing.Point(179, 157);
+            EditorPoolWeight.Name = "EditorPoolWeight";
+            EditorPoolWeight.Size = new System.Drawing.Size(100, 23);
+            EditorPoolWeight.TabIndex = 7;
             // 
-            // label4
+            // EditorPoolWeightLabel
             // 
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(144, 151);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(409, 17);
-            label4.TabIndex = 7;
-            label4.Text = "尚未连接到数据库！输入绝对/相对路径或拖放文件至输入框以读取数据库。";
+            EditorPoolWeightLabel.AutoSize = true;
+            EditorPoolWeightLabel.Location = new System.Drawing.Point(43, 160);
+            EditorPoolWeightLabel.Name = "EditorPoolWeightLabel";
+            EditorPoolWeightLabel.Size = new System.Drawing.Size(75, 17);
+            EditorPoolWeightLabel.TabIndex = 6;
+            EditorPoolWeightLabel.Text = "PoolWeight";
             // 
-            // checkBox1
+            // EditorTags
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new System.Drawing.Point(457, 70);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new System.Drawing.Size(225, 21);
-            checkBox1.TabIndex = 8;
-            checkBox1.Text = "启用Excel模拟数据库，而不是SQLite";
-            checkBox1.UseVisualStyleBackColor = true;
+            EditorTags.Location = new System.Drawing.Point(179, 81);
+            EditorTags.Multiline = true;
+            EditorTags.Name = "EditorTags";
+            EditorTags.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            EditorTags.Size = new System.Drawing.Size(411, 70);
+            EditorTags.TabIndex = 5;
+            // 
+            // EditorTagsLabel
+            // 
+            EditorTagsLabel.AutoSize = true;
+            EditorTagsLabel.Location = new System.Drawing.Point(43, 84);
+            EditorTagsLabel.Name = "EditorTagsLabel";
+            EditorTagsLabel.Size = new System.Drawing.Size(36, 17);
+            EditorTagsLabel.TabIndex = 4;
+            EditorTagsLabel.Text = "Tags";
+            // 
+            // EditorName
+            // 
+            EditorName.Location = new System.Drawing.Point(179, 52);
+            EditorName.Name = "EditorName";
+            EditorName.Size = new System.Drawing.Size(100, 23);
+            EditorName.TabIndex = 3;
+            // 
+            // EditorNameLabel
+            // 
+            EditorNameLabel.AutoSize = true;
+            EditorNameLabel.Location = new System.Drawing.Point(43, 55);
+            EditorNameLabel.Name = "EditorNameLabel";
+            EditorNameLabel.Size = new System.Drawing.Size(43, 17);
+            EditorNameLabel.TabIndex = 2;
+            EditorNameLabel.Text = "Name";
+            // 
+            // EditorID
+            // 
+            EditorID.Location = new System.Drawing.Point(179, 23);
+            EditorID.Name = "EditorID";
+            EditorID.Size = new System.Drawing.Size(100, 23);
+            EditorID.TabIndex = 1;
+            // 
+            // EditorIDLabel
+            // 
+            EditorIDLabel.AutoSize = true;
+            EditorIDLabel.Location = new System.Drawing.Point(43, 26);
+            EditorIDLabel.Name = "EditorIDLabel";
+            EditorIDLabel.Size = new System.Drawing.Size(21, 17);
+            EditorIDLabel.TabIndex = 0;
+            EditorIDLabel.Text = "ID";
+            // 
+            // TipLabel
+            // 
+            TipLabel.AutoSize = true;
+            TipLabel.Location = new System.Drawing.Point(144, 151);
+            TipLabel.Name = "TipLabel";
+            TipLabel.Size = new System.Drawing.Size(409, 17);
+            TipLabel.TabIndex = 7;
+            TipLabel.Text = "尚未连接到数据库！输入绝对/相对路径或拖放文件至输入框以读取数据库。";
+            // 
+            // UseExcelBox
+            // 
+            UseExcelBox.AutoSize = true;
+            UseExcelBox.Checked = true;
+            UseExcelBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            UseExcelBox.Location = new System.Drawing.Point(457, 70);
+            UseExcelBox.Name = "UseExcelBox";
+            UseExcelBox.Size = new System.Drawing.Size(225, 21);
+            UseExcelBox.TabIndex = 8;
+            UseExcelBox.Text = "启用Excel模拟数据库，而不是SQLite";
+            UseExcelBox.UseVisualStyleBackColor = true;
+            // 
+            // EditorSaveBtn
+            // 
+            EditorSaveBtn.Location = new System.Drawing.Point(246, 263);
+            EditorSaveBtn.Name = "EditorSaveBtn";
+            EditorSaveBtn.Size = new System.Drawing.Size(163, 23);
+            EditorSaveBtn.TabIndex = 11;
+            EditorSaveBtn.Text = "写入更改";
+            EditorSaveBtn.UseVisualStyleBackColor = true;
             // 
             // RandomItemsDbHelper
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(723, 568);
-            Controls.Add(checkBox1);
-            Controls.Add(label4);
-            Controls.Add(tabControl1);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(UseExcelBox);
+            Controls.Add(TipLabel);
+            Controls.Add(DataTabs);
+            Controls.Add(TestConnectBtn);
+            Controls.Add(ApplyBtn);
+            Controls.Add(PathBox);
+            Controls.Add(PathLabel);
+            Controls.Add(Subtitle);
+            Controls.Add(Title);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             Name = "RandomItemsDbHelper";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "随机选取器 - 数据库助手";
-            tabControl1.ResumeLayout(false);
+            DataTabs.ResumeLayout(false);
+            DataPreviewPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)PreviewBox).EndInit();
+            EditorPage.ResumeLayout(false);
+            EditorPage.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label Title;
+        private System.Windows.Forms.Label Subtitle;
+        private System.Windows.Forms.Label PathLabel;
+        private System.Windows.Forms.TextBox PathBox;
+        private System.Windows.Forms.Button ApplyBtn;
+        private System.Windows.Forms.Button TestConnectBtn;
+        private System.Windows.Forms.TabControl DataTabs;
+        private System.Windows.Forms.TabPage DataPreviewPage;
+        private System.Windows.Forms.TabPage EditorPage;
+        private System.Windows.Forms.Label TipLabel;
+        private System.Windows.Forms.CheckBox UseExcelBox;
+        private System.Windows.Forms.DataGridView PreviewBox;
+        private System.Windows.Forms.TextBox EditorID;
+        private System.Windows.Forms.Label EditorIDLabel;
+        private System.Windows.Forms.TextBox EditorPoolWeight;
+        private System.Windows.Forms.Label EditorPoolWeightLabel;
+        private System.Windows.Forms.TextBox EditorTags;
+        private System.Windows.Forms.Label EditorTagsLabel;
+        private System.Windows.Forms.TextBox EditorName;
+        private System.Windows.Forms.Label EditorNameLabel;
+        private System.Windows.Forms.Label EditorTipsLabel;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button EditorSaveBtn;
     }
 }
