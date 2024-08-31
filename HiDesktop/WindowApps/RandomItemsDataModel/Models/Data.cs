@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Widgets.MVP.WindowApps.RandomItemsDataModel.Models
 {
-    public class Items
+    public class Data
     {
         /// <summary>
         /// 项索引（主键）

@@ -16,7 +16,7 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
     public class RandomItemsDbContext : DbContext
     {
         public DbSet<Config> Config { get; set; }
-        public DbSet<Items> Items { get; set; }
+        public DbSet<Data> Data { get; set; }
         public string path;
         /// <summary>
         /// 初始化实体链接
@@ -47,7 +47,7 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Config>().HasKey(c => c.ID);
-            modelBuilder.Entity<Items>().HasKey(c => c.ID);
+            modelBuilder.Entity<Data>().HasKey(c => c.ID);
             // 其他实体类的主键定义
             var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<RandomItemsDbContext>(modelBuilder);
             Database.SetInitializer(sqliteConnectionInitializer);
@@ -63,7 +63,7 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         public void PreloadDb()
         {
             object _ = Config.ToList();
-            _ = Items.ToList();
+            _ = Data.ToList();
 
         }
     }
