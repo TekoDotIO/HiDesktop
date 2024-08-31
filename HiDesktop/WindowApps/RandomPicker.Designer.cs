@@ -303,6 +303,7 @@
             resources.ApplyResources(aRanDbDisplayFontSizeApplyBtn, "aRanDbDisplayFontSizeApplyBtn");
             aRanDbDisplayFontSizeApplyBtn.Name = "aRanDbDisplayFontSizeApplyBtn";
             aRanDbDisplayFontSizeApplyBtn.UseVisualStyleBackColor = false;
+            aRanDbDisplayFontSizeApplyBtn.Click += aRanDbDisplayFontSizeApplyBtn_Click;
             // 
             // RanDbHistory
             // 
@@ -319,6 +320,7 @@
             resources.ApplyResources(RanDbGenerateBtn, "RanDbGenerateBtn");
             RanDbGenerateBtn.Name = "RanDbGenerateBtn";
             RanDbGenerateBtn.UseVisualStyleBackColor = false;
+            RanDbGenerateBtn.Click += RanDbGenerateBtn_Click;
             // 
             // RanDbDisplayFontSize
             // 

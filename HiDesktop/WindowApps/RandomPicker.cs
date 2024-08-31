@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
@@ -20,6 +21,8 @@ namespace Widgets.MVP.WindowApps
         private float y;//定义当前窗体的高度
         public int defaultWidth = 816;
         public int defaultHeight = 489;
+        public string dbPath;
+        public bool useExcel = true;
         public RandomPicker()
         {
             InitializeComponent();
@@ -27,6 +30,20 @@ namespace Widgets.MVP.WindowApps
             x = this.Width;//初始化时候的界面宽度
             y = this.Height;//初始化时候的界面高度
             setTag(this);
+            if (File.Exists("./AppDefaultSettings/RandomItemDb.properties"))
+            {
+                try
+                {
+                    var setting = PropertiesHelper.Load("./AppDefaultSettings/RandomItemDb.properties");
+                    dbPath = ((string)setting["path"]);
+                    useExcel = (string)setting["type"] == "excel";
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when loading default setting: {ex}");
+                }
+
+            }
         }
 
 
@@ -394,6 +411,51 @@ namespace Widgets.MVP.WindowApps
             {
                 Parent.RanDbDisplay.Text = HistoryStr;
             }
+            public static void Generate()
+            {
+                try
+                {
+                    int minium = Convert.ToInt32(Parent.RanNumMinBox.Text);
+                    int maxium = Convert.ToInt32(Parent.RanNumMaxBox.Text);
+                    int num = Convert.ToInt32(Parent.RanNumNumBox.Text);
+                    bool animate = Parent.RanNumAnimate.Checked;
+                    bool addToExcept = Parent.RanNumAddToExcept.Checked;
+                    string exceptions = Parent.RanNumExceptBox.Text;
+                    var except = exceptions.Split(",");
+                    string result = "";
+                    //This model is not completed yet.
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when generating. Ex:{ex}", "RandomPicker");
+                    var r = MessageBox.Show($"抽取时发生错误！请检查参数！\n详细信息：\n{ex}\n\n如需调试，请点击“是”。", "随机选取程序 - 错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (r == DialogResult.Yes)
+                    {
+                        throw;
+                    }
+
+                }
+            }
+            public static void ApplyFontSize()
+            {
+                try
+                {
+                    int fontSize = Convert.ToInt32(Parent.RanDbDisplayFontSizeBox.Text);
+                    Parent.RanDbDisplay.Font = new(Parent.RanDbDisplay.Font.FontFamily, fontSize);
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when applying font. Ex:{ex}", "RandomPicker");
+                    var r = MessageBox.Show($"应用字体时发生错误！请检查参数！\n详细信息：\n{ex}\n\n如需调试，请点击“是”。", "随机选取程序 - 错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (r == DialogResult.Yes)
+                    {
+                        throw;
+                    }
+
+
+                }
+
+            }
         }
 
         private void RandomPicker_Load(object sender, EventArgs e)
@@ -446,8 +508,40 @@ namespace Widgets.MVP.WindowApps
 
         private void RanDbSettingBtn_Click(object sender, EventArgs e)
         {
-            RandomItemsDbHelper h = new();
-            h.ShowDialog();
+            RandomItemsDbHelper h;
+            if (File.Exists("./AppDefaultSettings/RandomItemDb.properties"))
+            {
+                try
+                {
+                    var setting = PropertiesHelper.Load("./AppDefaultSettings/RandomItemDb.properties");
+                    h = new((string)setting["path"]);
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when loading default setting: {ex}");
+                    h = new();
+                }
+
+            }
+            else
+            {
+                h = new();
+            }
+
+            var dataSrc = h.ShowDialogAndSeek();
+            dbPath = dataSrc[1];
+            useExcel = dataSrc[0] == "excel";
+        }
+
+        private void RanDbGenerateBtn_Click(object sender, EventArgs e)
+        {
+            DBRandPicker.Parent = this;
+        }
+
+        private void aRanDbDisplayFontSizeApplyBtn_Click(object sender, EventArgs e)
+        {
+            DBRandPicker.Parent = this;
+            DBRandPicker.ApplyFontSize();
         }
     }
 

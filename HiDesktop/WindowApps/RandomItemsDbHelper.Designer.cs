@@ -53,6 +53,7 @@
             TipLabel = new System.Windows.Forms.Label();
             UseExcelBox = new System.Windows.Forms.CheckBox();
             CreateBtn = new System.Windows.Forms.Button();
+            SetAsDefaultDbBox = new System.Windows.Forms.CheckBox();
             DataTabs.SuspendLayout();
             DataPreviewPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PreviewBox).BeginInit();
@@ -103,6 +104,7 @@
             ApplyBtn.TabIndex = 4;
             ApplyBtn.Text = "应用数据库到随机选取程序";
             ApplyBtn.UseVisualStyleBackColor = true;
+            ApplyBtn.Click += ApplyBtn_Click;
             // 
             // TestConnectBtn
             // 
@@ -304,11 +306,24 @@
             CreateBtn.UseVisualStyleBackColor = true;
             CreateBtn.Click += CreateBtn_Click;
             // 
+            // SetAsDefaultDbBox
+            // 
+            SetAsDefaultDbBox.AutoSize = true;
+            SetAsDefaultDbBox.Checked = true;
+            SetAsDefaultDbBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            SetAsDefaultDbBox.Location = new System.Drawing.Point(352, 535);
+            SetAsDefaultDbBox.Name = "SetAsDefaultDbBox";
+            SetAsDefaultDbBox.Size = new System.Drawing.Size(111, 21);
+            SetAsDefaultDbBox.TabIndex = 10;
+            SetAsDefaultDbBox.Text = "设为默认数据库";
+            SetAsDefaultDbBox.UseVisualStyleBackColor = true;
+            // 
             // RandomItemsDbHelper
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(723, 568);
+            Controls.Add(SetAsDefaultDbBox);
             Controls.Add(CreateBtn);
             Controls.Add(UseExcelBox);
             Controls.Add(TipLabel);
@@ -359,5 +374,6 @@
         private System.Windows.Forms.Button EditorReadByIDBtn;
         private System.Windows.Forms.Button EditorSaveBtn;
         private System.Windows.Forms.Button CreateBtn;
+        private System.Windows.Forms.CheckBox SetAsDefaultDbBox;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,6 +25,15 @@ namespace Widgets.MVP.WindowApps
         {
             InitializeComponent();
             PathBox.Text = path;
+        }
+
+        public string[] ShowDialogAndSeek()
+        {
+            ShowDialog();
+            string[] res = new string[2];
+            res[0] = UseExcelBox.Checked ? "excel" : "sqlite";
+            res[1] = PathBox.Text;
+            return res;
         }
 
         private void TestConnectBtn_Click(object sender, EventArgs e)
@@ -226,6 +236,22 @@ namespace Widgets.MVP.WindowApps
                 //use sqlite.
                 MessageBox.Show("SQLite模块正在开发，敬请期待。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void ApplyBtn_Click(object sender, EventArgs e)
+        {
+            if (SetAsDefaultDbBox.Checked)
+            {
+                Hashtable htStandard = new()
+                {
+                    { "type", UseExcelBox.Checked ? "excel" : "sqlite" },
+                    { "path", PathBox.Text },
+                };
+                Directory.CreateDirectory("./AppDefaultSettings/");
+                PropertiesHelper.Save("./AppDefaultSettings/RandomItemDb.properties", htStandard);
+
+            }
+            Close();
         }
     }
 }
