@@ -443,6 +443,12 @@ namespace Widgets.MVP.WindowApps
         {
             RandintPicker.HistoryStr = "";
         }
+
+        private void RanDbSettingBtn_Click(object sender, EventArgs e)
+        {
+            RandomItemsDbHelper h = new();
+            h.ShowDialog();
+        }
     }
 
 

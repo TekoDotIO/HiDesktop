@@ -38,8 +38,9 @@
             DataPreviewPage = new System.Windows.Forms.TabPage();
             PreviewBox = new System.Windows.Forms.DataGridView();
             EditorPage = new System.Windows.Forms.TabPage();
-            button2 = new System.Windows.Forms.Button();
-            button1 = new System.Windows.Forms.Button();
+            EditorSaveBtn = new System.Windows.Forms.Button();
+            EditorReadByNameBtn = new System.Windows.Forms.Button();
+            EditorReadByIDBtn = new System.Windows.Forms.Button();
             EditorTipsLabel = new System.Windows.Forms.Label();
             EditorPoolWeight = new System.Windows.Forms.TextBox();
             EditorPoolWeightLabel = new System.Windows.Forms.Label();
@@ -51,7 +52,7 @@
             EditorIDLabel = new System.Windows.Forms.Label();
             TipLabel = new System.Windows.Forms.Label();
             UseExcelBox = new System.Windows.Forms.CheckBox();
-            EditorSaveBtn = new System.Windows.Forms.Button();
+            CreateBtn = new System.Windows.Forms.Button();
             DataTabs.SuspendLayout();
             DataPreviewPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PreviewBox).BeginInit();
@@ -136,9 +137,12 @@
             // 
             // PreviewBox
             // 
+            PreviewBox.AllowUserToAddRows = false;
+            PreviewBox.AllowUserToDeleteRows = false;
             PreviewBox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PreviewBox.Location = new System.Drawing.Point(0, 0);
             PreviewBox.Name = "PreviewBox";
+            PreviewBox.ReadOnly = true;
             PreviewBox.RowTemplate.Height = 25;
             PreviewBox.Size = new System.Drawing.Size(654, 320);
             PreviewBox.TabIndex = 0;
@@ -146,8 +150,8 @@
             // EditorPage
             // 
             EditorPage.Controls.Add(EditorSaveBtn);
-            EditorPage.Controls.Add(button2);
-            EditorPage.Controls.Add(button1);
+            EditorPage.Controls.Add(EditorReadByNameBtn);
+            EditorPage.Controls.Add(EditorReadByIDBtn);
             EditorPage.Controls.Add(EditorTipsLabel);
             EditorPage.Controls.Add(EditorPoolWeight);
             EditorPage.Controls.Add(EditorPoolWeightLabel);
@@ -165,23 +169,35 @@
             EditorPage.Text = "快速编辑";
             EditorPage.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // EditorSaveBtn
             // 
-            button2.Location = new System.Drawing.Point(300, 52);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(163, 23);
-            button2.TabIndex = 10;
-            button2.Text = "以Name为依据读取";
-            button2.UseVisualStyleBackColor = true;
+            EditorSaveBtn.Location = new System.Drawing.Point(230, 262);
+            EditorSaveBtn.Name = "EditorSaveBtn";
+            EditorSaveBtn.Size = new System.Drawing.Size(178, 40);
+            EditorSaveBtn.TabIndex = 11;
+            EditorSaveBtn.Text = "写入更改";
+            EditorSaveBtn.UseVisualStyleBackColor = true;
+            EditorSaveBtn.Click += EditorSaveBtn_Click;
             // 
-            // button1
+            // EditorReadByNameBtn
             // 
-            button1.Location = new System.Drawing.Point(300, 23);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(163, 23);
-            button1.TabIndex = 9;
-            button1.Text = "以ID为依据读取";
-            button1.UseVisualStyleBackColor = true;
+            EditorReadByNameBtn.Location = new System.Drawing.Point(300, 52);
+            EditorReadByNameBtn.Name = "EditorReadByNameBtn";
+            EditorReadByNameBtn.Size = new System.Drawing.Size(163, 23);
+            EditorReadByNameBtn.TabIndex = 10;
+            EditorReadByNameBtn.Text = "以Name为依据读取";
+            EditorReadByNameBtn.UseVisualStyleBackColor = true;
+            EditorReadByNameBtn.Click += EditorReadByNameBtn_Click;
+            // 
+            // EditorReadByIDBtn
+            // 
+            EditorReadByIDBtn.Location = new System.Drawing.Point(300, 23);
+            EditorReadByIDBtn.Name = "EditorReadByIDBtn";
+            EditorReadByIDBtn.Size = new System.Drawing.Size(163, 23);
+            EditorReadByIDBtn.TabIndex = 9;
+            EditorReadByIDBtn.Text = "以ID为依据读取";
+            EditorReadByIDBtn.UseVisualStyleBackColor = true;
+            EditorReadByIDBtn.Click += EditorReadByIDBtn_Click;
             // 
             // EditorTipsLabel
             // 
@@ -260,7 +276,7 @@
             // TipLabel
             // 
             TipLabel.AutoSize = true;
-            TipLabel.Location = new System.Drawing.Point(144, 151);
+            TipLabel.Location = new System.Drawing.Point(282, 151);
             TipLabel.Name = "TipLabel";
             TipLabel.Size = new System.Drawing.Size(409, 17);
             TipLabel.TabIndex = 7;
@@ -278,20 +294,22 @@
             UseExcelBox.Text = "启用Excel模拟数据库，而不是SQLite";
             UseExcelBox.UseVisualStyleBackColor = true;
             // 
-            // EditorSaveBtn
+            // CreateBtn
             // 
-            EditorSaveBtn.Location = new System.Drawing.Point(246, 263);
-            EditorSaveBtn.Name = "EditorSaveBtn";
-            EditorSaveBtn.Size = new System.Drawing.Size(163, 23);
-            EditorSaveBtn.TabIndex = 11;
-            EditorSaveBtn.Text = "写入更改";
-            EditorSaveBtn.UseVisualStyleBackColor = true;
+            CreateBtn.Location = new System.Drawing.Point(143, 148);
+            CreateBtn.Name = "CreateBtn";
+            CreateBtn.Size = new System.Drawing.Size(133, 23);
+            CreateBtn.TabIndex = 9;
+            CreateBtn.Text = "在此位置新建";
+            CreateBtn.UseVisualStyleBackColor = true;
+            CreateBtn.Click += CreateBtn_Click;
             // 
             // RandomItemsDbHelper
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(723, 568);
+            Controls.Add(CreateBtn);
             Controls.Add(UseExcelBox);
             Controls.Add(TipLabel);
             Controls.Add(DataTabs);
@@ -337,8 +355,9 @@
         private System.Windows.Forms.TextBox EditorName;
         private System.Windows.Forms.Label EditorNameLabel;
         private System.Windows.Forms.Label EditorTipsLabel;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button EditorReadByNameBtn;
+        private System.Windows.Forms.Button EditorReadByIDBtn;
         private System.Windows.Forms.Button EditorSaveBtn;
+        private System.Windows.Forms.Button CreateBtn;
     }
 }

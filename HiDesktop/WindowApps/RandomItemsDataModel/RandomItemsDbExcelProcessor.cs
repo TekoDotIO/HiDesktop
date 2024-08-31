@@ -47,6 +47,76 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         }
 
         /// <summary>
+        /// 从表中读取数据
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FileFormatException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public DbDataRowObj[] GetDatas()
+        {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
+            using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.ReadWrite))
+            {
+                XSSFWorkbook wb = new(fs);
+                ISheet data = wb.GetSheet("Data");
+                if (data == null)
+                {
+                    throw new FileFormatException("Sheet 'Data' not found.");
+                }
+
+                IRow headers = data.GetRow(0);
+                int idCol = -1;
+                int nameCol = -1;
+                int tagsCol = -1;
+                int pwCol = -1;
+                foreach (var item in headers)
+                {
+                    string col = item.ToString();
+                    if (col == ID_KEY)
+                    {
+                        idCol = item.ColumnIndex;
+                    }
+                    else if (col == Name_KEY)
+                    {
+                        nameCol = item.ColumnIndex;
+                    }
+                    else if (col == Tags_KEY)
+                    {
+                        tagsCol = item.ColumnIndex;
+                    }
+                    else if (col == PoolWeight_KEY)
+                    {
+                        pwCol = item.ColumnIndex;
+                    }
+                }
+                if (idCol == -1 || nameCol == -1 || tagsCol == -1 || pwCol == -1)
+                {
+                    throw new ArgumentException("One or more required columns not found. Check if the config or column name is modified.");
+                }
+
+                DbDataRowObj[] result = new DbDataRowObj[data.LastRowNum - 1];
+                int i = 0;
+                foreach (IRow row in data) 
+                {
+                    DbDataRowObj obj = new()
+                    {
+                        ID = Convert.ToInt32(row.GetCell(idCol).ToString()),
+                        Name = row.GetCell(nameCol).ToString(),
+                        Tags = row.GetCell(tagsCol).ToString(),
+                        PoolWeight = Convert.ToInt32(row.GetCell(pwCol).ToString())
+                    };
+                    result[i] = obj;
+                    i++;
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 通过ID写入数据
         /// </summary>
         /// <param name="ID"></param>
@@ -57,7 +127,11 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         /// <exception cref="KeyNotFoundException"></exception>
         public void ModifyByID(DbDataRowObj dataObj)
         {
-            using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.ReadWrite))
+            if (!initialized) 
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
+            using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
             {
                 XSSFWorkbook wb = new(fs);
                 ISheet data = wb.GetSheet("Data");
@@ -103,12 +177,23 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
                         row.GetCell(nameCol).SetCellValue(dataObj.Name);
                         row.GetCell(tagsCol).SetCellValue(dataObj.Tags);
                         row.GetCell(pwCol).SetCellValue(dataObj.PoolWeight);
-                        wb.Write(fs);
+                        using (FileStream writeFS = new(FilePath, FileMode.Create, FileAccess.Write))
+                        {
+                            wb.Write(writeFS);
+                        }
+                        
                         return;
                     }
                 }
-
-                throw new KeyNotFoundException("The specific Name is not found.");
+                var row2 = data.CreateRow(data.LastRowNum + 1);
+                row2.CreateCell(idCol).SetCellValue(dataObj.ID);
+                row2.CreateCell(nameCol).SetCellValue(dataObj.Name);
+                row2.CreateCell(tagsCol).SetCellValue(dataObj.Tags);
+                row2.CreateCell(pwCol).SetCellValue(dataObj.PoolWeight);
+                using (FileStream writeFS = new(FilePath, FileMode.Create, FileAccess.Write))
+                {
+                    wb.Write(writeFS);
+                }
             }
         }
 
@@ -122,6 +207,10 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         /// <exception cref="KeyNotFoundException"></exception>
         public DbDataRowObj GetRowByName(string name)
         {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
             using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
             {
                 XSSFWorkbook wb = new(fs);
@@ -189,6 +278,10 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         /// <exception cref="KeyNotFoundException"></exception>
         public DbDataRowObj GetRowByID(int ID)
         {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
             using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
             {
                 XSSFWorkbook wb = new(fs);
@@ -252,6 +345,10 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
         /// <exception cref="FileFormatException"></exception>
         public void BindDataToDataGridView(DataGridView dgv)
         {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
             DataTable dataTable = new DataTable();
 
             using (var fileStream = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
@@ -315,9 +412,9 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
                 // 寻找Key和Value列的索引
                 for (int i = 0; i < headerRow.Cells.Count; i++)
                 {
-                    if (headerRow.GetCell(i).ToString() == "Key")
+                    if (headerRow.GetCell(i).ToString() == "KEY")
                         keyIndex = i;
-                    if (headerRow.GetCell(i).ToString() == "Value")
+                    if (headerRow.GetCell(i).ToString() == "VALUE")
                         valueIndex = i;
                 }
 

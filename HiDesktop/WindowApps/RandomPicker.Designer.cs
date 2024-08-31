@@ -53,6 +53,7 @@
             RanNumAddToExcept = new System.Windows.Forms.CheckBox();
             RanNumResultDisplayLabel = new System.Windows.Forms.Label();
             RanDbPage = new System.Windows.Forms.TabPage();
+            RanDbMemClear = new System.Windows.Forms.Button();
             RanDbEnableWeight = new System.Windows.Forms.CheckBox();
             RanDbSettingBtn = new System.Windows.Forms.Button();
             RanDbExceptTagBox = new System.Windows.Forms.TextBox();
@@ -74,7 +75,6 @@
             fullScreenBox = new System.Windows.Forms.CheckBox();
             darkModeBox = new System.Windows.Forms.CheckBox();
             ExitBtn = new System.Windows.Forms.Button();
-            RanDbMemClear = new System.Windows.Forms.Button();
             AppPages.SuspendLayout();
             RanNumPage.SuspendLayout();
             RanDbPage.SuspendLayout();
@@ -262,6 +262,13 @@
             RanDbPage.Name = "RanDbPage";
             RanDbPage.UseVisualStyleBackColor = true;
             // 
+            // RanDbMemClear
+            // 
+            RanDbMemClear.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(RanDbMemClear, "RanDbMemClear");
+            RanDbMemClear.Name = "RanDbMemClear";
+            RanDbMemClear.UseVisualStyleBackColor = false;
+            // 
             // RanDbEnableWeight
             // 
             resources.ApplyResources(RanDbEnableWeight, "RanDbEnableWeight");
@@ -277,6 +284,7 @@
             resources.ApplyResources(RanDbSettingBtn, "RanDbSettingBtn");
             RanDbSettingBtn.Name = "RanDbSettingBtn";
             RanDbSettingBtn.UseVisualStyleBackColor = false;
+            RanDbSettingBtn.Click += RanDbSettingBtn_Click;
             // 
             // RanDbExceptTagBox
             // 
@@ -394,13 +402,6 @@
             ExitBtn.Name = "ExitBtn";
             ExitBtn.UseVisualStyleBackColor = true;
             ExitBtn.Click += ExitBtn_Click_1;
-            // 
-            // RanDbMemClear
-            // 
-            RanDbMemClear.BackColor = System.Drawing.SystemColors.Control;
-            resources.ApplyResources(RanDbMemClear, "RanDbMemClear");
-            RanDbMemClear.Name = "RanDbMemClear";
-            RanDbMemClear.UseVisualStyleBackColor = false;
             // 
             // RandomPicker
             // 
