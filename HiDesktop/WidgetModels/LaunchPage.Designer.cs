@@ -32,12 +32,13 @@
             poster = new System.Windows.Forms.PictureBox();
             ProcessText = new System.Windows.Forms.Label();
             progressBar = new System.Windows.Forms.ProgressBar();
+            VersionDisplay = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)poster).BeginInit();
             SuspendLayout();
             // 
             // poster
             // 
-            poster.Image = Widgets.MVP.Properties.Resources.OpenPage;
+            poster.Image = Widgets.MVP.Properties.Resources.HiDesktopV2;
             resources.ApplyResources(poster, "poster");
             poster.Name = "poster";
             poster.TabStop = false;
@@ -55,11 +56,19 @@
             resources.ApplyResources(progressBar, "progressBar");
             progressBar.Name = "progressBar";
             // 
+            // VersionDisplay
+            // 
+            VersionDisplay.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(VersionDisplay, "VersionDisplay");
+            VersionDisplay.ForeColor = System.Drawing.Color.White;
+            VersionDisplay.Name = "VersionDisplay";
+            // 
             // LaunchPage
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.MediumSlateBlue;
+            Controls.Add(VersionDisplay);
             Controls.Add(progressBar);
             Controls.Add(ProcessText);
             Controls.Add(poster);
@@ -77,5 +86,6 @@
         private System.Windows.Forms.PictureBox poster;
         public System.Windows.Forms.Label ProcessText;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label VersionDisplay;
     }
 }

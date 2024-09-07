@@ -140,6 +140,10 @@ namespace HiDesktop
             //ProcessText.Location = new Point(0, 0);
             ProcessText.BackColor = Color.Transparent;
             ////实现文本反馈的透明背景
+            VersionDisplay.Parent = poster;
+            poster.Controls.Add(VersionDisplay);
+            VersionDisplay.BackColor = Color.Transparent;
+            VersionDisplay.Text = AppInfo.Version;
             
             bool enableFontInstall = false;
             bool waitForEffects = false;
