@@ -307,6 +307,11 @@ namespace Widgets.MVP.WidgetModels
                 pb.MouseDown += Pb_MouseDown;
             }
             radius = Convert.ToInt32((string)AppConfig["radius"]);
+            if (radius >= size) 
+            {
+                radius = size;
+                Log.SaveLog("radius不能超过窗口边界！已使用窗口大小。", "Activator");
+            }
             SetWindowRegion(radius);
             statu = ActivatorStatus.None;
 
@@ -370,6 +375,7 @@ namespace Widgets.MVP.WidgetModels
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
+                        Refresh();
                     }
                     SetIcon(leftArrowIcon);
                     //SetWindowRegion(20);
@@ -381,7 +387,7 @@ namespace Widgets.MVP.WidgetModels
             {
                 if (statu != ActivatorStatus.None)
                 {
-                    var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size / 2, size, 25, 1);
+                    var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size / 2, size, 25, 3);
                     //SetWindowRegion(30);
                     //Size = new Size(Size.Width - 10, Size.Height);
                     //Refresh();
@@ -396,7 +402,7 @@ namespace Widgets.MVP.WidgetModels
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
-                        //SetWindowRegion(20);//由于限定窗口区域，必须SetWindowRegion，否则动画不生效
+                        SetWindowRegion(20);//由于限定窗口区域，必须SetWindowRegion，否则动画不生效
                         Refresh();
                     }
                     SetWindowRegion(radius);

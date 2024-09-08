@@ -417,6 +417,7 @@
             Controls.Add(Subtitle);
             Controls.Add(Title);
             Name = "RandomPicker";
+            FormClosing += RandomPicker_FormClosing;
             Load += RandomPicker_Load;
             Resize += RandomPicker_Resize;
             AppPages.ResumeLayout(false);

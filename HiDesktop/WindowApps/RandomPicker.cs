@@ -23,6 +23,9 @@ namespace Widgets.MVP.WindowApps
         public int defaultHeight = 489;
         public string dbPath;
         public bool useExcel = true;
+        public string savedExceptNum = "";
+        public string savedExceptItem = "";
+        public string savedExceptTags = "";
         public RandomPicker()
         {
             InitializeComponent();
@@ -460,7 +463,12 @@ namespace Widgets.MVP.WindowApps
 
         private void RandomPicker_Load(object sender, EventArgs e)
         {
-
+            //savedExceptItem = RanDbExceptNameBox.Text;
+            //savedExceptTags = RanDbExceptTagBox.Text;
+            //savedExceptNum = RanNumExceptBox.Text;
+            RanDbExceptNameBox.Text = savedExceptItem;
+            RanDbExceptTagBox.Text = savedExceptTags;
+            RanNumExceptBox.Text = savedExceptNum;
         }
 
         private void RanNumDisplay_Click(object sender, EventArgs e)
@@ -492,7 +500,10 @@ namespace Widgets.MVP.WindowApps
 
         private void ExitBtn_Click_1(object sender, EventArgs e)
         {
-            this.Close();
+            savedExceptItem = RanDbExceptNameBox.Text;
+            savedExceptTags = RanDbExceptTagBox.Text;
+            savedExceptNum = RanNumExceptBox.Text;
+            this.Hide();
         }
 
         private void RanNumDisplayFontSizeApply_Click_1(object sender, EventArgs e)
@@ -542,6 +553,15 @@ namespace Widgets.MVP.WindowApps
         {
             DBRandPicker.Parent = this;
             DBRandPicker.ApplyFontSize();
+        }
+
+        private void RandomPicker_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            savedExceptItem = RanDbExceptNameBox.Text;
+            savedExceptTags = RanDbExceptTagBox.Text;
+            savedExceptNum = RanNumExceptBox.Text;
+            e.Cancel = true;
+            Hide();
         }
     }
 

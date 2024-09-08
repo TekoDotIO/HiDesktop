@@ -220,7 +220,7 @@ namespace Widgets.MVP.WidgetModels
             radius = Convert.ToInt32((string)AppConfig["windowRadius"]);
             opacity = Convert.ToDouble((string)AppConfig["opacity"]);
             additionalPageIfFull = (string)AppConfig["additionalPageIfFull"] == "true";
-            Opacity = opacity;
+            //Opacity = opacity;
             //CheckForIllegalCrossThreadCalls = false;
             StartPosition = FormStartPosition.Manual;
             TopMost = (string)AppConfig["topMost"] == "true";

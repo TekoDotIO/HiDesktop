@@ -16,8 +16,12 @@ namespace Widgets.MVP.WidgetModels
 {
     class ActivatorUriProcessor
     {
+        RandomPicker randomPicker;
         string className = "ActivatorUriProcessor";
         public string Url;
+        static string savedExceptNum = "";
+        static string savedExceptItem = "";
+        static string savedExceptTags = "";
         public ActivatorUriProcessor()
         {
 
@@ -142,10 +146,24 @@ namespace Widgets.MVP.WidgetModels
                     shellType.InvokeMember("ToggleDesktop", System.Reflection.BindingFlags.InvokeMethod, null, shellObject, null);
                     break;
                 case "randomPicker":
-                    RandomPicker rp = new();
+                    if (randomPicker == null) 
+                    {
+                        randomPicker = new();
+                    }
+                    if (randomPicker.IsDisposed)
+                    {
+                        randomPicker = new();
+                    }
+                    //RandomPicker rp = new();
                     Thread t = new(new ThreadStart(() =>
                     {
-                        rp.ShowDialog();
+                        randomPicker.savedExceptItem = savedExceptItem;
+                        randomPicker.savedExceptNum = savedExceptNum;
+                        randomPicker.savedExceptTags = savedExceptTags;
+                        randomPicker.ShowDialog();
+                        savedExceptItem = randomPicker.savedExceptItem;
+                        savedExceptNum = randomPicker.savedExceptNum;
+                        savedExceptTags = randomPicker.savedExceptTags;
                     }));
                     t.Start();
                     break;
