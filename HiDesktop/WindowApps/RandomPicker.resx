@@ -742,6 +742,33 @@
   <data name="&gt;&gt;RanNumPage.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="RanDbTestConBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RanDbTestConBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>524, 12</value>
+  </data>
+  <data name="RanDbTestConBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="RanDbTestConBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="RanDbTestConBtn.Text" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="&gt;&gt;RanDbTestConBtn.Name" xml:space="preserve">
+    <value>RanDbTestConBtn</value>
+  </data>
+  <data name="&gt;&gt;RanDbTestConBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RanDbTestConBtn.Parent" xml:space="preserve">
+    <value>RanDbPage</value>
+  </data>
+  <data name="&gt;&gt;RanDbTestConBtn.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="RanDbMemClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -767,7 +794,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbMemClear.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="RanDbEnableWeight.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -797,13 +824,13 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbEnableWeight.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="RanDbSettingBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>443, 13</value>
+    <value>443, 12</value>
   </data>
   <data name="RanDbSettingBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 23</value>
+    <value>75, 23</value>
   </data>
   <data name="RanDbSettingBtn.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
@@ -821,7 +848,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbSettingBtn.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="RanDbExceptTagBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>369, 149</value>
@@ -848,7 +875,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbExceptTagBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="RanDbExceptTag.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -878,7 +905,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbExceptTag.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="aRanDbDisplayFontSizeApplyBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -905,7 +932,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;aRanDbDisplayFontSizeApplyBtn.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="RanDbHistory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -932,7 +959,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbHistory.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="RanDbGenerateBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -959,7 +986,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbGenerateBtn.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="RanDbDisplayFontSize.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -989,7 +1016,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbDisplayFontSize.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="RanDbAnimate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1019,7 +1046,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbAnimate.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="RanDbNumBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>667, 13</value>
@@ -1046,7 +1073,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbNumBox.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="RanDbNum.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1076,7 +1103,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbNum.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="RanDbExceptNameBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>369, 67</value>
@@ -1103,7 +1130,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbExceptNameBox.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="RanDbExceptName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1133,7 +1160,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbExceptName.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="RanDbDisplayFontSizeBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>557, 218</value>
@@ -1160,7 +1187,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbDisplayFontSizeBox.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="RanDbSettingText.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1190,7 +1217,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbSettingText.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="RanDbAddToExcept.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1220,7 +1247,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbAddToExcept.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="RanDbDisplay.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 26.25pt, style=Bold</value>
@@ -1253,7 +1280,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbDisplay.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="RanDbResultDisplayText.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1283,7 +1310,7 @@
     <value>RanDbPage</value>
   </data>
   <data name="&gt;&gt;RanDbResultDisplayText.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="RanDbPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 26</value>

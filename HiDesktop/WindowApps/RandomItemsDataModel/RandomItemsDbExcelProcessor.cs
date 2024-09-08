@@ -98,10 +98,16 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
                     throw new ArgumentException("One or more required columns not found. Check if the config or column name is modified.");
                 }
 
-                DbDataRowObj[] result = new DbDataRowObj[data.LastRowNum - 1];
+                DbDataRowObj[] result = new DbDataRowObj[data.LastRowNum];
                 int i = 0;
+                bool firstFlag = true;
                 foreach (IRow row in data) 
                 {
+                    if (firstFlag)
+                    {
+                        firstFlag = false;
+                        continue;
+                    }
                     DbDataRowObj obj = new()
                     {
                         ID = Convert.ToInt32(row.GetCell(idCol).ToString()),

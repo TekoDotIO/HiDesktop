@@ -53,6 +53,7 @@
             RanNumAddToExcept = new System.Windows.Forms.CheckBox();
             RanNumResultDisplayLabel = new System.Windows.Forms.Label();
             RanDbPage = new System.Windows.Forms.TabPage();
+            RanDbTestConBtn = new System.Windows.Forms.Button();
             RanDbMemClear = new System.Windows.Forms.Button();
             RanDbEnableWeight = new System.Windows.Forms.CheckBox();
             RanDbSettingBtn = new System.Windows.Forms.Button();
@@ -239,6 +240,7 @@
             // 
             // RanDbPage
             // 
+            RanDbPage.Controls.Add(RanDbTestConBtn);
             RanDbPage.Controls.Add(RanDbMemClear);
             RanDbPage.Controls.Add(RanDbEnableWeight);
             RanDbPage.Controls.Add(RanDbSettingBtn);
@@ -262,12 +264,22 @@
             RanDbPage.Name = "RanDbPage";
             RanDbPage.UseVisualStyleBackColor = true;
             // 
+            // RanDbTestConBtn
+            // 
+            RanDbTestConBtn.BackColor = System.Drawing.SystemColors.Control;
+            RanDbTestConBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(RanDbTestConBtn, "RanDbTestConBtn");
+            RanDbTestConBtn.Name = "RanDbTestConBtn";
+            RanDbTestConBtn.UseVisualStyleBackColor = false;
+            RanDbTestConBtn.Click += RanDbTestConBtn_Click;
+            // 
             // RanDbMemClear
             // 
             RanDbMemClear.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(RanDbMemClear, "RanDbMemClear");
             RanDbMemClear.Name = "RanDbMemClear";
             RanDbMemClear.UseVisualStyleBackColor = false;
+            RanDbMemClear.Click += RanDbMemClear_Click;
             // 
             // RanDbEnableWeight
             // 
@@ -312,6 +324,7 @@
             resources.ApplyResources(RanDbHistory, "RanDbHistory");
             RanDbHistory.Name = "RanDbHistory";
             RanDbHistory.UseVisualStyleBackColor = false;
+            RanDbHistory.Click += RanDbHistory_Click;
             // 
             // RanDbGenerateBtn
             // 
@@ -477,5 +490,6 @@
         private System.Windows.Forms.Label RanNumDisplay;
         private System.Windows.Forms.Button RanNumMemClear;
         private System.Windows.Forms.Button RanDbMemClear;
+        private System.Windows.Forms.Button RanDbTestConBtn;
     }
 }

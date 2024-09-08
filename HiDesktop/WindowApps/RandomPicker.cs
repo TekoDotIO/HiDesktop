@@ -12,6 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Widgets.MVP.Essential_Repos;
+using Widgets.MVP.WindowApps.RandomItemsDataModel;
+using Widgets.MVP.WindowApps.RandomItemsDataModel.ExcelDataExchangeModels;
 
 namespace Widgets.MVP.WindowApps
 {
@@ -409,7 +411,7 @@ namespace Widgets.MVP.WindowApps
         class DBRandPicker
         {
             public static RandomPicker Parent;
-            static string HistoryStr = "";
+            public static string HistoryStr = "";
             public static void ShowHistory()
             {
                 Parent.RanDbDisplay.Text = HistoryStr;
@@ -418,14 +420,126 @@ namespace Widgets.MVP.WindowApps
             {
                 try
                 {
-                    int minium = Convert.ToInt32(Parent.RanNumMinBox.Text);
-                    int maxium = Convert.ToInt32(Parent.RanNumMaxBox.Text);
-                    int num = Convert.ToInt32(Parent.RanNumNumBox.Text);
-                    bool animate = Parent.RanNumAnimate.Checked;
-                    bool addToExcept = Parent.RanNumAddToExcept.Checked;
-                    string exceptions = Parent.RanNumExceptBox.Text;
+                    int num = Convert.ToInt32(Parent.RanDbNumBox.Text);
+                    bool animate = Parent.RanDbAnimate.Checked;
+                    bool addToExcept = Parent.RanDbAddToExcept.Checked;
+                    string exceptions = Parent.RanDbExceptNameBox.Text;
+                    string exTags = Parent.RanDbExceptTagBox.Text;
                     var except = exceptions.Split(",");
+                    var exTag = exTags.Split(",");
                     string result = "";
+                    Parent.RanDbDisplay.Text = "正在读取数据库，请稍候...";
+                    RandomItemsDbExcelProcessor db = new(Parent.dbPath);
+                    db.Initialize();
+                    var datas = db.GetDatas();
+                    int vaildNum = 0;
+                    foreach (var item in datas)
+                    {
+                        bool vaild = true;
+                        var itemTags = item.Tags.Split(",");
+                        foreach (var itemTag in itemTags)
+                        {
+                            if (exTags.Contains(itemTag))
+                            {
+                                vaild = false;
+                            }
+                        }
+                        if (except.Contains(item.Name)) vaild = false;
+                        if (vaild)
+                        {
+                            vaildNum++;
+                        }
+                    }
+                    if (vaildNum < Convert.ToInt32(Parent.RanDbNumBox.Text))
+                    {
+                        throw new Exception("所剩项目不足以进行抽取！No enough choices.");
+                    }
+                    List<DbDataRowObj> vaildItems = new();
+                    //Get vaild items.
+                    foreach (var item in datas)
+                    {
+                        bool vaild = true;
+                        var itemTags = item.Tags.Split(",");
+                        foreach (var itemTag in itemTags)
+                        {
+                            if (exTags.Contains(itemTag))
+                            {
+                                vaild = false;
+                            }
+                        }
+                        if (except.Contains(item.Name)) vaild = false;
+                        if (vaild)
+                        {
+                            if (Parent.RanDbEnableWeight.Checked)
+                            {
+                                for (int i = 0; i < item.PoolWeight; i++)
+                                {
+                                    vaildItems.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                vaildItems.Add(item);
+                            }
+                        }
+                    }
+
+                    vaildItems = vaildItems.OrderBy(i => Guid.NewGuid()).ToList();
+                    if (Parent.RanDbAnimate.Checked)
+                    {
+                        //Animate
+                        for (int i = 0; i < 8; i++)
+                        {
+                            Random r = new();
+                            var n = r.Next(0, vaildItems.Count);
+                            Parent.RanDbDisplay.Text = vaildItems[n].Name;
+                            Parent.RanDbDisplay.Refresh();
+                            Thread.Sleep(25);
+                        }
+                    }
+                    List<string> usedNames = new();
+                    for (int i = 0; i < Convert.ToInt32(Parent.RanDbNumBox.Text); i++)
+                    {
+                        Random r = new();
+                        var n = r.Next(0, vaildItems.Count);
+                        while (usedNames.Contains(vaildItems[n].Name))
+                        {
+                            n = r.Next(0, vaildItems.Count);
+                        }
+                        usedNames.Add(vaildItems[n].Name);
+                    }
+                    foreach (var item in usedNames)
+                    {
+                        if (result == "")
+                        {
+                            result = item;
+                        }
+                        else
+                        {
+                            result += "," + item;
+                        }
+                    }
+                    Parent.RanDbDisplay.Text = result;
+                    Parent.RanDbDisplay.Refresh();
+                    if (Parent.RanDbAddToExcept.Checked)
+                    {
+                        if (Parent.RanDbExceptNameBox.Text == "")
+                        {
+                            Parent.RanDbExceptNameBox.Text += result;
+                        }
+                        else
+                        {
+                            Parent.RanDbExceptNameBox.Text += "," + result;
+                        }
+                    }
+                    if (HistoryStr == "")
+                    {
+                        HistoryStr += result;
+                    }
+                    else
+                    {
+                        HistoryStr += "," + result;
+                    }
                     //This model is not completed yet.
                 }
                 catch (Exception ex)
@@ -547,6 +661,7 @@ namespace Widgets.MVP.WindowApps
         private void RanDbGenerateBtn_Click(object sender, EventArgs e)
         {
             DBRandPicker.Parent = this;
+            DBRandPicker.Generate();
         }
 
         private void aRanDbDisplayFontSizeApplyBtn_Click(object sender, EventArgs e)
@@ -562,6 +677,43 @@ namespace Widgets.MVP.WindowApps
             savedExceptNum = RanNumExceptBox.Text;
             e.Cancel = true;
             Hide();
+        }
+
+        private void RanDbTestConBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (useExcel)
+                {
+                    RandomItemsDbExcelProcessor p = new(dbPath);
+                    p.Initialize();
+                    MessageBox.Show("测试成功，连接有效。", "随机选取程序", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    throw new Exception("数据库功能尚未开发，敬请期待！");
+                }
+            }
+            catch (Exception ex)
+            {
+                var r = MessageBox.Show($"测试时发生错误！请检查参数！\n详细信息：\n{ex}\n\n如需调试，请点击“是”。", "随机选取程序 - 错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (r == DialogResult.Yes)
+                {
+                    throw;
+                }
+                throw;
+            }
+        }
+
+        private void RanDbHistory_Click(object sender, EventArgs e)
+        {
+            DBRandPicker.Parent = this;
+            DBRandPicker.ShowHistory();
+        }
+
+        private void RanDbMemClear_Click(object sender, EventArgs e)
+        {
+            DBRandPicker.HistoryStr = "";
         }
     }
 
