@@ -60,7 +60,7 @@ namespace HiDesktop
                 { "font", "auto" },
                 { "fontSize", "30" },
                 { "opacity", "1" },
-                { "topMost", "true" },
+                { "topMost", "false" },
                 { "text", "Config your textBar in properties file.." },
                 { "location", "auto" },
                 { "enabled","true" },

@@ -23,6 +23,7 @@ namespace Widgets.MVP
     {
         static bool activatorExists = false;
         public static WidgetModels.Activator activatedActivator;
+        public static OneQuoteText MainQuote;
         public static LaunchPage launchPage;
         public static Hashtable htStandard = new Hashtable()
         {

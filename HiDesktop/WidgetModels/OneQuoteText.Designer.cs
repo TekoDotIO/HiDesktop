@@ -66,6 +66,7 @@
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             Name = "OneQuoteText";
             Text = "Hi一言";
+            Resize += OneQuoteText_Resize;
             ResumeLayout(false);
         }
 

@@ -9,3 +9,17 @@ ColorID_KEY
 BackColor_KEY
 TextColor_KEY
 AuthorColor_KEY
+
+
+            { "type", "OneQuote" },
+            { "enabled", "true" },
+            { "size", "auto" },
+            { "location", "auto" },
+            { "dataSrcType", "Excel" },
+            { "dataSrc", "./OneQuoteText.xlsx" },
+            { "asMainQuote", "true" },
+            { "random", "false" },
+            { "allowMove", "true" },
+            { "updateBy", "day" },//day/manual/boot
+            { "opacity", "1" },
+            { "topMost", "false" }
