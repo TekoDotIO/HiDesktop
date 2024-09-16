@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -139,6 +140,9 @@ namespace Widgets.MVP.WidgetModels
         #endregion
 
         #region Controls
+
+        private float x;//定义当前窗体的宽度
+        private float y;//定义当前窗体的高度
         /// <summary>
         /// 绑定的Activator
         /// </summary>
@@ -177,6 +181,51 @@ namespace Widgets.MVP.WidgetModels
 
 
 
+        //[DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        //public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        //public const uint SWP_NOMOVE = 0x2;
+        //public const uint SWP_NOSIZE = 0x1;
+        //public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        //public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+
+        //Part from CSDN.
+        //Ori: https://blog.csdn.net/qq_27524749/article/details/102501450
+        private void setTag(Control cons)
+        {
+            foreach (Control con in cons.Controls)
+            {
+                con.Tag = con.Width + ";" + con.Height + ";" + con.Left + ";" + con.Top + ";" + con.Font.Size;
+                if (con.Controls.Count > 0)
+                {
+                    setTag(con);
+                }
+            }
+        }
+        //用来拉伸界面中的组件
+        private void setControls(float newx, float newy, Control cons)
+        {
+            //遍历窗体中的控件，重新设置控件的值
+            foreach (Control con in cons.Controls)
+            {
+                //获取控件的Tag属性值，并分割后存储字符串数组
+                if (con.Tag != null)
+                {
+                    string[] mytag = con.Tag.ToString().Split(new char[] { ';' });
+                    //根据窗体缩放的比例确定控件的值
+                    con.Width = Convert.ToInt32(System.Convert.ToSingle(mytag[0]) * newx);//宽度
+                    con.Height = Convert.ToInt32(System.Convert.ToSingle(mytag[1]) * newy);//高度
+                    con.Left = Convert.ToInt32(System.Convert.ToSingle(mytag[2]) * newx);//左边距
+                    con.Top = Convert.ToInt32(System.Convert.ToSingle(mytag[3]) * newy);//顶边距
+                    Single currentSize = System.Convert.ToSingle(mytag[4]) * newy;//字体大小
+                    con.Font = new Font(con.Font.Name, currentSize, con.Font.Style, con.Font.Unit);
+                    if (con.Controls.Count > 0)
+                    {
+                        setControls(newx, newy, con);
+                    }
+                }
+            }
+        }
 
 
         //protected override void WndProc(ref Message m)
@@ -215,6 +264,8 @@ namespace Widgets.MVP.WidgetModels
             //};
 
             InitializeComponent();
+            x = this.Width;//初始化时候的界面宽度
+            y = this.Height;//初始化时候的界面高度
             AppConfig = appConfig;
             parentActivator = activator;
             radius = Convert.ToInt32((string)AppConfig["windowRadius"]);
@@ -224,6 +275,10 @@ namespace Widgets.MVP.WidgetModels
             //CheckForIllegalCrossThreadCalls = false;
             StartPosition = FormStartPosition.Manual;
             TopMost = (string)AppConfig["topMost"] == "true";
+            //if (TopMost)
+            //{
+            //    SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);//窗口置顶
+            //}
             windowForeColor = ColorTranslator.FromHtml((string)AppConfig["windowForeColor"]);
             showTimeBar = (string)AppConfig["showTimeBar"] == "true";
             try
@@ -357,13 +412,20 @@ namespace Widgets.MVP.WidgetModels
                 NextPage();
             };
 
-            
+            //Single currentSize = System.Convert.ToSingle(mytag[4]) * newy;//字体大小
+            //con.Font = new Font(con.Font.Name, currentSize, con.Font.Style, con.Font.Unit);
 
             //lastPage.Visible = false;
             //nextPage.Visible = false;
             //lastPage.Hide();
             //nextPage.Hide();
             Log.SaveLog("StartInitialize : pageDisplay", "ActivatorSubWindow", output: false);
+
+
+            float newx = (this.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
+            float newy = (this.Height) / y;//拖动界面之后的高度与之前界面的高度之比
+
+
             pageDisplay = new Label()
             {
                 ForeColor = windowForeColor,
@@ -416,7 +478,7 @@ namespace Widgets.MVP.WidgetModels
                 item.Parent = this;
                 item.TextAlign = ContentAlignment.MiddleCenter;
                 item.ForeColor = windowForeColor;
-                item.Font = new Font(Font.FontFamily, lastPage.Width / 5);
+                item.Font = new Font(Font.Name, Font.Size * (this.Width) / x, Font.Style, Font.Unit);
                 item.Text = emptyItemTxt;
                 item.Size = new Size(itemIcon1.Width, lastPage.Width / 5 * 4);
                 //item.Hide();

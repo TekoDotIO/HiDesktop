@@ -99,6 +99,16 @@ namespace Widgets.MVP.WidgetModels
         /// </summary>
         public ActivatorSubWindow subWindow;
         #endregion
+        bool BgRefreshFlag = true;
+        //[DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        //public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        //public const uint SWP_NOMOVE = 0x2;
+        //public const uint SWP_NOSIZE = 0x1;
+        //public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        //public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+
+
         /// <summary>
         /// 标准示例配置文件
         /// </summary>
@@ -136,6 +146,19 @@ namespace Widgets.MVP.WidgetModels
             { "emptyItemAction","HiDesktop://activator?action=NewActivatorShortcut"},
             { "additionalPageIfFull","true"},
         };
+        //protected override void WndProc(ref Message m)
+        //{
+        //    //From https://blog.csdn.net/Qin066/article/details/80102927
+        //    if (m.Msg == 0x0014 && !BgRefreshFlag)  // 禁掉清除背景消息  
+
+        //        return;
+        //    if (BgRefreshFlag)
+        //    {
+        //        BgRefreshFlag = false;
+        //    }
+        //    base.WndProc(ref m);
+
+        //}
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中
         /// </summary>
@@ -148,7 +171,7 @@ namespace Widgets.MVP.WidgetModels
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle &= (~WS_EX_APPWINDOW);
                 cp.ExStyle |= WS_EX_TOOLWINDOW;
-                cp.ExStyle |= 0x02000000;//防止闪屏
+                //cp.ExStyle |= 0x02000000;//防止闪屏
                 return cp;
             }
         }
@@ -191,6 +214,10 @@ namespace Widgets.MVP.WidgetModels
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
             TopLevel = (string)AppConfig["topMost"] == "true";
             TopMost = (string)AppConfig["topMost"] == "true";
+            //if (TopMost)
+            //{
+            //    SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);//窗口置顶
+            //}
             Size = new Size(Convert.ToInt32((string)AppConfig["size"]), Convert.ToInt32((string)AppConfig["size"]));
             size = Convert.ToInt32((string)AppConfig["size"]);
             enableSideHide = (string)AppConfig["enableSideHide"] == "true";
@@ -343,6 +370,10 @@ namespace Widgets.MVP.WidgetModels
 
         private void JudgeHideStatu()
         {
+            //if (TopMost)
+            //{
+            //    SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);//窗口置顶
+            //}
             var p = Location;
             if (p.X <= scrEdgeSize)
             {
@@ -350,6 +381,7 @@ namespace Widgets.MVP.WidgetModels
                 {
                     SetWindowRegion(20);
                     SetIcon(rightArrowIcon);
+                    BgRefreshFlag = true;
                     Refresh();
                     var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size, size / 2, 25, 1);
                     foreach (var item in l)
@@ -370,6 +402,8 @@ namespace Widgets.MVP.WidgetModels
                 {
                     SetWindowRegion(20);
                     SetIcon(leftArrowIcon);
+                    BgRefreshFlag = true;
+
                     Refresh();
                     var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size, size / 2, 25, 1);
                     foreach (var item in l)
@@ -398,6 +432,8 @@ namespace Widgets.MVP.WidgetModels
                     SetWindowRegion(20);
                     Size = new Size(size / 2, size);
                     Show();
+                    BgRefreshFlag = true;
+
                     Refresh();
                     foreach (var item in l)
                     {
