@@ -99,7 +99,7 @@ namespace Widgets.MVP.WidgetModels
         /// </summary>
         public ActivatorSubWindow subWindow;
         #endregion
-        bool BgRefreshFlag = true;
+        //bool BgRefreshFlag = true;
         //[DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         //public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
@@ -381,7 +381,7 @@ namespace Widgets.MVP.WidgetModels
                 {
                     SetWindowRegion(20);
                     SetIcon(rightArrowIcon);
-                    BgRefreshFlag = true;
+                    //BgRefreshFlag = true;
                     Refresh();
                     var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size, size / 2, 25, 1);
                     foreach (var item in l)
@@ -402,7 +402,7 @@ namespace Widgets.MVP.WidgetModels
                 {
                     SetWindowRegion(20);
                     SetIcon(leftArrowIcon);
-                    BgRefreshFlag = true;
+                    //BgRefreshFlag = true;
 
                     Refresh();
                     var l = MathRepo.CreatePhysicalSmoothMovePointsSet(size, size / 2, 25, 1);
@@ -432,7 +432,7 @@ namespace Widgets.MVP.WidgetModels
                     SetWindowRegion(20);
                     Size = new Size(size / 2, size);
                     Show();
-                    BgRefreshFlag = true;
+                    //BgRefreshFlag = true;
 
                     Refresh();
                     foreach (var item in l)

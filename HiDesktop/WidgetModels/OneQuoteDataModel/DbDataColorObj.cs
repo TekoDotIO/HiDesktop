@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
 {
-    public class OneQuoteDataColorObj
+    public class DbDataColorObj
     {
-        public OneQuoteDataColorObj() { }
+        public DbDataColorObj() { }
         public string ColorID { get; set; }
         public string BackColor { get; set; }
         public string TextColor { get; set; }

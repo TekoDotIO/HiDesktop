@@ -11,6 +11,7 @@ using NPOI.XSSF.UserModel;
 using System.Windows.Forms;
 using System.Data;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing;
 
 namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
 {
@@ -46,13 +47,13 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
         }
 
         /// <summary>
-        /// 从表中读取数据
+        /// 从Data表中读取数据
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="FileFormatException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public DbDataRowObj[] GetDatas()
+        public DbDataRowObj[] GetDatasFromDatas()
         {
             if (!initialized)
             {
@@ -129,14 +130,18 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
                         continue;
                     }
                     DbDataRowObj obj = new();
-                    obj.ID = Convert.ToInt32(row.GetCell(idCol).ToString());
-                    obj.Text = row.GetCell(textCol).ToString();
-                    obj.Author = row.GetCell(authorCol).ToString();
-                    obj.Date = row.GetCell(dateCol).ToString();
-                    obj.Ahead = row.GetCell(aheadCol).ToString();
-                    obj.TextFont = row.GetCell(textFontCol).ToString();
-                    obj.AuthorFont = row.GetCell(authorFontCol).ToString();
-                    obj.ColorID = row.GetCell(colorIDCol).ToString();
+                    if ((row.GetCell(idCol) == null ? "" : row.GetCell(idCol).ToString()) == "") 
+                    {
+                        continue;
+                    }
+                    obj.ID = Convert.ToInt32((row.GetCell(idCol) == null ? "" : row.GetCell(idCol).ToString()));
+                    obj.Text = (row.GetCell(textCol) == null ? "" : row.GetCell(textCol).ToString());
+                    obj.Author = (row.GetCell(authorCol) == null ? "" : row.GetCell(authorCol).ToString());
+                    obj.Date = (row.GetCell(dateCol) == null ? "" : row.GetCell(dateCol).ToString());
+                    obj.Ahead = (row.GetCell(aheadCol) == null ? "" : row.GetCell(aheadCol).ToString());
+                    obj.TextFont = (row.GetCell(textFontCol) == null ? "" : row.GetCell(textFontCol).ToString());
+                    obj.AuthorFont = (row.GetCell(authorFontCol) == null ? "" : row.GetCell(authorFontCol).ToString());
+                    obj.ColorID = (row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString());
                     result[i] = obj;
                     i++;
                 }
@@ -144,8 +149,89 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
             }
         }
 
+
         /// <summary>
-        /// 通过ID写入数据
+        /// 从Color表中读取数据
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FileFormatException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public DbDataColorObj[] GetDatasFromColor()
+        {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
+            using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.ReadWrite))
+            {
+                XSSFWorkbook wb = new(fs);
+                ISheet data = wb.GetSheet("Colors");
+                if (data == null)
+                {
+                    throw new FileFormatException("Sheet 'Colors' not found.");
+                }
+
+                IRow headers = data.GetRow(0);
+                int colorIDCol = -1;
+                int backColorCol = -1;
+                int textColorCol = -1;
+                int authorColorCol = -1;
+                foreach (var item in headers)
+                {
+                    string col = item.ToString();
+                    if (col == ColorID_KEY)
+                    {
+                        colorIDCol = item.ColumnIndex;
+                    }
+                    else if (col == BackColor_KEY)
+                    {
+                        backColorCol = item.ColumnIndex;
+                    }
+                    else if (col == TextColor_KEY)
+                    {
+                        textColorCol = item.ColumnIndex;
+                    }
+                    else if (col == AuthorColor_KEY)
+                    {
+                        authorColorCol = item.ColumnIndex;
+                    }
+                }
+                if (colorIDCol == -1 || backColorCol == -1 || textColorCol == -1 || authorColorCol == -1)
+                {
+                    throw new ArgumentException("One or more required columns not found. Check if the config or column name is modified.");
+                }
+
+
+                DbDataColorObj[] result = new DbDataColorObj[data.LastRowNum];
+                int i = 0;
+                bool firstFlag = true;
+                foreach (IRow row in data)
+                {
+                    if (firstFlag)
+                    {
+                        firstFlag = false;
+                        continue;
+                    }
+                    if ((row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString()) == "")
+                    {
+                        continue;
+                    }
+                    DbDataColorObj obj = new();
+                    obj.ColorID = (row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString());
+                    obj.BackColor = (row.GetCell(backColorCol) == null ? "" : row.GetCell(backColorCol).ToString());
+                    obj.TextColor = (row.GetCell(textColorCol) == null ? "" : row.GetCell(textColorCol).ToString());
+                    obj.AuthorColor = (row.GetCell(authorColorCol) == null ? "" : row.GetCell(authorColorCol).ToString());
+                    result[i] = obj;
+                    i++;
+                }
+                return result;
+            }
+        }
+
+
+        /// <summary>
+        /// 通过ID写入数据到Data
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="dataObj">待写入数据</param>
@@ -153,7 +239,7 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
         /// <exception cref="FileFormatException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="KeyNotFoundException"></exception>
-        public void ModifyByID(DbDataRowObj dataObj)
+        public void ModifyToDataByID(DbDataRowObj dataObj)
         {
             if (!initialized) 
             {
@@ -221,11 +307,18 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
 
                 foreach (IRow row in data)
                 {
-                    if (row.GetCell(idCol).ToString() == dataObj.ID.ToString())
+                    if ((row.GetCell(idCol) == null ? "" : row.GetCell(idCol).ToString()) == dataObj.ID.ToString())
                     {
+                        (row.GetCell(textCol) ?? row.CreateCell(textCol)).SetCellValue(dataObj.Text);
+                        (row.GetCell(authorCol) ?? row.CreateCell(authorCol)).SetCellValue(dataObj.Author);
+                        (row.GetCell(dateCol) ?? row.CreateCell(dateCol)).SetCellValue(dataObj.Date);
+                        (row.GetCell(aheadCol) ?? row.CreateCell(aheadCol)).SetCellValue(dataObj.Ahead);
+                        (row.GetCell(textFontCol) ?? row.CreateCell(textFontCol)).SetCellValue(dataObj.TextFont);
+                        (row.GetCell(authorFontCol) ?? row.CreateCell(authorFontCol)).SetCellValue(dataObj.AuthorFont);
+                        (row.GetCell(colorIDCol) ?? row.CreateCell(colorIDCol)).SetCellValue(dataObj.ColorID);
                         row.GetCell(textCol).SetCellValue(dataObj.Text);
                         row.GetCell(authorCol).SetCellValue(dataObj.Author);
-                        row.GetCell(dateCol).SetCellValue(dataObj.Date.ToString());
+                        row.GetCell(dateCol).SetCellValue(dataObj.Date);
                         row.GetCell(aheadCol).SetCellValue(dataObj.Ahead);
                         row.GetCell(textFontCol).SetCellValue(dataObj.TextFont);
                         row.GetCell(authorFontCol).SetCellValue(dataObj.AuthorFont);
@@ -243,7 +336,7 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
                 row2.CreateCell(idCol).SetCellValue(dataObj.ID);
                 row2.CreateCell(textCol).SetCellValue(dataObj.Text);
                 row2.CreateCell(authorCol).SetCellValue(dataObj.Author);
-                row2.CreateCell(dateCol).SetCellValue(dataObj.Date.ToString());
+                row2.CreateCell(dateCol).SetCellValue(dataObj.Date);
                 row2.CreateCell(aheadCol).SetCellValue(dataObj.Ahead);
                 row2.CreateCell(textFontCol).SetCellValue(dataObj.TextFont);
                 row2.CreateCell(authorFontCol).SetCellValue(dataObj.AuthorFont);
@@ -256,11 +349,100 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
             }
         }
 
-        
+
+        /// <summary>
+        /// 通过ColorID写入数据到Colors
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="dataObj">待写入数据</param>
+        /// <returns></returns>
+        /// <exception cref="FileFormatException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="KeyNotFoundException"></exception>
+        public void ModifyToColorByColorID(DbDataColorObj dataObj)
+        {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
+            using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
+            {
+                XSSFWorkbook wb = new(fs);
+                ISheet data = wb.GetSheet("Colors");
+                if (data == null)
+                {
+                    throw new FileFormatException("Sheet 'Colors' not found.");
+                }
+
+                IRow headers = data.GetRow(0);
+                int colorIDCol = -1;
+                int backColorCol = -1;
+                int textColorCol = -1;
+                int authorColorCol = -1;
+                foreach (var item in headers)
+                {
+                    string col = item.ToString();
+                    if (col == ColorID_KEY)
+                    {
+                        colorIDCol = item.ColumnIndex;
+                    }
+                    else if (col == BackColor_KEY)
+                    {
+                        backColorCol = item.ColumnIndex;
+                    }
+                    else if (col == TextColor_KEY)
+                    {
+                        textColorCol = item.ColumnIndex;
+                    }
+                    else if (col == AuthorColor_KEY)
+                    {
+                        authorColorCol = item.ColumnIndex;
+                    }
+                }
+                if (colorIDCol == -1 || backColorCol == -1 || textColorCol == -1 || authorColorCol == -1)
+                {
+                    throw new ArgumentException("One or more required columns not found. Check if the config or column name is modified.");
+                }
+
+
+                foreach (IRow row in data)
+                {
+                    if ((row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString()) == dataObj.ColorID.ToString())
+                    {
+                        (row.GetCell(backColorCol) ?? row.CreateCell(backColorCol)).SetCellValue(dataObj.BackColor);
+                        (row.GetCell(textColorCol) ?? row.CreateCell(textColorCol)).SetCellValue(dataObj.TextColor);
+                        (row.GetCell(authorColorCol) ?? row.CreateCell(authorColorCol)).SetCellValue(dataObj.AuthorColor);
+                        row.GetCell(colorIDCol).SetCellValue(dataObj.ColorID);
+                        row.GetCell(backColorCol).SetCellValue(dataObj.BackColor);
+                        row.GetCell(textColorCol).SetCellValue(dataObj.TextColor);
+                        row.GetCell(authorColorCol).SetCellValue(dataObj.AuthorColor);
+
+                        using (FileStream writeFS = new(FilePath, FileMode.Create, FileAccess.Write))
+                        {
+                            wb.Write(writeFS);
+                        }
+
+                        return;
+                    }
+                }
+                var row2 = data.CreateRow(data.LastRowNum + 1);
+                row2.CreateCell(colorIDCol).SetCellValue(dataObj.ColorID);
+                row2.CreateCell(backColorCol).SetCellValue(dataObj.BackColor);
+                row2.CreateCell(textColorCol).SetCellValue(dataObj.TextColor);
+                row2.CreateCell(authorColorCol).SetCellValue(dataObj.AuthorColor);
+
+                using (FileStream writeFS = new(FilePath, FileMode.Create, FileAccess.Write))
+                {
+                    wb.Write(writeFS);
+                }
+            }
+        }
+
+
 
 
         /// <summary>
-        /// 通过ID获取相应的行
+        /// 通过ID从Data获取相应的行
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
@@ -337,17 +519,17 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
 
                 foreach (IRow row in data)
                 {
-                    if (row.GetCell(idCol).ToString() == ID.ToString())
+                    if ((row.GetCell(idCol) == null ? "" : row.GetCell(idCol).ToString()) == ID.ToString())
                     {
                         DbDataRowObj obj = new();
-                        obj.ID = Convert.ToInt32(row.GetCell(idCol).ToString());
-                        obj.Text = row.GetCell(textCol).ToString();
-                        obj.Author = row.GetCell(authorCol).ToString();
-                        obj.Date = row.GetCell(dateCol).ToString();
-                        obj.Ahead = row.GetCell(aheadCol).ToString();
-                        obj.TextFont = row.GetCell(textFontCol).ToString();
-                        obj.AuthorFont = row.GetCell(authorFontCol).ToString();
-                        obj.ColorID = row.GetCell(colorIDCol).ToString();
+                        obj.ID = Convert.ToInt32((row.GetCell(idCol) == null ? "" : row.GetCell(idCol).ToString()));
+                        obj.Text = (row.GetCell(textCol) == null ? "" : row.GetCell(textCol).ToString());
+                        obj.Author = (row.GetCell(authorCol) == null ? "" : row.GetCell(authorCol).ToString());
+                        obj.Date = (row.GetCell(dateCol) == null ? "" : row.GetCell(dateCol).ToString());
+                        obj.Ahead = (row.GetCell(aheadCol) == null ? "" : row.GetCell(aheadCol).ToString());
+                        obj.TextFont = (row.GetCell(textFontCol) == null ? "" : row.GetCell(textFontCol).ToString());
+                        obj.AuthorFont = (row.GetCell(authorFontCol) == null ? "" : row.GetCell(authorFontCol).ToString());
+                        obj.ColorID = (row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString());
 
                         return obj;
                     }
@@ -356,6 +538,84 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
                 throw new KeyNotFoundException("The specific ID is not found.");
             }
         }
+
+        /// <summary>
+        /// 通过ColorID从Colors获取相应的行
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        /// <exception cref="FileFormatException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="KeyNotFoundException"></exception>
+        public DbDataColorObj GetRowFromColorByID(string ColorID)
+        {
+            if (!initialized)
+            {
+                throw new ArgumentNullException("The excel processor has not been initialized yet.");
+            }
+            using (var fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
+            {
+                XSSFWorkbook wb = new(fs);
+                ISheet data = wb.GetSheet("Colors");
+                if (data == null)
+                {
+                    throw new FileFormatException("Sheet 'Colors' not found.");
+                }
+
+                IRow headers = data.GetRow(0);
+                int colorIDCol = -1;
+                int backColorCol = -1;
+                int textColorCol = -1;
+                int authorColorCol = -1;
+                foreach (var item in headers)
+                {
+                    string col = item.ToString();
+                    if (col == ColorID_KEY)
+                    {
+                        colorIDCol = item.ColumnIndex;
+                    }
+                    else if (col == BackColor_KEY)
+                    {
+                        backColorCol = item.ColumnIndex;
+                    }
+                    else if (col == TextColor_KEY)
+                    {
+                        textColorCol = item.ColumnIndex;
+                    }
+                    else if (col == AuthorColor_KEY)
+                    {
+                        authorColorCol = item.ColumnIndex;
+                    }
+                }
+                if (colorIDCol == -1 || backColorCol == -1 || textColorCol == -1 || authorColorCol == -1)
+                {
+                    throw new ArgumentException("One or more required columns not found. Check if the config or column name is modified.");
+                }
+
+                if (colorIDCol == -1 || backColorCol == -1 || textColorCol == -1 || authorColorCol == -1)
+                {
+                    throw new ArgumentException("One or more required columns not found. Check if the config or column name is modified.");
+                }
+
+
+                foreach (IRow row in data)
+                {
+                    if ((row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString()) == ColorID)
+                    {
+                        DbDataColorObj obj = new();
+                        obj.ColorID = (row.GetCell(colorIDCol) == null ? "" : row.GetCell(colorIDCol).ToString());
+                        obj.BackColor = (row.GetCell(backColorCol) == null ? "" : row.GetCell(backColorCol).ToString());
+                        obj.TextColor = (row.GetCell(textColorCol) == null ? "" : row.GetCell(textColorCol).ToString());
+                        obj.AuthorColor = (row.GetCell(authorColorCol) == null ? "" : row.GetCell(authorColorCol).ToString());
+
+                        return obj;
+                    }
+                }
+
+                throw new KeyNotFoundException("The specific ColorID is not found.");
+            }
+        }
+
 
         /// <summary>
         /// 绑定数据到DataGridView
@@ -534,7 +794,7 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
             string[,] configData = new string[,]
             {
                 { "Reminder", "如不清楚用途，请勿修改此表内容，否则数据库结构可能遭到损坏！" },
-                { "Type", "RandomItemsDb" },
+                { "Type", "OneQuoteDb" },
                 { "Version", "1" },
                 { "ID_KEY", "ID" },
                 { "Text_KEY", "Text" },
@@ -569,9 +829,14 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
             dataHeaderRow.CreateCell(6).SetCellValue("AuthorFont");
             dataHeaderRow.CreateCell(7).SetCellValue("ColorID");
 
+            IRow dataHeaderRowEx = dataSheet.CreateRow(1);
+            dataHeaderRowEx.CreateCell(0).SetCellValue("1");
+            dataHeaderRowEx.CreateCell(1).SetCellValue("只是那生命的大雨纷飞，​总不济于这片虚幻到不真实的万里晴空就是了。");
+            dataHeaderRowEx.CreateCell(2).SetCellValue("- 幻愿Recovery -");
 
             // 创建“Colors”工作表
             ISheet dataSheet2 = wb.CreateSheet("Colors");
+            
 
             // 创建“Colors”表头行
             IRow dataHeaderRow2 = dataSheet2.CreateRow(0);
@@ -579,7 +844,11 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
             dataHeaderRow2.CreateCell(1).SetCellValue("BackColor");
             dataHeaderRow2.CreateCell(2).SetCellValue("TextColor");
             dataHeaderRow2.CreateCell(3).SetCellValue("AuthorColor");
-
+            IRow dataHeaderRowEx2 = dataSheet2.CreateRow(1);
+            dataHeaderRowEx2.CreateCell(0).SetCellValue("Example");
+            dataHeaderRowEx2.CreateCell(1).SetCellValue("#C2D7F3");
+            dataHeaderRowEx2.CreateCell(2).SetCellValue("#7778CC");
+            dataHeaderRowEx2.CreateCell(3).SetCellValue("#7778CC");
 
 
             //save

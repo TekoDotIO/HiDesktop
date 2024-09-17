@@ -60,6 +60,9 @@ namespace Widgets.MVP
                     case WidgetModels.Activator _:
                         ((WidgetModels.Activator)widgets[nowFile]).ShowDialog();
                         break;
+                    case OneQuoteText _:
+                        ((OneQuoteText)widgets[nowFile]).ShowDialog();
+                        break;
                     default:
                         break;
                 }
@@ -76,8 +79,8 @@ namespace Widgets.MVP
                     }
                 }
 
-                Log.SaveLog($"Main program fatal exception:\n{e}", $"HiDesktopMain: {nowFile}", false);
-                var r = MessageBox.Show($"主程序执行时出现致命错误！\n出错的程序模块已终止，我们对造成的不便表示歉意。\n\n如果您是用户，请将此信息和日志信息反馈给开发者：\n\n异常文件：{nowFile}\n异常信息：{e}\n\n如果您想亲自调试程序，请点击“是”，如果您想退出当前模块，请点击“否”。", $"HiDesktop - 异常捕获：{nowFile}", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                Log.SaveLog($"Widget runtime fatal exception:\n{e}", $"HiDesktopMain: {nowFile}", false);
+                var r = MessageBox.Show($"小组件执行时出现致命错误！\n出错的程序模块已终止，我们对造成的不便表示歉意。\n\n如果您是用户，请将此信息和日志信息反馈给开发者：\n\n异常文件：{nowFile}\n异常信息：{e}\n\n如果您想亲自调试程序，请点击“是”，如果您想退出当前模块，请点击“否”。", $"HiDesktop - 异常捕获：{nowFile}", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
                 if (r == DialogResult.Yes)
                 {
@@ -105,84 +108,122 @@ namespace Widgets.MVP
             }
             foreach (string localFile in properties)
             {
-                if (localFile.Contains(".properties"))
+                try
                 {
-                    Hashtable config = PropertiesHelper.Load(localFile);
-                    
-                    switch ((string)config["type"])
+                    if (localFile.Contains(".properties"))
                     {
-                        case "CounterBar":
-                            
-                            if ((string)config["enabled"] == "true")
-                            {
-                                CounterBar textBar = new CounterBar(localFile);
-                                p.widgets.Add(localFile, textBar);
-                                p.nowFile = localFile;
-                                Thread View = new Thread(new ThreadStart(p.StartView));
-                                View.Start();
-                                string s = $"Launched {localFile}";
-                                Log.SaveLog(s);
-                                if (enableHook)
-                                {
-                                    launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
-                                }
-                            }
-                            else
-                            {
-                                Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
-                            }
-                            break;
-                        case "TextBar":
-                            if ((string)config["enabled"] == "true")
-                            {
-                                TextBar textBar = new TextBar(localFile);
-                                p.widgets.Add(localFile, textBar);
-                                p.nowFile = localFile;
-                                Thread Counter = new Thread(new ThreadStart(p.StartView));
-                                Counter.Start();
-                                Log.SaveLog($"Launched {localFile}");
-                                if (enableHook)
-                                {
-                                    launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
-                                }
-                            }
-                            else
-                            {
-                                Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
-                            }
-                            break;
-                        case "Activator":
-                            if (activatorExists)
-                            {
-                                Log.SaveLog("Already exists one activated Activator. This widget can only exist 1 per OS.");
-                                break;
-                            }
-                            if ((string)config["enabled"] == "true")
-                            {
-                                WidgetModels.Activator activator = new(localFile);
-                                p.widgets.Add(localFile, activator);
-                                p.nowFile = localFile;
-                                Thread a = new Thread(new ThreadStart(p.StartView));
-                                a.Start();
-                                Log.SaveLog($"Launched {localFile}");
-                                activatorExists = true;
-                                if (enableHook)
-                                {
-                                    launchPage.ProcessText.Text = $"Activator对象成功构建:{localFile}";
-                                }
-                                activatedActivator = activator;
-                            }
-                            else
-                            {
-                                Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
-                            }
-                            break;
-                        default:
-                            Log.SaveLog($"Unknown program type:{localFile}");
-                            break;
-                    }
+                        Hashtable config = PropertiesHelper.Load(localFile);
 
+                        switch ((string)config["type"])
+                        {
+                            case "CounterBar":
+
+                                if ((string)config["enabled"] == "true")
+                                {
+                                    CounterBar textBar = new CounterBar(localFile);
+                                    p.widgets.Add(localFile, textBar);
+                                    p.nowFile = localFile;
+                                    Thread View = new Thread(new ThreadStart(p.StartView));
+                                    View.Start();
+                                    string s = $"Launched {localFile}";
+                                    Log.SaveLog(s);
+                                    if (enableHook)
+                                    {
+                                        launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
+                                    }
+                                }
+                                else
+                                {
+                                    Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                                }
+                                break;
+                            case "TextBar":
+                                if ((string)config["enabled"] == "true")
+                                {
+                                    TextBar textBar = new TextBar(localFile);
+                                    p.widgets.Add(localFile, textBar);
+                                    p.nowFile = localFile;
+                                    Thread Counter = new Thread(new ThreadStart(p.StartView));
+                                    Counter.Start();
+                                    Log.SaveLog($"Launched {localFile}");
+                                    if (enableHook)
+                                    {
+                                        launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
+                                    }
+                                }
+                                else
+                                {
+                                    Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                                }
+                                break;
+                            case "Activator":
+                                if (activatorExists)
+                                {
+                                    Log.SaveLog("Already exists one activated Activator. This widget can only exist 1 per OS.");
+                                    break;
+                                }
+                                if ((string)config["enabled"] == "true")
+                                {
+                                    WidgetModels.Activator activator = new(localFile);
+                                    p.widgets.Add(localFile, activator);
+                                    p.nowFile = localFile;
+                                    Thread a = new Thread(new ThreadStart(p.StartView));
+                                    a.Start();
+                                    Log.SaveLog($"Launched {localFile}");
+                                    activatorExists = true;
+                                    if (enableHook)
+                                    {
+                                        launchPage.ProcessText.Text = $"Activator对象成功构建:{localFile}";
+                                    }
+                                    activatedActivator = activator;
+                                }
+                                else
+                                {
+                                    Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                                }
+                                break;
+                            case "OneQuote":
+                                if ((string)config["enabled"] == "true")
+                                {
+                                    OneQuoteText obj = new(localFile);
+                                    p.widgets.Add(localFile, obj);
+                                    p.nowFile = localFile;
+                                    Thread Counter = new Thread(new ThreadStart(p.StartView));
+                                    Counter.Start();
+                                    Log.SaveLog($"Launched {localFile}");
+                                    if (enableHook)
+                                    {
+                                        launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
+                                    }
+                                }
+                                else
+                                {
+                                    Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                                }
+                                break;
+                            default:
+                                Log.SaveLog($"Unknown program type:{localFile}");
+                                break;
+                        }
+
+                    }
                 }
+                catch (Exception ex)
+                {
+
+                    Log.SaveLog($"Widget initialization program fatal exception:\n{ex}", $"HiDesktopMain: {localFile}", false);
+                    var r = MessageBox.Show($"小组件初始化阶段时出现致命错误！\n出错的程序模块已终止，我们对造成的不便表示歉意。\n\n如果您是用户，请将此信息和日志信息反馈给开发者：\n\n异常文件：{localFile}\n异常信息：{ex}\n\n如果您想亲自调试程序，请点击“是”，如果您想退出当前模块，请点击“否”。", $"HiDesktop - 异常捕获：{localFile}", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                    if (r == DialogResult.Yes)
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                
 
             }
             Log.SaveLog("Launched all.");

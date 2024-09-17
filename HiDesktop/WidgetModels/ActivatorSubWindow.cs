@@ -266,6 +266,7 @@ namespace Widgets.MVP.WidgetModels
             InitializeComponent();
             x = this.Width;//初始化时候的界面宽度
             y = this.Height;//初始化时候的界面高度
+            setTag(this);
             AppConfig = appConfig;
             parentActivator = activator;
             radius = Convert.ToInt32((string)AppConfig["windowRadius"]);

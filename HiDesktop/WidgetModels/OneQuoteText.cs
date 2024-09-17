@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Widgets.MVP.Essential_Repos;
+using Widgets.MVP.WidgetModels.OneQuoteDataModel;
 
 namespace Widgets.MVP.WidgetModels
 {
@@ -24,7 +29,9 @@ namespace Widgets.MVP.WidgetModels
         public bool allowMove = false;
         public DataSourceType SrcType;
         public string DataSrc;
+        public string ColorSrcIfNotExcelSrc;
         public bool random = false;
+        DbDataRowObj quote;
         public UpdateMode updateMode;
         public enum UpdateMode
         {
@@ -49,14 +56,37 @@ namespace Widgets.MVP.WidgetModels
             { "allowMove", "true" },
             { "updateBy", "day" },//day/manual/boot
             { "opacity", "1" },
-            { "topMost", "false" }
+            { "topMost", "false" },
+            { "colorSrcIfNotExcelSrc", "" },
+            { "radius", "auto" }
         };
+
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_EX_APPWINDOW = 0x40000;
+                const int WS_EX_TOOLWINDOW = 0x80;
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle &= (~WS_EX_APPWINDOW);
+                cp.ExStyle |= WS_EX_TOOLWINDOW;
+                cp.ExStyle |= 0x02000000;//解决闪屏问题，来自 https://blog.csdn.net/weixin_38211198/article/details/90724952
+
+                return cp;
+            }
+        }
+        //From https://www.cnblogs.com/darkic/p/16256294.html
+
+
         public OneQuoteText(string path)
         {
             InitializeComponent();
+            ShowInTaskbar = false;
             this.Path = path;
             x = this.Width;//初始化时候的界面宽度
             y = this.Height;//初始化时候的界面高度
+            setTag(this);
             //Log.SaveLog("Start initializing...");
             if (!File.Exists(Path))
             {
@@ -90,109 +120,199 @@ namespace Widgets.MVP.WidgetModels
                 return;
             }
 
-            //size
-            if ((string)AppConfig["size"] == "auto") 
+
+            //Start loading: quote
+            //See load
+
+
+
+        }
+
+
+
+        void LoadFromExcel()
+        {
+            OneQuoteDbExcelProcessor dp = new(DataSrc, true);
+
+            dp.Initialize();
+            var datas = dp.GetDatasFromDatas();
+            for (int i = 0; i < datas.Count(); i++)
             {
-                var h = SystemInformation.PrimaryMonitorSize.Height;
-                this.Size = new Size(Convert.ToInt32(h / 3.5), h / 7);
-            }
-            else
-            {
-                var wh = Convert.ToInt32((string)AppConfig["size"]);
-                Size = new Size(wh * 2, wh);
+                var data = datas[i];
+                if (data == null)
+                {
+                    continue;
+                }
+                if (data.Ahead == "true")
+                {
+                    if (data.Date != "" && data.Date != DateTime.Today.ToString("yyyy.MM.dd"))
+                    {
+                        data.Ahead = "false";
+                        dp.ModifyToDataByID(data);
+                    }
+                    quote = data;
+                }
             }
 
-            //location
-            if ((string)AppConfig["location"] == "auto") 
+            if (quote == null)
             {
-                StartPosition = FormStartPosition.CenterScreen;
-                AppConfig["location"] = $"{Location.X},{Location.Y}";
-                PropertiesHelper.Save(path, AppConfig);
+                for (int i = 0; i < datas.Count(); i++)
+                {
+
+                    var data = datas[i];
+                    if (data == null)
+                    {
+                        continue;
+                    }
+                    if (data.Date == DateTime.Today.ToString("yyyy.MM.dd"))
+                    {
+                        if (updateMode != UpdateMode.Boot)
+                        {
+
+                            quote = data;
+                        }
+
+                    }
+                }
+            }
+
+
+            if (quote == null)
+            {
+                if (random)
+                {
+                    List<DbDataRowObj> objs = new();
+                    for (int i = 0; i < datas.Count(); i++)
+                    {
+                        var data = datas[i];
+                        if (data == null)
+                        {
+                            continue;
+                        }
+                        if (data.Date == "")
+                        {
+                            objs.Add(data);
+                        }
+                    }
+                    if (objs.Count == 0)
+                    {
+                        Log.SaveLog($"[{Path}]No enough quotes!", "OneQuote");
+                        return;
+                    }
+                    Random r = new();
+                    quote = objs[r.Next(0, objs.Count)];
+                    if (updateMode == UpdateMode.Day)
+                    {
+                        quote.Date = DateTime.Today.ToString("yyyy.MM.dd");
+                    }
+                    else if (updateMode == UpdateMode.Boot)
+                    {
+                        quote.Date = DateTime.Today.AddDays(-1).ToString("yyyy.MM.dd");
+                    }
+
+                    dp.ModifyToDataByID(quote);
+                }
+                else
+                {
+                    for (int i = 0; i < datas.Count(); i++)
+                    {
+                        var data = datas[i];
+                        if (data == null)
+                        {
+                            continue;
+                        }
+                        if (data.Date == "")
+                        {
+                            quote = data;
+                            if (updateMode == UpdateMode.Day)
+                            {
+                                quote.Date = DateTime.Today.ToString("yyyy.MM.dd");
+                            }
+                            else if (updateMode == UpdateMode.Boot)
+                            {
+                                quote.Date = DateTime.Today.AddDays(-1).ToString("yyyy.MM.dd");
+                            }
+                            dp.ModifyToDataByID(quote);
+                            break;
+                        }
+                    }
+                    if (quote == null)
+                    {
+                        Log.SaveLog($"[{Path}]No enough quotes!", "OneQuote");
+                        return;
+                    }
+                }
+            }
+
+
+            //Apply quote
+            QuoteText.Text = quote.Text;
+            AuthorText.Text = quote.Author;
+
+
+            //Apply fonts
+            try
+            {
+                if (quote.TextFont != "")
+                {
+                    PrivateFontCollection fcText = new();
+                    fcText.AddFontFile(quote.TextFont);
+                    QuoteText.Font = new(fcText.Families[0], QuoteText.Font.Size);
+                }
+                if (quote.AuthorFont != "")
+                {
+                    PrivateFontCollection atText = new();
+                    atText.AddFontFile(quote.AuthorFont);
+                    QuoteText.Font = new(atText.Families[0], QuoteText.Font.Size);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"[{Path}]Error when loading fonts:{ex}", "OneQuote");
+            }
+
+            //Apply colors
+            if (quote.ColorID != "")
+            {
+                try
+                {
+                    var c = dp.GetRowFromColorByID(quote.ColorID);
+                    QuoteText.ForeColor = ColorTranslator.FromHtml(c.TextColor);
+                    AuthorText.ForeColor = ColorTranslator.FromHtml(c.AuthorColor);
+                    BackColor = ColorTranslator.FromHtml(c.BackColor);
+                    QuoteText.BackColor = Color.Transparent;
+                    AuthorText.BackColor = Color.Transparent;
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"[{Path}]Error when loading colors:{ex}", "OneQuote");
+                }
+
             }
             else
             {
                 try
                 {
-                    StartPosition = FormStartPosition.Manual;
-                    var temp = ((string)AppConfig["location"]).Split(",");
-                    Location = new Point(Convert.ToInt32(temp[0]), Convert.ToInt32(temp[1]));
+                    var colors = dp.GetDatasFromColor();
+                    Random r = new();
+                    var c = colors[r.Next(1, colors.Count())];
+                    QuoteText.ForeColor = ColorTranslator.FromHtml(c.TextColor);
+                    AuthorText.ForeColor = ColorTranslator.FromHtml(c.AuthorColor);
+                    BackColor = ColorTranslator.FromHtml(c.BackColor);
+                    QuoteText.BackColor = Color.Transparent;
+                    AuthorText.BackColor = Color.Transparent;
                 }
                 catch (Exception ex)
                 {
-                    Log.SaveLog($"[{path}]Error when loading location:{ex}", "OneQuote");
-                    StartPosition = FormStartPosition.CenterScreen;
-                    AppConfig["location"] = $"{Location.X},{Location.Y}";
-                    PropertiesHelper.Save(path, AppConfig);
+                    Log.SaveLog($"[{Path}]Error when loading colors:{ex}", "OneQuote");
                 }
-
             }
-
-            //dataScrType
-            switch ((string)AppConfig["dataSrcType"])
-            {
-                case "Excel":
-                    SrcType = DataSourceType.Excel;
-                    break;
-                default:
-                    Log.SaveLog($"[{path}]Not suppoorted src type.", "OneQuote");
-                    return;
-            }
-
-            //allowMove
-            if ((string)AppConfig["allowMove"] == "true")
-            {
-                allowMove = true;
-            }
-
-            //topMost
-            if ((string)AppConfig["topMost"] == "true") 
-            {
-                TopMost = true;
-            }
-
-            //random
-            if ((string)AppConfig["random"] == "true")
-            {
-                random = true;
-            }
-
-            //opacity
-            Opacity = Convert.ToDouble((string)AppConfig["opacity"]);
-
-            //dataSrc
-            DataSrc = (string)AppConfig["dataSrc"];
-
-            //updateBy
-            switch ((string)AppConfig["updateBy"])
-            {
-                case "day":
-                    updateMode = UpdateMode.Day;
-                    break;
-                case "manual":
-                    updateMode = UpdateMode.Manual;
-                    break;
-                case "boot":
-                    updateMode = UpdateMode.Boot;
-                    break;
-                default:
-                    Log.SaveLog($"[{path}]Error when loading updateBy: Invaild arg.", "OneQuote");
-                    updateMode = UpdateMode.Manual;
-                    break;
-            }
-
-            //asMainQuote
-            if ((string)AppConfig["asMainQuote"] == "true")
-            {
-                Program.MainQuote = this;
-            }
-
-            Log.SaveLog($"[{path}]Initialization accomplished.", "OneQuote");
-
-
-
 
 
         }
+
+
 
         private void OneQuoteText_Resize(object sender, EventArgs e)
         {
@@ -236,6 +356,253 @@ namespace Widgets.MVP.WidgetModels
                     }
                 }
             }
+        }
+
+
+
+        //From https://www.cnblogs.com/darkic/p/16256294.html
+        /// <summary>
+        /// 设置窗体的Region
+        /// </summary>
+        public void SetWindowRegion(int radius)
+        {
+            GraphicsPath FormPath;
+            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
+            FormPath = GetRoundedRectPath(rect, radius);
+            this.Region = new Region(FormPath);
+
+        }
+        /// <summary>
+        /// 绘制圆角路径
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        private GraphicsPath GetRoundedRectPath(Rectangle rect, int radius)
+        {
+            int diameter = radius;
+            Rectangle arcRect = new Rectangle(rect.Location, new Size(diameter, diameter));
+            GraphicsPath path = new GraphicsPath();
+
+            // 左上角
+            path.AddArc(arcRect, 180, 90);
+
+            // 右上角
+            arcRect.X = rect.Right - diameter;
+            path.AddArc(arcRect, 270, 90);
+
+            // 右下角
+            arcRect.Y = rect.Bottom - diameter;
+            path.AddArc(arcRect, 0, 90);
+
+            // 左下角
+            arcRect.X = rect.Left;
+            path.AddArc(arcRect, 90, 90);
+            path.CloseFigure();//闭合曲线
+            return path;
+        }
+
+
+
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
+
+        private void FrmMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (allowMove)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, 0x0112, 0xF012, 0);
+            }
+
+        }
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            FrmMain_MouseDown(this, e);
+        }
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+        }
+
+        private void OneQuoteText_Load(object sender, EventArgs e)
+        {
+            //size
+            if ((string)AppConfig["size"] == "auto")
+            {
+                var h = SystemInformation.PrimaryMonitorSize.Height;
+                this.Size = new Size(Convert.ToInt32(h / 3.5), h / 7);
+            }
+            else
+            {
+                var wh = Convert.ToInt32((string)AppConfig["size"]);
+                Size = new Size(wh * 2, wh);
+            }
+            float newx = (Size.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
+            float newy = (Size.Height) / y;//拖动界面之后的高度与之前界面的高度之比
+            setControls(newx, newy, this);//进行控件大小的伸缩变换
+
+
+            //location
+            if ((string)AppConfig["location"] == "auto")
+            {
+                StartPosition = FormStartPosition.CenterScreen;
+                AppConfig["location"] = $"{Location.X},{Location.Y}";
+                PropertiesHelper.Save(Path, AppConfig);
+            }
+            else
+            {
+                try
+                {
+                    StartPosition = FormStartPosition.Manual;
+                    var temp = ((string)AppConfig["location"]).Split(",");
+                    Location = new Point(Convert.ToInt32(temp[0]), Convert.ToInt32(temp[1]));
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"[{Path}]Error when loading location:{ex}", "OneQuote");
+                    StartPosition = FormStartPosition.CenterScreen;
+                    AppConfig["location"] = $"{Location.X},{Location.Y}";
+                    PropertiesHelper.Save(Path, AppConfig);
+                }
+
+            }
+
+            //dataScrType
+            switch ((string)AppConfig["dataSrcType"])
+            {
+                case "Excel":
+                    SrcType = DataSourceType.Excel;
+                    break;
+                default:
+                    Log.SaveLog($"[{Path}]Not suppoorted src type.", "OneQuote");
+                    return;
+            }
+
+            //allowMove
+            if ((string)AppConfig["allowMove"] == "true")
+            {
+                allowMove = true;
+            }
+
+            //topMost
+            if ((string)AppConfig["topMost"] == "true")
+            {
+                TopMost = true;
+            }
+
+            //random
+            if ((string)AppConfig["random"] == "true")
+            {
+                random = true;
+            }
+
+            //opacity
+            Opacity = Convert.ToDouble((string)AppConfig["opacity"]);
+
+            //dataSrc
+            DataSrc = (string)AppConfig["dataSrc"];
+
+            //colorSrcIfNotExcelSrc
+            ColorSrcIfNotExcelSrc = (string)AppConfig["colorSrcIfNotExcelSrc"];
+
+            //updateBy
+            switch ((string)AppConfig["updateBy"])
+            {
+                case "day":
+                    updateMode = UpdateMode.Day;
+                    break;
+                case "manual":
+                    updateMode = UpdateMode.Manual;
+                    break;
+                case "boot":
+                    updateMode = UpdateMode.Boot;
+                    break;
+                default:
+                    Log.SaveLog($"[{Path}]Error when loading updateBy: Invaild arg.", "OneQuote");
+                    updateMode = UpdateMode.Manual;
+                    break;
+            }
+
+            //asMainQuote
+            if ((string)AppConfig["asMainQuote"] == "true")
+            {
+                if (Program.MainQuote != null)
+                {
+                    Log.SaveLog($"[{Path}]Threr is already a main quote registered. Skipping...", "OneQuote");
+                }
+                Program.MainQuote = this;
+            }
+
+
+            //radius
+            if ((string)AppConfig["radius"] == "auto")
+            {
+                SetWindowRegion(Height / 7);
+            }
+            else
+            {
+                try
+                {
+                    SetWindowRegion(Convert.ToInt32((string)AppConfig["radius"]));
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"[{Path}]Error when loading radius:{ex}", "OneQuote");
+                    SetWindowRegion(Height / 7);
+                    //throw;
+                }
+            }
+
+
+
+            Log.SaveLog($"[{Path}]Initialization accomplished.", "OneQuote");
+
+
+            Thread t = new(new ThreadStart(() =>
+            {
+                //Start loading: quote
+                switch (SrcType)
+                {
+                    case DataSourceType.Excel:
+                        LoadFromExcel();
+                        break;
+                    default:
+                        break;
+                }
+            }));
+            t.Start();
+
+        }
+
+        private void QuoteText_MouseDown(object sender, MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            FrmMain_MouseDown(this, e);
+        }
+
+        private void QuoteText_MouseUp(object sender, MouseEventArgs e)
+        {
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+        }
+
+        private void AuthorText_MouseDown(object sender, MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            FrmMain_MouseDown(this, e);
+        }
+
+        private void AuthorText_MouseUp(object sender, MouseEventArgs e)
+        {
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
         }
     }
 }

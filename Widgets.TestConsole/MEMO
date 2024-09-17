@@ -1,16 +1,4 @@
-﻿ID_KEY
-Text_KEY
-Author_KEY
-Date_KEY
-Ahead_KEY
-TextFont_KEY
-AuthorFont_KEY
-ColorID_KEY
-BackColor_KEY
-TextColor_KEY
-AuthorColor_KEY
-
-
+﻿
             { "type", "OneQuote" },
             { "enabled", "true" },
             { "size", "auto" },
@@ -22,4 +10,19 @@ AuthorColor_KEY
             { "allowMove", "true" },
             { "updateBy", "day" },//day/manual/boot
             { "opacity", "1" },
-            { "topMost", "false" }
+            { "topMost", "false" },
+            { "colorSrcIfNotExcelSrc", "" },
+            { "radius", "auto" }
+
+
+
+protected override void OnMouseDown(MouseEventArgs e)
+{
+    base.OnMouseDown(e);
+    FrmMain_MouseDown(this, e);
+}
+protected override void OnMouseUp(MouseEventArgs e)
+{
+    AppConfig["location"] = $"{Location.X},{Location.Y}";
+    PropertiesHelper.Save(Path, AppConfig);
+}
