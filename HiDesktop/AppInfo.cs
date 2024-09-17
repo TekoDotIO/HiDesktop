@@ -8,6 +8,6 @@ namespace Widgets.MVP
 {
     public static class AppInfo
     {
-        public const string Version = "v.2.0.1.0  Nightly Alpha";
+        public const string Version = "v.2.0.3.1  Nightly Alpha";
     }
 }
