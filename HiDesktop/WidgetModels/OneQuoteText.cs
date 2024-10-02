@@ -33,6 +33,7 @@ namespace Widgets.MVP.WidgetModels
         public bool random = false;
         DbDataRowObj quote;
         public UpdateMode updateMode;
+        OneQuoteDbExcelProcessor dp;
         public enum UpdateMode
         {
             Day,
@@ -130,9 +131,9 @@ namespace Widgets.MVP.WidgetModels
 
 
 
-        void LoadFromExcel()
+        void LoadFromExcel(bool skipDate)
         {
-            OneQuoteDbExcelProcessor dp = new(DataSrc, true);
+            dp = new(DataSrc, true);
 
             dp.Initialize();
             var datas = dp.GetDatasFromDatas();
@@ -145,12 +146,16 @@ namespace Widgets.MVP.WidgetModels
                 }
                 if (data.Ahead == "true")
                 {
-                    if (data.Date != "" && data.Date != DateTime.Today.ToString("yyyy.MM.dd"))
+                    if (!skipDate)
                     {
-                        data.Ahead = "false";
-                        dp.ModifyToDataByID(data);
+                        if (data.Date != "" && data.Date != DateTime.Today.ToString("yyyy.MM.dd"))
+                        {
+                            data.Ahead = "false";
+                            dp.ModifyToDataByID(data);
+                        }
+                        quote = data;
                     }
-                    quote = data;
+
                 }
             }
 
@@ -166,7 +171,7 @@ namespace Widgets.MVP.WidgetModels
                     }
                     if (data.Date == DateTime.Today.ToString("yyyy.MM.dd"))
                     {
-                        if (updateMode != UpdateMode.Boot)
+                        if (updateMode != UpdateMode.Boot && !skipDate)
                         {
 
                             quote = data;
@@ -201,11 +206,11 @@ namespace Widgets.MVP.WidgetModels
                     }
                     Random r = new();
                     quote = objs[r.Next(0, objs.Count)];
-                    if (updateMode == UpdateMode.Day)
+                    if (updateMode == UpdateMode.Day && !skipDate)
                     {
                         quote.Date = DateTime.Today.ToString("yyyy.MM.dd");
                     }
-                    else if (updateMode == UpdateMode.Boot)
+                    else if (updateMode == UpdateMode.Boot && !skipDate)
                     {
                         quote.Date = DateTime.Today.AddDays(-1).ToString("yyyy.MM.dd");
                     }
@@ -224,11 +229,11 @@ namespace Widgets.MVP.WidgetModels
                         if (data.Date == "")
                         {
                             quote = data;
-                            if (updateMode == UpdateMode.Day)
+                            if (updateMode == UpdateMode.Day && !skipDate)
                             {
                                 quote.Date = DateTime.Today.ToString("yyyy.MM.dd");
                             }
-                            else if (updateMode == UpdateMode.Boot)
+                            else if (updateMode == UpdateMode.Boot && !skipDate)
                             {
                                 quote.Date = DateTime.Today.AddDays(-1).ToString("yyyy.MM.dd");
                             }
@@ -431,7 +436,8 @@ namespace Widgets.MVP.WidgetModels
             PropertiesHelper.Save(Path, AppConfig);
         }
 
-        private void OneQuoteText_Load(object sender, EventArgs e)
+
+        public void ReloadOneQuote()
         {
             //size
             if ((string)AppConfig["size"] == "auto")
@@ -502,6 +508,10 @@ namespace Widgets.MVP.WidgetModels
             {
                 random = true;
             }
+            else
+            {
+                random = false;
+            }
 
             //opacity
             Opacity = Convert.ToDouble((string)AppConfig["opacity"]);
@@ -564,21 +574,33 @@ namespace Widgets.MVP.WidgetModels
 
             Log.SaveLog($"[{Path}]Initialization accomplished.", "OneQuote");
 
+            LoadText(false);
 
+
+        }
+
+
+        private void LoadText(bool skipDate)
+        {
             Thread t = new(new ThreadStart(() =>
             {
                 //Start loading: quote
                 switch (SrcType)
                 {
                     case DataSourceType.Excel:
-                        LoadFromExcel();
+                        LoadFromExcel(skipDate);
                         break;
                     default:
                         break;
                 }
             }));
             t.Start();
+        }
 
+
+        private void OneQuoteText_Load(object sender, EventArgs e)
+        {
+            ReloadOneQuote();
         }
 
         private void QuoteText_MouseDown(object sender, MouseEventArgs e)
@@ -603,6 +625,79 @@ namespace Widgets.MVP.WidgetModels
         {
             AppConfig["location"] = $"{Location.X},{Location.Y}";
             PropertiesHelper.Save(Path, AppConfig);
+        }
+
+        private void ReloadOneQuoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //重新加载小组件
+            quote = null;
+            ReloadOneQuote();
+
+        }
+
+        private void Menu_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void ChangeTextManualToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //换一条（临时）
+            quote = null;
+            this.random = true;
+            LoadText(true);
+            Thread.Sleep(2000);
+            if (quote == null)
+            {
+                //MessageBox.Show("更换失败！请检查是否是所剩项目不足！", "OneQuote - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.SaveLog("更换可能失败！请检查是否是所剩项目不足！", $"[OneQuote]{Path}");
+            }
+        }
+
+        private void SkipTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (quote != null)
+            {
+                quote.Date = DateTime.Today.AddDays(-1).ToString("yyyy.MM.dd");
+                dp.ModifyToDataByID(quote);
+            }
+
+            quote = null;
+            LoadText(true);
+            Thread.Sleep(2000);
+            if (quote == null)
+            {
+                //MessageBox.Show("更换失败！请检查是否是所剩项目不足！", "OneQuote - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.SaveLog("更换可能失败！请检查是否是所剩项目不足！", $"[OneQuote]{Path}");
+            }
+        }
+
+        private void ChangeColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var colors = dp.GetDatasFromColor();
+                Random r = new();
+                var c = colors[r.Next(1, colors.Count())];
+                QuoteText.ForeColor = ColorTranslator.FromHtml(c.TextColor);
+                AuthorText.ForeColor = ColorTranslator.FromHtml(c.AuthorColor);
+                BackColor = ColorTranslator.FromHtml(c.BackColor);
+                QuoteText.BackColor = Color.Transparent;
+                AuthorText.BackColor = Color.Transparent;
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"[{Path}]Error when loading colors:{ex}", "OneQuote");
+            }
+        }
+
+
+        private void SavePositionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+            MessageBox.Show("新的位置已保存到配置文件", "OneQuote - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

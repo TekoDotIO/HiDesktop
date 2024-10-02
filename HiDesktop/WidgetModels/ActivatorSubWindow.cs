@@ -929,14 +929,21 @@ namespace Widgets.MVP.WidgetModels
                     ForeColor = windowForeColor,
                     Parent = this,
                     AutoSize = true,
-                    //Visible = false,
-                    //TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font(Font.FontFamily, lastPage.Width / 3),
+                    ////Visible = false,
+                    ////TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font(Font.FontFamily, pageDisplay.Font.Size * 2),
                     Text = DateTime.Now.ToString("HH:mm")
                 };
+                setTag(timeBar);
                 timeBar.Hide();
                 //timeBar.AutoSize = false;
                 timeBar.Location = new Point(windowSize / 10, windowSize + windowSize / 7 / 2 - timeBar.Size.Height);
+                //在启用全局缩放的情况下无需对timeBar的FontSize和Location进行设置。
+
+                float newx = (Size.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
+                float newy = (Size.Height) / y;//拖动界面之后的高度与之前界面的高度之比
+                setControls(newx, newy, this);//进行控件大小的伸缩变换
+
                 Thread timeUpdateThread = new(new ThreadStart(() =>
                 {
                     while (true)
