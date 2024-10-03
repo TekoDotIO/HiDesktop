@@ -5,7 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,19 +19,18 @@ namespace Widgets.MVP.WidgetModels
         public CountdownV2()
         {
             InitializeComponent();
-            SetWindowRegion();
-            //From https://www.cnblogs.com/tony-brook/p/10308843.html
-            
+            StartPosition = FormStartPosition.Manual;
         }
 
+        //From https://www.cnblogs.com/darkic/p/16256294.html
         /// <summary>
         /// 设置窗体的Region
         /// </summary>
-        public void SetWindowRegion()
+        public void SetWindowRegion(int radius)
         {
             GraphicsPath FormPath;
             Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-            FormPath = GetRoundedRectPath(rect, 75);
+            FormPath = GetRoundedRectPath(rect, radius);
             this.Region = new Region(FormPath);
 
         }
@@ -63,14 +64,65 @@ namespace Widgets.MVP.WidgetModels
             return path;
         }
 
-        /// <summary>
-        /// 窗体size发生改变时重新设置Region属性
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Resize(object sender, EventArgs e)
+        private void CountdownV2_Load(object sender, EventArgs e)
         {
-            SetWindowRegion();
+            SetWindowRegion(30);
+            Thread updateThread = new(new ThreadStart(Updater));
+            updateThread.Start();
         }
+
+        private void Updater()
+        {
+            
+            while (true)
+            {
+                var span = DateTime.Now - DateTime.Parse("2024.10.03");
+                DayDisplay.Text = Math.Floor(span.TotalDays).ToString();
+                HourDisplay.Text = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
+                MinDisplay.Text = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+                SecDisplay.Text = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+                Thread.Sleep(900);
+            }
+            
+        }
+
+
+
+
+
+
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
+
+        private void FrmMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x0112, 0xF012, 0);
+
+        }
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            FrmMain_MouseDown(this, e);
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_EX_APPWINDOW = 0x40000;
+                const int WS_EX_TOOLWINDOW = 0x80;
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle &= (~WS_EX_APPWINDOW);
+                cp.ExStyle |= WS_EX_TOOLWINDOW;
+                cp.ExStyle |= 0x02000000;//解决闪屏问题，来自 https://blog.csdn.net/weixin_38211198/article/details/90724952
+
+                return cp;
+            }
+        }
+        //From https://www.cnblogs.com/darkic/p/16256294.html
     }
 }

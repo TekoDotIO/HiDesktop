@@ -427,13 +427,11 @@ namespace Widgets.MVP.WidgetModels
         }
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            base.OnMouseDown(e);
-            FrmMain_MouseDown(this, e);
-        }
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            if (allowMove)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, 0x0112, 0xF012, 0);
+            }
         }
 
 
@@ -601,7 +599,33 @@ namespace Widgets.MVP.WidgetModels
         private void OneQuoteText_Load(object sender, EventArgs e)
         {
             ReloadOneQuote();
+            if (updateMode == UpdateMode.Day) 
+            {
+                Thread dawnUpdater = new(new ThreadStart(() =>
+                {
+                    DateTime dtRecord = DateTime.Now.Date;
+                    while (true)
+                    {
+                        if (DateTime.Now.Date != dtRecord)
+                        {
+                            
+                            dtRecord = DateTime.Now.Date;
+                            QuoteText.Text = "是新的一天了！";
+                            AuthorText.Text = "- HiDesktop V2 -";
+                            quote = null;
+                            ReloadOneQuote();
+                        }
+                        Thread.Sleep(800);
+                    }
+                }));
+                dawnUpdater.Start();
+            }
+            
         }
+
+
+
+
 
         private void QuoteText_MouseDown(object sender, MouseEventArgs e)
         {

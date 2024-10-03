@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using Widgets.MVP.Essential_Repos;
+using Widgets.MVP.WidgetModels;
 
 namespace HiDesktop
 {
@@ -25,6 +26,7 @@ namespace HiDesktop
         readonly string seconds;
         readonly string weekdays;
         readonly int refreshTime;
+        bool countDown = true;
         WorkStyle workStyle;
         int getdays;
         DateTime dtRecord;//用于记录打开时间，简化运算
@@ -211,11 +213,13 @@ namespace HiDesktop
             {
                 LabelNo1.Text = (string)AppConfig["countdown_frontText"];
                 LabelNo2.Text = (string)AppConfig["countdown_middleText"];
+                countDown = true;
             }
             else
             {
                 LabelNo1.Text = (string)AppConfig["count_frontText"];
                 LabelNo2.Text = (string)AppConfig["count_middleText"];
+                countDown = false;
             }
 
 
@@ -305,7 +309,36 @@ namespace HiDesktop
 
 
 
+            ReloadLocations();
 
+            TimeSpan span;
+            if (Target > Latest)
+            {
+                span = (Target - Latest);
+                getdays = GetDays(Target, Latest);
+                dtRecord = DateTime.Now;
+            }
+            else
+            {
+                span = Latest - Target;
+                getdays = GetDays(Latest, Target);
+                dtRecord = DateTime.Now;
+            }
+
+            Thread thread;
+            //thread = Target > DateTime.Now ? new Thread(new ThreadStart(Countdown_UpdateTime)) : new Thread(new ThreadStart(Count_UpdateTime));
+            thread = new Thread(new ThreadStart(Countdown_UpdateTime));
+            //?:的作用相当于if else 如果?左侧是true 则执行:左侧句 否则执行右侧句
+            thread.Start();
+
+        }
+
+
+        private void ReloadLocations()
+        {
+            int w = SystemInformation.PrimaryMonitorSize.Width;
+            int h = SystemInformation.PrimaryMonitorSize.Height;
+            #region PositionSettings
             LabelNo1.Location = new Point(0, 0);
             EventText.Location = new Point(LabelNo1.Location.X + LabelNo1.Size.Width, EventText.Location.Y);
 
@@ -355,28 +388,10 @@ namespace HiDesktop
                     Location = new Point(w / 2 - (deltaX) / 2, Location.Y);
                 }
             }
-
-            TimeSpan span;
-            if (Target > Latest)
-            {
-                span = (Target - Latest);
-                getdays = GetDays(Target, Latest);
-                dtRecord = DateTime.Now;
-            }
-            else
-            {
-                span = Latest - Target;
-                getdays = GetDays(Latest, Target);
-                dtRecord = DateTime.Now;
-            }
-
-            Thread thread;
-            //thread = Target > DateTime.Now ? new Thread(new ThreadStart(Countdown_UpdateTime)) : new Thread(new ThreadStart(Count_UpdateTime));
-            thread = new Thread(new ThreadStart(Countdown_UpdateTime));
-            //?:的作用相当于if else 如果?左侧是true 则执行:左侧句 否则执行右侧句
-            thread.Start();
-
+            #endregion
         }
+
+
         private void Countdown_UpdateTime()
         {
             while (true)
@@ -387,6 +402,34 @@ namespace HiDesktop
         }
         private void Countdown_UpdateTimeOnce()
         {
+            if (Target > DateTime.Now)
+            {
+                if (!countDown)
+                {
+                    countDown = true;
+                    LabelNo1.Text = (string)AppConfig["countdown_frontText"];
+                    LabelNo2.Text = (string)AppConfig["countdown_middleText"];
+                    ReloadLocations();
+                }
+
+            }
+            else
+            {
+                if (countDown)
+                {
+                    //CountdownV2 ctv2 = new();
+                    //Hide();
+                    //ctv2.Location = Location;
+                    //ctv2.ShowDialog();
+
+
+                    countDown = false;
+                    LabelNo1.Text = (string)AppConfig["count_frontText"];
+                    LabelNo2.Text = (string)AppConfig["count_middleText"];
+                    ReloadLocations();
+                }
+                
+            }
             TimeSpan span;
 
             if (Target > Latest)
