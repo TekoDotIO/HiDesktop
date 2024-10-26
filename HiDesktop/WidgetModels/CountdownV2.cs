@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,15 +11,47 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Widgets.MVP.Essential_Repos;
 
 namespace Widgets.MVP.WidgetModels
 {
     public partial class CountdownV2 : Form
     {
-
-        public CountdownV2()
+        public string Path;
+        Hashtable htStandard = new Hashtable()
+            {
+                { "type", "CountdownV2" },
+                { "font", "auto" },
+                { "opacity", "1" },
+                { "radius", "20" },
+                { "size", "304" },
+                { "enableGrowing", "false" },
+                { "topMost", "false" },
+                { "tagsFloating", "true" },
+                { "date", "2025.1.1" },
+                { "time","00:00:00" },
+                { "event", "EVENT!" },
+                { "location", "auto" },
+                { "enabled","true" },
+                { "countdown_frontText","To" },
+                { "count_frontText","From" },
+                { "days","d" },
+                { "hours","hr" },
+                { "minutes","min" },
+                { "seconds","" },
+                { "refreshTime","500" },
+                { "frontText_Color","#000000" },
+                { "main_Color","#000000" },
+                { "sub_Color","#696969" },
+                { "event_Color","#faadac" },
+                { "back_Color","#fcdfe5" },
+                { "allowMove","true" },
+                { "timeCalcLevel", "DHMS" }
+            };
+        public CountdownV2(string Path)
         {
             InitializeComponent();
+            this.Path = Path;
             StartPosition = FormStartPosition.Manual;
         }
 
@@ -66,7 +99,50 @@ namespace Widgets.MVP.WidgetModels
 
         private void CountdownV2_Load(object sender, EventArgs e)
         {
-            SetWindowRegion(30);
+            Log.SaveLog($"{Path} Start initializing...", "CountdownV2");
+            Hashtable AppConfig = PropertiesHelper.AutoCheck(htStandard, Path);
+            //topmost
+            if ((string)AppConfig["topMost"] == "true") 
+            {
+                TopMost = true;
+            }
+            //radius
+            try
+            {
+                SetWindowRegion(Convert.ToInt32((string)AppConfig["radius"]));
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"{Path} Err when applying radius: {ex}", "CountdownV2");
+                //throw;
+            }
+            //opacity
+            try
+            {
+                Opacity = Convert.ToDouble((string)AppConfig["opacity"]);
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"{Path} Err when applying opacity: {ex}", "CountdownV2");
+                throw;
+            }
+            //location
+            try
+            {
+                if ((string)AppConfig["location"] == "auto")
+                {
+                    Location = new Point(0, 0);
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             Thread updateThread = new(new ThreadStart(Updater));
             updateThread.Start();
         }

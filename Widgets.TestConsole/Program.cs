@@ -8,12 +8,18 @@ namespace Widgets.TestConsole
     {
         static void Main(string[] args)
         {
-            RegisterCustomURLScheme("appname");
-            //RemoveCustomURLScheme("appname");
-            if (args.Length != 0) 
-            {
-                HandleCustomURL(args[0]);
-            }
+
+
+
+
+
+
+            //RegisterCustomURLScheme("appname");
+            ////RemoveCustomURLScheme("appname");
+            //if (args.Length != 0) 
+            //{
+            //    HandleCustomURL(args[0]);
+            //}
             //while (true)
             //{
 

@@ -1,1 +1,29 @@
-﻿
+﻿{
+                { "type", "CountdownV2" },//
+                { "font", "auto" },
+                { "opacity", "1" },//
+                { "radius", "20" },//
+                { "size", "304" },
+                { "enableGrowing", "false" },
+                { "topMost", "false" },//
+                { "tagsFloating", "true" },
+                { "date", "2025.1.1" },
+                { "time","00:00:00" },
+                { "event", "EVENT!" },
+                { "location", "auto" },
+                { "enabled","true" },//
+                { "countdown_frontText","To" },
+                { "count_frontText","From" },
+                { "days","d" },
+                { "hours","hr" },
+                { "minutes","min" },
+                { "seconds","" },
+                { "refreshTime","500" },
+                { "frontText_Color","#000000" },
+                { "main_Color","#000000" },
+                { "sub_Color","#696969" },
+                { "event_Color","#faadac" },
+                { "back_Color","#fcdfe5" },
+                { "allowMove","true" },
+                { "timeCalcLevel", "DHMS" }
+            };

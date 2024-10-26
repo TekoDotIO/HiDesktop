@@ -63,6 +63,9 @@ namespace Widgets.MVP
                     case OneQuoteText _:
                         ((OneQuoteText)widgets[nowFile]).ShowDialog();
                         break;
+                    case CountdownV2 _:
+                        ((CountdownV2)widgets[nowFile]).ShowDialog();
+                        break;
                     default:
                         break;
                 }
@@ -116,6 +119,26 @@ namespace Widgets.MVP
 
                         switch ((string)config["type"])
                         {
+                            case "CountdownV2":
+                                if ((string)config["enabled"] == "true")
+                                {
+                                    CountdownV2 widget = new(localFile);
+                                    p.widgets.Add(localFile, widget);
+                                    p.nowFile = localFile;
+                                    Thread View = new Thread(new ThreadStart(p.StartView));
+                                    View.Start();
+                                    string s = $"Launched {localFile}";
+                                    Log.SaveLog(s);
+                                    if (enableHook)
+                                    {
+                                        launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
+                                    }
+                                }
+                                else
+                                {
+                                    Log.SaveLog($"Program:\"{localFile}\" is not enabled.");
+                                }
+                                break;
                             case "CounterBar":
 
                                 if ((string)config["enabled"] == "true")
