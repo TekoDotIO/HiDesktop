@@ -36,8 +36,8 @@
             ChangeTextManualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             SkipTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ChangeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            AuthorText = new System.Windows.Forms.Label();
             savePositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            AuthorText = new System.Windows.Forms.Label();
             Menu.SuspendLayout();
             SuspendLayout();
             // 
@@ -59,13 +59,13 @@
             // 
             Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ReloadOneQuoteToolStripMenuItem, OneQuoteControlMenuToolStripMenuItem, savePositionToolStripMenuItem });
             Menu.Name = "Menu";
-            Menu.Size = new System.Drawing.Size(181, 92);
+            Menu.Size = new System.Drawing.Size(161, 70);
             Menu.Opening += Menu_Opening;
             // 
             // ReloadOneQuoteToolStripMenuItem
             // 
             ReloadOneQuoteToolStripMenuItem.Name = "ReloadOneQuoteToolStripMenuItem";
-            ReloadOneQuoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ReloadOneQuoteToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             ReloadOneQuoteToolStripMenuItem.Text = "重新加载小组件";
             ReloadOneQuoteToolStripMenuItem.Click += ReloadOneQuoteToolStripMenuItem_Click;
             // 
@@ -73,29 +73,36 @@
             // 
             OneQuoteControlMenuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { ChangeTextManualToolStripMenuItem, SkipTextToolStripMenuItem, ChangeColorToolStripMenuItem });
             OneQuoteControlMenuToolStripMenuItem.Name = "OneQuoteControlMenuToolStripMenuItem";
-            OneQuoteControlMenuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            OneQuoteControlMenuToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             OneQuoteControlMenuToolStripMenuItem.Text = "控制选项";
             // 
             // ChangeTextManualToolStripMenuItem
             // 
             ChangeTextManualToolStripMenuItem.Name = "ChangeTextManualToolStripMenuItem";
-            ChangeTextManualToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ChangeTextManualToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             ChangeTextManualToolStripMenuItem.Text = "换一条（临时）";
             ChangeTextManualToolStripMenuItem.Click += ChangeTextManualToolStripMenuItem_Click;
             // 
             // SkipTextToolStripMenuItem
             // 
             SkipTextToolStripMenuItem.Name = "SkipTextToolStripMenuItem";
-            SkipTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            SkipTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             SkipTextToolStripMenuItem.Text = "跳过当前条目";
             SkipTextToolStripMenuItem.Click += SkipTextToolStripMenuItem_Click;
             // 
             // ChangeColorToolStripMenuItem
             // 
             ChangeColorToolStripMenuItem.Name = "ChangeColorToolStripMenuItem";
-            ChangeColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ChangeColorToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             ChangeColorToolStripMenuItem.Text = "换个颜色";
             ChangeColorToolStripMenuItem.Click += ChangeColorToolStripMenuItem_Click;
+            // 
+            // savePositionToolStripMenuItem
+            // 
+            savePositionToolStripMenuItem.Name = "savePositionToolStripMenuItem";
+            savePositionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            savePositionToolStripMenuItem.Text = "保存位置";
+            savePositionToolStripMenuItem.Click += SavePositionToolStripMenuItem_Click;
             // 
             // AuthorText
             // 
@@ -111,13 +118,6 @@
             AuthorText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             AuthorText.MouseDown += AuthorText_MouseDown;
             AuthorText.MouseUp += AuthorText_MouseUp;
-            // 
-            // savePositionToolStripMenuItem
-            // 
-            savePositionToolStripMenuItem.Name = "savePositionToolStripMenuItem";
-            savePositionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            savePositionToolStripMenuItem.Text = "保存位置";
-            savePositionToolStripMenuItem.Click += SavePositionToolStripMenuItem_Click;
             // 
             // OneQuoteText
             // 

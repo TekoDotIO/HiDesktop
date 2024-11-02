@@ -27,6 +27,7 @@ namespace Widgets.MVP.WidgetModels
         public int defaultWidth = 500;
         public int defaultHeight = 250;
         public bool allowMove = false;
+        public bool formatIfStyleIncorrect = true;
         public DataSourceType SrcType;
         public string DataSrc;
         public string ColorSrcIfNotExcelSrc;
@@ -59,7 +60,8 @@ namespace Widgets.MVP.WidgetModels
             { "opacity", "1" },
             { "topMost", "false" },
             { "colorSrcIfNotExcelSrc", "" },
-            { "radius", "auto" }
+            { "radius", "auto" },
+            { "formatIfStyleIncorrect", "true" }
         };
 
 
@@ -110,6 +112,13 @@ namespace Widgets.MVP.WidgetModels
             {
                 Log.SaveLog($"[{Path}]{Path} is not enabled.");
                 this.Close();
+                return;
+
+            }
+
+            if ((string)AppConfig["formatIfStyleIncorrect"] != "true")
+            {
+                formatIfStyleIncorrect = false;
                 return;
 
             }
@@ -181,6 +190,9 @@ namespace Widgets.MVP.WidgetModels
                 }
             }
 
+            CorrectFormat();
+            
+
 
             if (quote == null)
             {
@@ -216,6 +228,9 @@ namespace Widgets.MVP.WidgetModels
                     }
 
                     dp.ModifyToDataByID(quote);
+
+
+                    CorrectFormat();
                 }
                 else
                 {
@@ -229,6 +244,7 @@ namespace Widgets.MVP.WidgetModels
                         if (data.Date == "")
                         {
                             quote = data;
+                            CorrectFormat();
                             if (updateMode == UpdateMode.Day && !skipDate)
                             {
                                 quote.Date = DateTime.Today.ToString("yyyy.MM.dd");
@@ -301,7 +317,7 @@ namespace Widgets.MVP.WidgetModels
                 {
                     var colors = dp.GetDatasFromColor();
                     Random r = new();
-                    var c = colors[r.Next(1, colors.Count())];
+                    var c = colors[r.Next(0, colors.Count())];
                     QuoteText.ForeColor = ColorTranslator.FromHtml(c.TextColor);
                     AuthorText.ForeColor = ColorTranslator.FromHtml(c.AuthorColor);
                     BackColor = ColorTranslator.FromHtml(c.BackColor);
@@ -318,7 +334,20 @@ namespace Widgets.MVP.WidgetModels
         }
 
 
-
+        private void CorrectFormat()
+        {
+            if (quote != null)
+            {
+                if (quote.Text[0] != '\"' || quote.Text[quote.Text.Length - 1] != '\"' || quote.Author[0] != '-' || quote.Author[quote.Author.Length - 1] != '-')
+                {
+                    if (formatIfStyleIncorrect)
+                    {
+                        quote.Text = "\"" + quote.Text + "\"";
+                        quote.Author = "- " + quote.Author + " -";
+                    }
+                }
+            }
+        }
         private void OneQuoteText_Resize(object sender, EventArgs e)
         {
             float newx = (this.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
@@ -599,7 +628,7 @@ namespace Widgets.MVP.WidgetModels
         private void OneQuoteText_Load(object sender, EventArgs e)
         {
             ReloadOneQuote();
-            if (updateMode == UpdateMode.Day) 
+            if (updateMode == UpdateMode.Day)
             {
                 Thread dawnUpdater = new(new ThreadStart(() =>
                 {
@@ -608,7 +637,7 @@ namespace Widgets.MVP.WidgetModels
                     {
                         if (DateTime.Now.Date != dtRecord)
                         {
-                            
+
                             dtRecord = DateTime.Now.Date;
                             QuoteText.Text = "是新的一天了！";
                             AuthorText.Text = "- HiDesktop V2 -";
@@ -620,7 +649,7 @@ namespace Widgets.MVP.WidgetModels
                 }));
                 dawnUpdater.Start();
             }
-            
+
         }
 
 
@@ -702,7 +731,7 @@ namespace Widgets.MVP.WidgetModels
             {
                 var colors = dp.GetDatasFromColor();
                 Random r = new();
-                var c = colors[r.Next(1, colors.Count())];
+                var c = colors[r.Next(0, colors.Count())];
                 QuoteText.ForeColor = ColorTranslator.FromHtml(c.TextColor);
                 AuthorText.ForeColor = ColorTranslator.FromHtml(c.AuthorColor);
                 BackColor = ColorTranslator.FromHtml(c.BackColor);
@@ -722,6 +751,16 @@ namespace Widgets.MVP.WidgetModels
             AppConfig["location"] = $"{Location.X},{Location.Y}";
             PropertiesHelper.Save(Path, AppConfig);
             MessageBox.Show("新的位置已保存到配置文件", "OneQuote - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void AuthorText_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AuthorText_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
