@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Configuration;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -14,6 +15,50 @@ namespace HiDesktop
 {
     public partial class LaunchPage : Form
     {
+
+        //From https://www.cnblogs.com/darkic/p/16256294.html
+        /// <summary>
+        /// 设置窗体的Region
+        /// </summary>
+        public void SetWindowRegion(int radius)
+        {
+            GraphicsPath FormPath;
+            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
+            FormPath = GetRoundedRectPath(rect, radius);
+            this.Region = new Region(FormPath);
+
+        }
+        /// <summary>
+        /// 绘制圆角路径
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        private GraphicsPath GetRoundedRectPath(Rectangle rect, int radius)
+        {
+            int diameter = radius;
+            Rectangle arcRect = new Rectangle(rect.Location, new Size(diameter, diameter));
+            GraphicsPath path = new GraphicsPath();
+
+            // 左上角
+            path.AddArc(arcRect, 180, 90);
+
+            // 右上角
+            arcRect.X = rect.Right - diameter;
+            path.AddArc(arcRect, 270, 90);
+
+            // 右下角
+            arcRect.Y = rect.Bottom - diameter;
+            path.AddArc(arcRect, 0, 90);
+
+            // 左下角
+            arcRect.X = rect.Left;
+            path.AddArc(arcRect, 90, 90);
+            path.CloseFigure();//闭合曲线
+            return path;
+        }
+
+
         Hashtable ht;
         bool iniFinished = false;
         public LaunchPage()
@@ -22,7 +67,7 @@ namespace HiDesktop
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
 
-            
+
 
             ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
             Thread thread = new Thread(new ThreadStart(Initialize));
@@ -68,7 +113,7 @@ namespace HiDesktop
             { "showBootWindow" , "true"},
             { "topMost" , "true"},
             { "enableAnime" , "true"},
-            { "animeLength", "3" }
+            { "animeLength", "0.1" }
         };
 
         void TryAnime()
@@ -134,17 +179,21 @@ namespace HiDesktop
 
         void Initialize()
         {
-
+            SetWindowRegion(Height / 20);
             ProcessText.Parent = poster;
-            poster.Controls.Add(ProcessText);
+            //poster.Controls.Add(ProcessText);
             //ProcessText.Location = new Point(0, 0);
             ProcessText.BackColor = Color.Transparent;
             ////实现文本反馈的透明背景
             VersionDisplay.Parent = poster;
-            poster.Controls.Add(VersionDisplay);
+            //poster.Controls.Add(VersionDisplay);
             VersionDisplay.BackColor = Color.Transparent;
             VersionDisplay.Text = AppInfo.Version;
-            
+
+            StartupInfo.Parent = poster;
+            StartupInfo.Text = AppInfo.StartupInfo;
+            StartupInfo.BackColor = Color.Transparent;
+
             bool enableFontInstall = false;
             bool waitForEffects = false;
             //bool showBootWindow = false;
@@ -201,7 +250,7 @@ namespace HiDesktop
             MainThread.Start();
             Log.SaveLog($"[LaunchPage]Thread started.");
             ProcessText.Text = "线程构建完成-Thread built... ";
-            
+
             progressBar.Value = 100;
             if (waitForEffects) Thread.Sleep(1000);
             ProcessText.Text = "启动完成-Finished";
@@ -287,6 +336,11 @@ namespace HiDesktop
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void LaunchPage_Load(object sender, EventArgs e)
+        {
+            SetWindowRegion(Height / 20);
         }
     }
 }

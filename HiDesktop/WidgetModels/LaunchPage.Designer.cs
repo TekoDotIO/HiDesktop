@@ -33,12 +33,13 @@
             ProcessText = new System.Windows.Forms.Label();
             progressBar = new System.Windows.Forms.ProgressBar();
             VersionDisplay = new System.Windows.Forms.Label();
+            StartupInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)poster).BeginInit();
             SuspendLayout();
             // 
             // poster
             // 
-            poster.Image = Widgets.MVP.Properties.Resources.HiDesktopV2;
+            poster.BackColor = System.Drawing.Color.FromArgb(241, 241, 241);
             resources.ApplyResources(poster, "poster");
             poster.Name = "poster";
             poster.TabStop = false;
@@ -46,8 +47,8 @@
             // ProcessText
             // 
             resources.ApplyResources(ProcessText, "ProcessText");
-            ProcessText.BackColor = System.Drawing.SystemColors.ControlText;
-            ProcessText.ForeColor = System.Drawing.SystemColors.Control;
+            ProcessText.BackColor = System.Drawing.Color.FromArgb(241, 241, 241);
+            ProcessText.ForeColor = System.Drawing.Color.Black;
             ProcessText.Name = "ProcessText";
             ProcessText.Click += label1_Click;
             // 
@@ -58,16 +59,24 @@
             // 
             // VersionDisplay
             // 
-            VersionDisplay.BackColor = System.Drawing.Color.Black;
+            VersionDisplay.BackColor = System.Drawing.Color.FromArgb(241, 241, 241);
             resources.ApplyResources(VersionDisplay, "VersionDisplay");
-            VersionDisplay.ForeColor = System.Drawing.Color.White;
+            VersionDisplay.ForeColor = System.Drawing.Color.Black;
             VersionDisplay.Name = "VersionDisplay";
+            // 
+            // StartupInfo
+            // 
+            StartupInfo.BackColor = System.Drawing.Color.FromArgb(241, 241, 241);
+            resources.ApplyResources(StartupInfo, "StartupInfo");
+            StartupInfo.ForeColor = System.Drawing.Color.DimGray;
+            StartupInfo.Name = "StartupInfo";
             // 
             // LaunchPage
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            BackColor = System.Drawing.Color.MediumSlateBlue;
+            BackColor = System.Drawing.Color.FromArgb(241, 241, 241);
+            Controls.Add(StartupInfo);
             Controls.Add(VersionDisplay);
             Controls.Add(progressBar);
             Controls.Add(ProcessText);
@@ -76,6 +85,7 @@
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             Name = "LaunchPage";
             ShowInTaskbar = false;
+            Load += LaunchPage_Load;
             ((System.ComponentModel.ISupportInitialize)poster).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -87,5 +97,6 @@
         public System.Windows.Forms.Label ProcessText;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label VersionDisplay;
+        private System.Windows.Forms.Label StartupInfo;
     }
 }
