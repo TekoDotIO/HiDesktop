@@ -423,8 +423,8 @@ namespace Widgets.MVP.WidgetModels
             Log.SaveLog("StartInitialize : pageDisplay", "ActivatorSubWindow", output: false);
 
 
-            float newx = (this.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
-            float newy = (this.Height) / y;//拖动界面之后的高度与之前界面的高度之比
+            //float newx = (this.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
+            //float newy = (this.Height) / y;//拖动界面之后的高度与之前界面的高度之比
 
 
             pageDisplay = new Label()
@@ -931,11 +931,11 @@ namespace Widgets.MVP.WidgetModels
                     AutoSize = true,
                     ////Visible = false,
                     ////TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font(Font.FontFamily, pageDisplay.Font.Size * 2),
+                    Font = new Font(Font.FontFamily, pageDisplay.Font.Size),
                     Text = DateTime.Now.ToString("HH:mm")
                 };
                 setTag(timeBar);
-                timeBar.Hide();
+                //timeBar.Hide();
                 //timeBar.AutoSize = false;
                 timeBar.Location = new Point(windowSize / 10, windowSize + windowSize / 7 / 2 - timeBar.Size.Height);
                 //在启用全局缩放的情况下无需对timeBar的FontSize和Location进行设置。

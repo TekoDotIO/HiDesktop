@@ -1,16 +1,16 @@
 ﻿{
                 { "type", "CountdownV2" },//
-                { "font", "auto" },
+                { "font", "auto" },//
                 { "opacity", "1" },//
                 { "radius", "20" },//
-                { "size", "304" },
+                { "size", "432,304" },//
                 { "enableGrowing", "false" },
                 { "topMost", "false" },//
-                { "tagsFloating", "true" },
-                { "date", "2025.1.1" },
-                { "time","00:00:00" },
+                { "tagsFloating", "true" },//
+                { "date", "2025.1.1" },//
+                { "time","00:00:00" },//
                 { "event", "EVENT!" },
-                { "location", "auto" },
+                { "location", "auto" },//
                 { "enabled","true" },//
                 { "countdown_frontText","To" },
                 { "count_frontText","From" },
@@ -19,13 +19,13 @@
                 { "minutes","min" },
                 { "seconds","" },
                 { "refreshTime","500" },
-                { "frontText_Color","#000000" },
-                { "main_Color","#000000" },
-                { "sub_Color","#696969" },
-                { "event_Color","#faadac" },
-                { "back_Color","#fcdfe5" },
+                { "frontText_Color","#000000" },//
+                { "main_Color","#000000" },//
+                { "sub_Color","#696969" },//
+                { "event_Color","#faadac" },//
+                { "back_Color","#fcdfe5" },//
                 { "allowMove","true" },
-                { "timeCalcLevel", "DHMS" }
+                { "timeCalcLevel", "DHMS" }//
             };
 
 
