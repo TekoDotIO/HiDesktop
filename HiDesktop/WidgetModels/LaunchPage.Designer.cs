@@ -70,6 +70,7 @@
             resources.ApplyResources(StartupInfo, "StartupInfo");
             StartupInfo.ForeColor = System.Drawing.Color.DimGray;
             StartupInfo.Name = "StartupInfo";
+            StartupInfo.Click += StartupInfo_Click;
             // 
             // LaunchPage
             // 

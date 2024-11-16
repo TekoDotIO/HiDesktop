@@ -68,12 +68,20 @@ namespace HiDesktop
             CheckForIllegalCrossThreadCalls = false;
 
 
-
-            ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
-            Thread thread = new Thread(new ThreadStart(Initialize));
-            thread.Start();
-            //Thread animeThread = new Thread(new ThreadStart(TryAnime));
-            //animeThread.Start();
+            try
+            {
+                ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
+                Thread thread = new Thread(new ThreadStart(Initialize));
+                thread.Start();
+                //Thread animeThread = new Thread(new ThreadStart(TryAnime));
+                //animeThread.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"Err when initializing: {ex}", "LaunchPage");
+                //throw;
+            }
+            
         }
 
         /// <summary>
@@ -118,20 +126,30 @@ namespace HiDesktop
 
         void TryAnime()
         {
-            this.DoubleBuffered = true;//设置本窗体
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
-            SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲
-            if ((string)ht["enableAnime"] == "true")
+            try
             {
-                AnimeStart();
+                this.DoubleBuffered = true;//设置本窗体
+                SetStyle(ControlStyles.UserPaint, true);
+                SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+                SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲
+                if ((string)ht["enableAnime"] == "true")
+                {
+                    AnimeStart();
+                }
+                Opacity = 1.00;
+                while (!iniFinished)
+                {
+                    Thread.Sleep(200);
+                }
+                Close();
             }
-            Opacity = 1.00;
-            while (!iniFinished)
+            catch (Exception ex)
             {
-                Thread.Sleep(200);
+                Log.SaveLog($"Err when applying anime: {ex}", "LaunchPage");
+                Opacity = 1;
+                //throw;
             }
-            Close();
+            
         }
 
         void AnimeStart()
@@ -341,6 +359,11 @@ namespace HiDesktop
         private void LaunchPage_Load(object sender, EventArgs e)
         {
             SetWindowRegion(Height / 20);
+        }
+
+        private void StartupInfo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

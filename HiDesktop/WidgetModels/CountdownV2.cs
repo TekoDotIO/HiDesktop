@@ -235,6 +235,7 @@ namespace Widgets.MVP.WidgetModels
                 DayLabel.Location = new Point(DayLabel.Location.X, DayDisplay.Location.Y + DayDisplay.Height - DayLabel.Height);
                 HourLabel.Location = new Point(HourLabel.Location.X, HourDisplay.Location.Y + HourLabel.Height - DayLabel.Height);
                 MinLabel.Location = new Point(MinLabel.Location.X, MinDisplay.Location.Y + MinDisplay.Height - MinLabel.Height);
+                SecDisplay.Location = new Point(SecDisplay.Location.X, MinDisplay.Location.Y);            
             }
 
             var wsStr = (string)AppConfig["timeCalcLevel"];
@@ -275,14 +276,34 @@ namespace Widgets.MVP.WidgetModels
             //initialize workstyle=>tags
 
 
+            if ((string)AppConfig["enableGrowing"] == "true")
+            {
+                AutoSize = true;
+                //sides????
+#warning 边框对齐！
+            }
+
+
 
 
             Exception exc;//here under construction..
+            days = (string)AppConfig["days"];
+            hours = (string)AppConfig["hours"];
+            minutes = (string)AppConfig["minutes"];
+            seconds = (string)AppConfig["seconds"];
             switch (workStyle)
             {
                 case WorkStyle.DayHourMinSec:
+                    DayLabel.Text = days;
+                    HourLabel.Text = hours;
+                    MinLabel.Text = minutes;
+                    SecDisplay.Text += seconds;
                     break;
                 case WorkStyle.DayHourMin:
+                    DayLabel.Text = days;
+                    HourLabel.Text = hours;
+                    MinLabel.Text = minutes;
+                    SecDisplay.Hide();
                     break;
                 case WorkStyle.DayHour:
                     break;
@@ -300,7 +321,7 @@ namespace Widgets.MVP.WidgetModels
                     break;
             }
 
-
+            
 
 
 
