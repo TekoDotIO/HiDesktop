@@ -18,7 +18,7 @@
                 { "hours","hr" },
                 { "minutes","min" },
                 { "seconds","" },
-                { "refreshTime","500" },
+                { "refreshTime","500" },//
                 { "frontText_Color","#000000" },//
                 { "main_Color","#000000" },//
                 { "sub_Color","#696969" },//

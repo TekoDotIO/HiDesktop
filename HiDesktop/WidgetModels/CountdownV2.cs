@@ -27,6 +27,7 @@ namespace Widgets.MVP.WidgetModels
         Color mainColor, sub_Color;
         WorkStyle workStyle;
         public string Path;
+        int refreshTime = 900;
         public DateTime dtTarget;
         Hashtable htStandard = new Hashtable()
             {
@@ -324,7 +325,6 @@ namespace Widgets.MVP.WidgetModels
 
 
 
-            Exception exc;//here under construction..
             days = (string)AppConfig["days"];
             hours = (string)AppConfig["hours"];
             minutes = (string)AppConfig["minutes"];
@@ -454,9 +454,9 @@ namespace Widgets.MVP.WidgetModels
                 x = this.Width;//初始化时候的界面宽度
                 y = this.Height;//初始化时候的界面高度
 
-                if ((string)AppConfig["location"] == "auto")
+                if ((string)AppConfig["size"] == "auto")
                 {
-                    Size = new Size(432, 304);
+                    //Size = new Size(432, 304);
                 }
                 else
                 {
@@ -511,7 +511,19 @@ namespace Widgets.MVP.WidgetModels
                 Log.SaveLog($"{Path} Err when applying colors: {ex}", "CountdownV2");
                 //throw;
             }
-            
+
+            //refreshTime
+            try
+            {
+                refreshTime = (Convert.ToInt32((string)AppConfig["radius"]));
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"{Path} Err when applying refreshTime: {ex}", "CountdownV2");
+                //throw;
+            }
+
+
             Thread updateThread = new(new ThreadStart(Updater));
             updateThread.Start();
         }
@@ -532,21 +544,227 @@ namespace Widgets.MVP.WidgetModels
 
         private void Updater()
         {
-            
+            int LenDay = 0, LenHour = 0, LenMin = 0, LenSec = 0;
+            bool isCountdown = true;
+            if (dtTarget > DateTime.Now)
+            {
+                isCountdown = true;
+                FrontTipLabel.Text = countdown_frontText;
+            }
+            else
+            {
+                isCountdown = false;
+                FrontTipLabel.Text = count_frontText;
+            }
             while (true)
             {
-                var span = DateTime.Now - DateTime.Parse("2024.10.03");
-                DayDisplay.Text = Math.Floor(span.TotalDays).ToString();
-                HourDisplay.Text = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
-                MinDisplay.Text = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
-                SecDisplay.Text = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
-                Thread.Sleep(900);
+                //var span = DateTime.Now - DateTime.Parse("2024.10.03");
+                //DayDisplay.Text = Math.Floor(span.TotalDays).ToString();
+                //HourDisplay.Text = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
+                //MinDisplay.Text = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+                //SecDisplay.Text = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+                //Thread.Sleep(900);
+                if (isCountdown)
+                {
+                    if (dtTarget < DateTime.Now)
+                    {
+                        isCountdown = false;
+                        FrontTipLabel.Text = count_frontText;
+                    }
+                }
+                TimeSpan span;
+                if (isCountdown)
+                {
+                    span = DateTime.Now - dtTarget;
+
+                }
+                else
+                {
+                    span = dtTarget - DateTime.Now ;
+
+                }
+                string day = "", hour = "", min = "", sec = "";
+                //switch (workStyle)
+                //{
+                //    case WorkStyle.DayHourMinSec:
+                //        day = Math.Floor(span.TotalDays).ToString();
+                //        hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
+                //        min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+                //        sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+                //        DayDisplay.Text = day;
+                //        HourDisplay.Text = hour;
+                //        MinDisplay.Text = min;
+                //        SecDisplay.Text = sec;
+                //        break;
+                //    case WorkStyle.DayHourMin:
+                //        break;
+                //    case WorkStyle.DayHour:
+                //        break;
+                //    case WorkStyle.Day:
+                //        break;
+                //    case WorkStyle.HourMinSec:
+                //        break;
+                //    case WorkStyle.MinSec:
+                //        break;
+                //    case WorkStyle.Sec:
+                //        break;
+                //    case WorkStyle.Hour:
+                //        break;
+                //    case WorkStyle.Min:
+                //        break;
+                //}
+
+                switch (workStyle)
+                {
+                    case WorkStyle.DayHourMinSec:
+                        day = Math.Floor(span.TotalDays).ToString();
+                        hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
+                        min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+                        sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+
+                        DayDisplay.Text = day;
+                        HourDisplay.Text = hour;
+                        MinDisplay.Text = min;
+                        SecDisplay.Text = sec;
+                        break;
+
+                    case WorkStyle.DayHourMin:
+                        day = Math.Floor(span.TotalDays).ToString();
+                        hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
+                        min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+
+                        DayDisplay.Text = day;
+                        HourDisplay.Text = hour;
+                        MinDisplay.Text = min;
+
+                        //SecDisplay.Hide();
+                        break;
+
+                    case WorkStyle.DayHour:
+                        day = Math.Floor(span.TotalDays).ToString();
+                        hour = Math.Floor(span.TotalHours).ToString(); // 包括天数的小时总计
+
+                        DayDisplay.Text = day;
+                        HourDisplay.Text = hour;
+
+                        //MinDisplay.Hide();
+                        //SecDisplay.Hide();
+                        break;
+
+                    case WorkStyle.Day:
+                        day = Math.Floor(span.TotalDays).ToString(); // 累计天数
+
+                        DayDisplay.Text = day;
+
+                        //HourDisplay.Hide();
+                        //MinDisplay.Hide();
+                        //SecDisplay.Hide();
+                        break;
+
+                    case WorkStyle.HourMinSec:
+                        hour = Math.Floor(span.TotalHours).ToString();
+                        min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+                        sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+
+                        DayDisplay.Text = hour;  // 小时作为首位
+                        HourDisplay.Text = min;  // 分钟作为第二位
+                        MinDisplay.Text = sec;   // 秒作为第三位
+
+                        //SecDisplay.Hide();       // 隐藏最小单位
+                        break;
+
+                    case WorkStyle.MinSec:
+                        min = Math.Floor(span.TotalMinutes).ToString(); // 累计分钟数
+                        sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+
+                        DayDisplay.Text = min; // 分钟作为首位
+                        HourDisplay.Text = sec; // 秒作为第二位
+
+                        //MinDisplay.Hide();
+                        //SecDisplay.Hide();
+                        break;
+
+                    case WorkStyle.Sec:
+                        sec = Math.Floor(span.TotalSeconds).ToString(); // 累计秒数
+
+                        DayDisplay.Text = sec;
+
+                        //HourDisplay.Hide();
+                        //MinDisplay.Hide();
+                        //SecDisplay.Hide();
+                        break;
+
+                    case WorkStyle.Hour:
+                        hour = Math.Floor(span.TotalHours).ToString(); // 累计小时数
+
+                        DayDisplay.Text = hour;
+
+                        //HourDisplay.Hide();
+                        //MinDisplay.Hide();
+                        //SecDisplay.Hide();
+                        break;
+
+                    case WorkStyle.Min:
+                        min = Math.Floor(span.TotalMinutes).ToString(); // 累计分钟数
+
+                        DayDisplay.Text = min;
+
+                        //HourDisplay.Hide();
+                        //MinDisplay.Hide();
+                        //SecDisplay.Hide();
+                        break;
+
+                }
+
+
+
+                if (day.Length != LenDay || hour.Length != LenHour || min.Length != LenMin || sec.Length != LenSec)
+                {
+                    RelocateCompoments();
+                }
+                LenDay = day.Length;
+                LenHour = hour.Length;
+                LenMin = min.Length;
+                LenSec = sec.Length;
+
+                Thread.Sleep(refreshTime);
+
+
             }
-            
+
         }
 
 
 
+        void RelocateCompoments()
+        {
+            int spare = Height / 15; // 控件之间的间距
+            int currentX = spare;   // 从左侧边距开始布局
+
+            // DayDisplay 定位
+            DayDisplay.Location = new Point(currentX, DayDisplay.Location.Y);
+            currentX += DayDisplay.Width + spare;
+
+            // DayLabel 定位
+            DayLabel.Location = new Point(currentX, DayLabel.Location.Y);
+            currentX += DayLabel.Width + spare;
+
+            // HourDisplay 定位
+            HourDisplay.Location = new Point(currentX, HourDisplay.Location.Y);
+            currentX += HourDisplay.Width + spare;
+
+            // HourLabel 定位
+            HourLabel.Location = new Point(currentX, HourLabel.Location.Y);
+            currentX += HourLabel.Width + spare;
+
+            // MinDisplay 定位
+            MinDisplay.Location = new Point(currentX, MinDisplay.Location.Y);
+            currentX += MinDisplay.Width + spare;
+
+            // MinLabel 定位
+            MinLabel.Location = new Point(currentX, MinLabel.Location.Y);
+            SecDisplay.Location = new Point(currentX, MinLabel.Location.Y);
+        }
 
 
 
