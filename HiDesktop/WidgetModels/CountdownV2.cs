@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Widgets.MVP.Essential_Repos;
+using Windows.Devices.PointOfService;
 
 namespace Widgets.MVP.WidgetModels
 {
@@ -280,7 +281,44 @@ namespace Widgets.MVP.WidgetModels
             {
                 AutoSize = true;
                 //sides????
-#warning 边框对齐！
+                int border = EventLabel.Location.X;
+                bool autoSizeFlag = false;
+                int minWidth = 0;
+                int currentTemp = 0;
+                currentTemp = FrontTipLabel.Location.X + FrontTipLabel.Size.Width + border;
+                if (currentTemp > Width) 
+                {
+                    autoSizeFlag = true;
+                    if (minWidth < currentTemp) minWidth = FrontTipLabel.Location.X + FrontTipLabel.Size.Width + border;
+                }
+                currentTemp = EventLabel.Location.X + EventLabel.Size.Width + border;
+                if (currentTemp > Width)
+                {
+                    autoSizeFlag = true;
+
+                    if (minWidth < currentTemp) minWidth = EventLabel.Location.X + EventLabel.Size.Width + border;
+
+                }
+                Control[] controls = { DayLabel, HourLabel, MinLabel, DayDisplay, HourDisplay, MinDisplay, SecDisplay };
+
+                // 遍历所有控件
+                foreach (var control in controls)
+                {
+                    currentTemp = control.Location.X + control.Size.Width + border;
+                    if (currentTemp > Width)
+                    {
+                        autoSizeFlag = true;
+                        if (minWidth < currentTemp)
+                        {
+                            minWidth = currentTemp;
+                        }
+                    }
+                }
+
+                if (autoSizeFlag)
+                {
+                    Width = minWidth;
+                }
             }
 
 
@@ -291,33 +329,117 @@ namespace Widgets.MVP.WidgetModels
             hours = (string)AppConfig["hours"];
             minutes = (string)AppConfig["minutes"];
             seconds = (string)AppConfig["seconds"];
+            DayLabel.Hide();
+            DayDisplay.Hide();
+            HourLabel.Hide();
+            HourDisplay.Hide();
+            MinLabel.Hide();
+            MinDisplay.Hide();
+            SecDisplay.Hide();
             switch (workStyle)
             {
+                //case WorkStyle.DayHourMinSec:
+                //    DayLabel.Text = days;
+                //    HourLabel.Text = hours;
+                //    MinLabel.Text = minutes;
+                //    SecDisplay.Text += seconds;
+                //    break;
+                //case WorkStyle.DayHourMin:
+                //    DayLabel.Text = days;
+                //    HourLabel.Text = hours;
+                //    MinLabel.Text = minutes;
+                //    SecDisplay.Hide();
+                //    break;
                 case WorkStyle.DayHourMinSec:
                     DayLabel.Text = days;
+                    DayDisplay.Text = days;
                     HourLabel.Text = hours;
+                    HourDisplay.Text = hours;
                     MinLabel.Text = minutes;
-                    SecDisplay.Text += seconds;
+                    MinDisplay.Text = minutes;
+                    SecDisplay.Text = seconds;
+
+                    // 显示所有控件
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Show(); HourDisplay.Show();
+                    MinLabel.Show(); MinDisplay.Show();
+                    SecDisplay.Show();
                     break;
+
                 case WorkStyle.DayHourMin:
                     DayLabel.Text = days;
+                    DayDisplay.Text = days;
                     HourLabel.Text = hours;
+                    HourDisplay.Text = hours;
                     MinLabel.Text = minutes;
+                    MinDisplay.Text = minutes;
+
+                    // 显示高顺位控件，隐藏低顺位
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Show(); HourDisplay.Show();
+                    MinLabel.Show(); MinDisplay.Show();
                     SecDisplay.Hide();
                     break;
-                case WorkStyle.DayHour:
-                    break;
-                case WorkStyle.Day:
-                    break;
+
                 case WorkStyle.HourMinSec:
+                    DayLabel.Text = hours; // Hour 占用 Day 的位置
+                    DayDisplay.Text = hours;
+                    HourLabel.Text = minutes; // Min 占用 Hour 的位置
+                    HourDisplay.Text = minutes;
+                    MinLabel.Text = seconds; // Sec 占用 Min 的位置
+                    MinDisplay.Text = seconds;
+
+                    // 显示高顺位控件，隐藏最低顺位
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Show(); HourDisplay.Show();
+                    MinLabel.Show(); MinDisplay.Show();
+                    SecDisplay.Hide();
                     break;
+
                 case WorkStyle.MinSec:
+                    DayLabel.Text = minutes; // Min 占用 Day 的位置
+                    DayDisplay.Text = minutes;
+                    HourLabel.Text = seconds; // Sec 占用 Hour 的位置
+                    HourDisplay.Text = seconds;
+
+                    // 显示高顺位控件，隐藏最低顺位
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Show(); HourDisplay.Show();
+                    MinLabel.Hide(); MinDisplay.Hide();
+                    SecDisplay.Hide();
                     break;
+
                 case WorkStyle.Sec:
+                    DayLabel.Text = seconds; // Sec 占用 Day 的位置
+                    DayDisplay.Text = seconds;
+
+                    // 显示最高顺位控件，隐藏其余
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Hide(); HourDisplay.Hide();
+                    MinLabel.Hide(); MinDisplay.Hide();
+                    SecDisplay.Hide();
                     break;
+
                 case WorkStyle.Hour:
+                    DayLabel.Text = hours; // Hour 占用 Day 的位置
+                    DayDisplay.Text = hours;
+
+                    // 显示最高顺位控件，隐藏其余
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Hide(); HourDisplay.Hide();
+                    MinLabel.Hide(); MinDisplay.Hide();
+                    SecDisplay.Hide();
                     break;
+
                 case WorkStyle.Min:
+                    DayLabel.Text = minutes; // Min 占用 Day 的位置
+                    DayDisplay.Text = minutes;
+
+                    // 显示最高顺位控件，隐藏其余
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Hide(); HourDisplay.Hide();
+                    MinLabel.Hide(); MinDisplay.Hide();
+                    SecDisplay.Hide();
                     break;
             }
 
