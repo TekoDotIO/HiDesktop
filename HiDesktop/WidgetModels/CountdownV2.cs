@@ -28,6 +28,7 @@ namespace Widgets.MVP.WidgetModels
         WorkStyle workStyle;
         public string Path;
         int refreshTime = 900;
+        bool enableGrowing = true;
         public DateTime dtTarget;
         Hashtable htStandard = new Hashtable()
             {
@@ -36,7 +37,7 @@ namespace Widgets.MVP.WidgetModels
                 { "opacity", "1" },
                 { "radius", "20" },
                 { "size", "432,304" },
-                { "enableGrowing", "false" },
+                //{ "enableGrowing", "false" },
                 { "topMost", "false" },
                 { "tagsFloating", "true" },
                 { "date", "2025.1.1" },
@@ -57,7 +58,8 @@ namespace Widgets.MVP.WidgetModels
                 { "event_Color","#faadac" },
                 { "back_Color","#fcdfe5" },
                 { "allowMove","true" },
-                { "timeCalcLevel", "DHMS" }
+                { "timeCalcLevel", "DHMS" },
+                { "enableGrowing", "true"}
             };
         public CountdownV2(string Path)
         {
@@ -200,6 +202,20 @@ namespace Widgets.MVP.WidgetModels
                 Log.SaveLog($"{Path} Err when applying date or time: {ex}", "CountdownV2");
                 //throw;
             }
+            //datas
+            try
+            {
+                countdown_frontText = (string)AppConfig["countdown_frontText"];
+                count_frontText = (string)AppConfig["count_frontText"];
+                event_text = (string)AppConfig["event_text"];
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"{Path} Err when applying datas: {ex}", "CountdownV2");
+                //throw;
+            }
+
+            EventLabel.Text = event_text;
 
             //fonts
             try
@@ -280,46 +296,9 @@ namespace Widgets.MVP.WidgetModels
 
             if ((string)AppConfig["enableGrowing"] == "true")
             {
-                AutoSize = true;
-                //sides????
-                int border = EventLabel.Location.X;
-                bool autoSizeFlag = false;
-                int minWidth = 0;
-                int currentTemp = 0;
-                currentTemp = FrontTipLabel.Location.X + FrontTipLabel.Size.Width + border;
-                if (currentTemp > Width) 
-                {
-                    autoSizeFlag = true;
-                    if (minWidth < currentTemp) minWidth = FrontTipLabel.Location.X + FrontTipLabel.Size.Width + border;
-                }
-                currentTemp = EventLabel.Location.X + EventLabel.Size.Width + border;
-                if (currentTemp > Width)
-                {
-                    autoSizeFlag = true;
-
-                    if (minWidth < currentTemp) minWidth = EventLabel.Location.X + EventLabel.Size.Width + border;
-
-                }
-                Control[] controls = { DayLabel, HourLabel, MinLabel, DayDisplay, HourDisplay, MinDisplay, SecDisplay };
-
-                // 遍历所有控件
-                foreach (var control in controls)
-                {
-                    currentTemp = control.Location.X + control.Size.Width + border;
-                    if (currentTemp > Width)
-                    {
-                        autoSizeFlag = true;
-                        if (minWidth < currentTemp)
-                        {
-                            minWidth = currentTemp;
-                        }
-                    }
-                }
-
-                if (autoSizeFlag)
-                {
-                    Width = minWidth;
-                }
+                enableGrowing = true;
+                GrowWindow();
+                
             }
 
 
@@ -575,13 +554,12 @@ namespace Widgets.MVP.WidgetModels
                 TimeSpan span;
                 if (isCountdown)
                 {
-                    span = DateTime.Now - dtTarget;
-
+                    span = dtTarget - DateTime.Now;
                 }
                 else
                 {
-                    span = dtTarget - DateTime.Now ;
-
+                    
+                    span = DateTime.Now - dtTarget;
                 }
                 string day = "", hour = "", min = "", sec = "";
                 //switch (workStyle)
@@ -734,11 +712,53 @@ namespace Widgets.MVP.WidgetModels
 
         }
 
+        void GrowWindow()
+        {
+            AutoSize = true;
+            //sides????
+            int border = EventLabel.Location.X;
+            bool autoSizeFlag = false;
+            int minWidth = 0;
+            int currentTemp = 0;
+            currentTemp = FrontTipLabel.Location.X + FrontTipLabel.Size.Width + border;
+            if (currentTemp > Width)
+            {
+                autoSizeFlag = true;
+                if (minWidth < currentTemp) minWidth = FrontTipLabel.Location.X + FrontTipLabel.Size.Width + border;
+            }
+            currentTemp = EventLabel.Location.X + EventLabel.Size.Width + border;
+            if (currentTemp > Width)
+            {
+                autoSizeFlag = true;
 
+                if (minWidth < currentTemp) minWidth = EventLabel.Location.X + EventLabel.Size.Width + border;
+
+            }
+            Control[] controls = { DayLabel, HourLabel, MinLabel, DayDisplay, HourDisplay, MinDisplay, SecDisplay };
+
+            // 遍历所有控件
+            foreach (var control in controls)
+            {
+                currentTemp = control.Location.X + control.Size.Width + border;
+                if (currentTemp > Width)
+                {
+                    autoSizeFlag = true;
+                    if (minWidth < currentTemp)
+                    {
+                        minWidth = currentTemp;
+                    }
+                }
+            }
+
+            if (autoSizeFlag)
+            {
+                Width = minWidth;
+            }
+        }
 
         void RelocateCompoments()
         {
-            int spare = Height / 15; // 控件之间的间距
+            int spare = Height / 60; // 控件之间的间距
             int currentX = spare;   // 从左侧边距开始布局
 
             // DayDisplay 定位
@@ -763,7 +783,11 @@ namespace Widgets.MVP.WidgetModels
 
             // MinLabel 定位
             MinLabel.Location = new Point(currentX, MinLabel.Location.Y);
-            SecDisplay.Location = new Point(currentX, MinLabel.Location.Y);
+            SecDisplay.Location = new Point(currentX, SecDisplay.Location.Y);
+            if (enableGrowing)
+            {
+                GrowWindow();
+            }
         }
 
 

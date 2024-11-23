@@ -369,6 +369,7 @@ namespace Widgets.MVP
                                 }
                                 launchPage = new();
                                 //launchPage.ShowDialog();
+                                Thread.Sleep(500);//Prevent:¡°Object is currently in use elsewhere.¡±
                                 Application.Run(launchPage);
                             }
                             else
