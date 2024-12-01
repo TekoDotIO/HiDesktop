@@ -61,6 +61,8 @@ namespace HiDesktop
 
         Hashtable ht;
         bool iniFinished = false;
+        public bool isBusy = false;
+        public bool isAlive = false;
         public LaunchPage()
         {
             Opacity = 0.01;
@@ -68,19 +70,7 @@ namespace HiDesktop
             CheckForIllegalCrossThreadCalls = false;
 
 
-            try
-            {
-                ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
-                Thread thread = new Thread(new ThreadStart(Initialize));
-                thread.Start();
-                //Thread animeThread = new Thread(new ThreadStart(TryAnime));
-                //animeThread.Start();
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLog($"Err when initializing: {ex}", "LaunchPage");
-                //throw;
-            }
+            
             
         }
 
@@ -154,43 +144,71 @@ namespace HiDesktop
 
         void AnimeStart()
         {
-            //Hide();
-
-            Refresh();
-            //var targetLocation = Location;
-            //var targetSize = Size;
-            ////var screenHeight = SystemInformation.PrimaryMonitorSize.Height;
-            //var screenWidth = SystemInformation.PrimaryMonitorSize.Width;
-            //double maxt = Convert.ToDouble((string)ht["animeLength"]);
-            ////maxt = 2.5;
-            //Size = new Size(1, Size.Height);
-            //Location = new Point(screenWidth / 2, Location.Y);
-            ////Show();
-            //var sizeAl = MathRepo.CreatePhysicalSmoothMovePointsSet(1, targetSize.Width, maxt, 0.01);
-            //var xAl = MathRepo.CreatePhysicalSmoothMovePointsSet(screenWidth / 2, targetLocation.X, maxt, 0.01);
-            ////var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, maxt, 0.01);
-            //Opacity = 1;
-            //for (int i = 0; i < xAl.Count; i++)
-            //{
-            //    //Refresh();
-            //    //var a = Convert.ToDouble(((double)al[i]).ToString("0.00"));
-            //    //Opacity = Convert.ToDouble(((double)al[i]).ToString("0.00"));
-            //    Size = new Size((int)Math.Round(((double)sizeAl[i])), Size.Height);
-            //    Location = new Point((int)Math.Round(((double)xAl[i])), Location.Y);
-            //    //Thread.Sleep(5);
-            //}
-
-            var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, 2, 0.05);
-            foreach (var item in al)
+            try
             {
-                var a = Convert.ToDouble(((double)item).ToString("0.00"));
-                Opacity = Convert.ToDouble(((double)item).ToString("0.00"));
-                Thread.Sleep(20);
+                //Hide();
+                isBusy = true;
+                Refresh();
+                isBusy = false;
+                //var targetLocation = Location;
+                //var targetSize = Size;
+                ////var screenHeight = SystemInformation.PrimaryMonitorSize.Height;
+                //var screenWidth = SystemInformation.PrimaryMonitorSize.Width;
+                //double maxt = Convert.ToDouble((string)ht["animeLength"]);
+                ////maxt = 2.5;
+                //Size = new Size(1, Size.Height);
+                //Location = new Point(screenWidth / 2, Location.Y);
+                ////Show();
+                //var sizeAl = MathRepo.CreatePhysicalSmoothMovePointsSet(1, targetSize.Width, maxt, 0.01);
+                //var xAl = MathRepo.CreatePhysicalSmoothMovePointsSet(screenWidth / 2, targetLocation.X, maxt, 0.01);
+                ////var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, maxt, 0.01);
+                //Opacity = 1;
+                //for (int i = 0; i < xAl.Count; i++)
+                //{
+                //    //Refresh();
+                //    //var a = Convert.ToDouble(((double)al[i]).ToString("0.00"));
+                //    //Opacity = Convert.ToDouble(((double)al[i]).ToString("0.00"));
+                //    Size = new Size((int)Math.Round(((double)sizeAl[i])), Size.Height);
+                //    Location = new Point((int)Math.Round(((double)xAl[i])), Location.Y);
+                //    //Thread.Sleep(5);
+                //}
+
+                var al = MathRepo.CreatePhysicalSmoothMovePointsSet(0, 1, 2, 0.05);
+                foreach (var item in al)
+                {
+                    var a = Convert.ToDouble(((double)item).ToString("0.00"));
+                    isBusy = true;
+                    Opacity = Convert.ToDouble(((double)item).ToString("0.00"));
+                    isBusy = false;
+                    Thread.Sleep(20);
+                }
             }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"Err when animating: {ex}", "LaunchPage");
+                //throw;
+            }
+            
         }
 
         protected override void OnLoad(EventArgs e)
         {
+            try
+            {
+                ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
+
+                Thread thread = new Thread(new ThreadStart(Initialize));
+                thread.Start();
+                //Thread animeThread = new Thread(new ThreadStart(TryAnime));
+                //animeThread.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"Err when initializing: {ex}", "LaunchPage");
+                //throw;
+            }
+
+
             Thread animeThread = new Thread(new ThreadStart(TryAnime));
             animeThread.Start();
         }
@@ -198,6 +216,7 @@ namespace HiDesktop
         void Initialize()
         {
             SetWindowRegion(Height / 20);
+            isBusy = true;
             ProcessText.Parent = poster;
             //poster.Controls.Add(ProcessText);
             //ProcessText.Location = new Point(0, 0);
@@ -212,6 +231,8 @@ namespace HiDesktop
             StartupInfo.Text = AppInfo.StartupInfo;
             StartupInfo.BackColor = Color.Transparent;
 
+            isBusy = false;
+
             bool enableFontInstall = false;
             bool waitForEffects = false;
             //bool showBootWindow = false;
@@ -221,57 +242,79 @@ namespace HiDesktop
             //if ((string)ht["showBootWindow"] == "true") showBootWindow = true;
             if ((string)ht["topMost"] == "true") topMost = true;
             if (topMost) this.TopMost = true;
+            isBusy = true;
             progressBar.Style = ProgressBarStyle.Marquee;
             progressBar.MarqueeAnimationSpeed = 10;
             //Thread.Sleep(10000);
             progressBar.Value = 20;
             ProcessText.Text = "程序正在启动-Program loading...";
+            isBusy = false;
             Log.SaveLog("[LaunchPage]Window launched.");
             Thread MainThread = new Thread(new ThreadStart(Program.MainProcess));
             if (waitForEffects) Thread.Sleep(1000);
             Log.SaveLog("[LaunchPage]Thread built");
             if (enableFontInstall)
             {
+                isBusy = true;
                 ProcessText.Text = "安装字体-Install fonts...";
+                isBusy = false;
+
                 try
                 {
                     int fontNum = Directory.GetFiles("./Fonts/").Length;
                     foreach (string file in Directory.GetFiles("./Fonts/"))
                     {
+                        isBusy = true;
                         ProcessText.Text = $"正在安装字体{file}-Installing font{file}";
+                        isBusy = false;
                         InstallFont(file);
+                        isBusy = true;
                         progressBar.Value += 55 / fontNum;
+                        isBusy = false;
                         Log.SaveLog($"[LaunchPage]Installed font {file}");
                         if (waitForEffects) Thread.Sleep(100);
                     }
+                    isBusy = true;
                     ProcessText.Text = $"字体安装完成-Fonts installed..";
+                    isBusy = false;
                     Log.SaveLog($"[LaunchPage]Fonts installed.");
                 }
                 catch (Exception ex)
                 {
                     Log.SaveLog($"[LaunchPage]Exception while installing font:{ex}");
+                    isBusy = true;
                     ProcessText.Text = $"字体安装异常-Fonts installed with an exception..";
+                    isBusy = false;
                 }
             }
             else
             {
                 Log.SaveLog($"[LaunchPage]Font install is not enabled.");
+                isBusy = true;
                 ProcessText.Text = $"字体安装已禁用-Font installation is disabled..";
+                isBusy = false;
             }
 
 
-
+            isBusy = true;
             progressBar.Value = 75;
+            isBusy = false;
             if (waitForEffects) Thread.Sleep(1000);
+            isBusy = true;
             ProcessText.Text = "请等待字体安装完成-Waiting for OS font... ";
+            isBusy = false;
             if (waitForEffects) Thread.Sleep(500);
             MainThread.Start();
             Log.SaveLog($"[LaunchPage]Thread started.");
+            isBusy = true;
             ProcessText.Text = "线程构建完成-Thread built... ";
 
             progressBar.Value = 100;
+            isBusy = false;
             if (waitForEffects) Thread.Sleep(1000);
+            isBusy = true;
             ProcessText.Text = "启动完成-Finished";
+            isBusy = false;
             Log.SaveLog($"[LaunchPage]Launched MainProcess.");
             if (waitForEffects) Thread.Sleep(200);
             //Close();

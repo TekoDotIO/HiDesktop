@@ -129,7 +129,7 @@ namespace Widgets.MVP
                                     View.Start();
                                     string s = $"Launched {localFile}";
                                     Log.SaveLog(s);
-                                    if (enableHook)
+                                    if (enableHook && launchPage.isAlive && !launchPage.isBusy)
                                     {
                                         launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
                                     }
@@ -150,7 +150,7 @@ namespace Widgets.MVP
                                     View.Start();
                                     string s = $"Launched {localFile}";
                                     Log.SaveLog(s);
-                                    if (enableHook)
+                                    if (enableHook && launchPage.isAlive && !launchPage.isBusy)
                                     {
                                         launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
                                     }
@@ -169,7 +169,7 @@ namespace Widgets.MVP
                                     Thread Counter = new Thread(new ThreadStart(p.StartView));
                                     Counter.Start();
                                     Log.SaveLog($"Launched {localFile}");
-                                    if (enableHook)
+                                    if (enableHook && launchPage.isAlive && !launchPage.isBusy)
                                     {
                                         launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
                                     }
@@ -194,7 +194,7 @@ namespace Widgets.MVP
                                     a.Start();
                                     Log.SaveLog($"Launched {localFile}");
                                     activatorExists = true;
-                                    if (enableHook)
+                                    if (enableHook && launchPage.isAlive && !launchPage.isBusy)
                                     {
                                         launchPage.ProcessText.Text = $"Activator对象成功构建:{localFile}";
                                     }
@@ -214,7 +214,7 @@ namespace Widgets.MVP
                                     Thread Counter = new Thread(new ThreadStart(p.StartView));
                                     Counter.Start();
                                     Log.SaveLog($"Launched {localFile}");
-                                    if (enableHook)
+                                    if (enableHook && launchPage.isAlive && !launchPage.isBusy)
                                     {
                                         launchPage.ProcessText.Text = $"对象成功构建:{localFile}";
                                     }
@@ -368,15 +368,23 @@ namespace Widgets.MVP
                                     Thread.Sleep(500);//等待字体响应
                                 }
                                 launchPage = new();
-                                //launchPage.ShowDialog();
-                                Thread.Sleep(500);//Prevent:“Object is currently in use elsewhere.”
-                                Application.Run(launchPage);
+                                try
+                                {
+                                    //launchPage.ShowDialog();
+                                    Thread.Sleep(500);//Prevent:“Object is currently in use elsewhere.”
+                                    Application.Run(launchPage);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Log.SaveLog($"Err when running at Program.cs: {ex}", "LaunchPage");
+                                }
+                                
                             }
                             else
                             {
                                 Thread t = new(new ThreadStart(MainProcess));
                                 t.Start();
-                                Log.SaveLog("Program started with no launch pages.");
+                                Log.SaveLog("Program started with no a launch page.");
                             }
                             break;
                         case "--SkipLaunchPage":
