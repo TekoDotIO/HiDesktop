@@ -9,11 +9,11 @@
                 { "tagsFloating", "true" },//
                 { "date", "2025.1.1" },//
                 { "time","00:00:00" },//
-                { "event", "EVENT!" },
+                { "event", "EVENT!" },//
                 { "location", "auto" },//
                 { "enabled","true" },//
-                { "countdown_frontText","To" },
-                { "count_frontText","From" },
+                { "countdown_frontText","To" },//
+                { "count_frontText","From" },//
                 { "days","d" },
                 { "hours","hr" },
                 { "minutes","min" },
