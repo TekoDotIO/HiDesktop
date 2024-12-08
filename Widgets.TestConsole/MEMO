@@ -39,3 +39,19 @@
 #daf1e5 - #00e2a0
 
 #ffd5d9 - #f76866
+
+
+
+
+public enum WorkStyle
+        {
+            DayHourMinSec,//
+            DayHourMin,//
+            DayHour,
+            Day,
+            HourMinSec,//
+            MinSec,//
+            Sec,//
+            Hour,//
+            Min,//
+        

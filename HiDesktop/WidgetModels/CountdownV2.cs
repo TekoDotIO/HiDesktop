@@ -31,6 +31,9 @@ namespace Widgets.MVP.WidgetModels
         int radius;
         bool enableGrowing = true;
         public DateTime dtTarget;
+        int fontBoundUp = 5;
+        int fontBoundLR = 5;
+        int spareConst = 100;
         Hashtable htStandard = new Hashtable()
             {
                 { "type", "CountdownV2" },
@@ -51,7 +54,7 @@ namespace Widgets.MVP.WidgetModels
                 { "days","d" },
                 { "hours","hr" },
                 { "minutes","min" },
-                { "seconds","" },
+                { "seconds","s" },
                 { "refreshTime","500" },
                 { "frontText_Color","#000000" },
                 { "main_Color","#000000" },
@@ -60,7 +63,9 @@ namespace Widgets.MVP.WidgetModels
                 { "back_Color","#fcdfe5" },
                 { "allowMove","true" },
                 { "timeCalcLevel", "DHMS" },
-                { "enableGrowing", "true"}
+                { "enableGrowing", "true"},
+                { "fontBound", "5,5"},
+                { "spareConst", "100"}
             };
         public CountdownV2(string Path)
         {
@@ -164,7 +169,23 @@ namespace Widgets.MVP.WidgetModels
             {
                 TopMost = true;
             }
-            
+
+            //Consts
+            //{ "fontBound", "5,5"},
+            //{ "spareConst", "100"}
+            try
+            {
+                fontBoundUp = (Convert.ToInt32(((string)AppConfig["fontBound"]).Split(",")[0]));
+                fontBoundLR = (Convert.ToInt32(((string)AppConfig["fontBound"]).Split(",")[1]));
+                spareConst = Convert.ToInt32(((string)AppConfig["spareConst"]));
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"{Path} Err when applying constss: {ex}", "CountdownV2");
+                //throw;
+            }
+
+
             //opacity
             try
             {
@@ -251,10 +272,10 @@ namespace Widgets.MVP.WidgetModels
             //tagsFloating
             if ((string)AppConfig["tagsFloating"] != "true")
             {
-                DayLabel.Location = new Point(DayLabel.Location.X, DayDisplay.Location.Y + DayDisplay.Height - DayLabel.Height);
-                HourLabel.Location = new Point(HourLabel.Location.X, HourDisplay.Location.Y + HourLabel.Height - DayLabel.Height);
-                MinLabel.Location = new Point(MinLabel.Location.X, MinDisplay.Location.Y + MinDisplay.Height - MinLabel.Height);
-                SecDisplay.Location = new Point(SecDisplay.Location.X, MinDisplay.Location.Y);            
+                DayLabel.Location = new Point(DayLabel.Location.X, DayDisplay.Location.Y + DayDisplay.Height - DayLabel.Height - fontBoundUp);
+                HourLabel.Location = new Point(HourLabel.Location.X, HourDisplay.Location.Y + HourDisplay.Height - DayLabel.Height - fontBoundUp);
+                MinLabel.Location = new Point(MinLabel.Location.X, MinDisplay.Location.Y + MinDisplay.Height - MinLabel.Height - fontBoundUp);
+                SecDisplay.Location = new Point(SecDisplay.Location.X, MinDisplay.Location.Y);
             }
 
             var wsStr = (string)AppConfig["timeCalcLevel"];
@@ -361,6 +382,26 @@ namespace Widgets.MVP.WidgetModels
                     SecDisplay.Hide();
                     break;
 
+                case WorkStyle.DayHour:
+                    DayLabel.Text = days;
+                    DayDisplay.Text = days;
+                    HourLabel.Text = hours;
+                    HourDisplay.Text = hours;
+
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Show(); HourDisplay.Show();
+                    MinLabel.Hide(); MinDisplay.Hide();
+                    SecDisplay.Hide();
+                    break;
+                case WorkStyle.Day:
+                    DayLabel.Text = days;
+                    DayDisplay.Text = days;
+
+                    DayLabel.Show(); DayDisplay.Show();
+                    HourLabel.Hide(); HourDisplay.Hide();
+                    MinLabel.Hide(); MinDisplay.Hide();
+                    SecDisplay.Hide();
+                    break;
                 case WorkStyle.HourMinSec:
                     DayLabel.Text = hours; // Hour 占用 Day 的位置
                     DayDisplay.Text = hours;
@@ -720,130 +761,6 @@ namespace Widgets.MVP.WidgetModels
         }
 
 
-        void UpdateOnce()
-        {
-            bool isCountdown = true;
-            if (isCountdown)
-            {
-                if (dtTarget < DateTime.Now)
-                {
-                    isCountdown = false;
-                    FrontTipLabel.Text = count_frontText;
-                }
-            }
-            TimeSpan span;
-            if (isCountdown)
-            {
-                span = dtTarget - DateTime.Now;
-            }
-            else
-            {
-
-                span = DateTime.Now - dtTarget;
-            }
-            string day = "", hour = "", min = "", sec = "";
-            switch (workStyle)
-            {
-                case WorkStyle.DayHourMinSec:
-                    day = Math.Floor(span.TotalDays).ToString();
-                    hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
-                    min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
-                    sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
-
-                    DayDisplay.Text = day;
-                    HourDisplay.Text = hour;
-                    MinDisplay.Text = min;
-                    SecDisplay.Text = sec;
-                    break;
-
-                case WorkStyle.DayHourMin:
-                    day = Math.Floor(span.TotalDays).ToString();
-                    hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
-                    min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
-
-                    DayDisplay.Text = day;
-                    HourDisplay.Text = hour;
-                    MinDisplay.Text = min;
-
-                    //SecDisplay.Hide();
-                    break;
-
-                case WorkStyle.DayHour:
-                    day = Math.Floor(span.TotalDays).ToString();
-                    hour = Math.Floor(span.TotalHours).ToString(); // 包括天数的小时总计
-
-                    DayDisplay.Text = day;
-                    HourDisplay.Text = hour;
-
-                    //MinDisplay.Hide();
-                    //SecDisplay.Hide();
-                    break;
-
-                case WorkStyle.Day:
-                    day = Math.Floor(span.TotalDays).ToString(); // 累计天数
-
-                    DayDisplay.Text = day;
-
-                    //HourDisplay.Hide();
-                    //MinDisplay.Hide();
-                    //SecDisplay.Hide();
-                    break;
-
-                case WorkStyle.HourMinSec:
-                    hour = Math.Floor(span.TotalHours).ToString();
-                    min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
-                    sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
-
-                    DayDisplay.Text = hour;  // 小时作为首位
-                    HourDisplay.Text = min;  // 分钟作为第二位
-                    MinDisplay.Text = sec;   // 秒作为第三位
-
-                    //SecDisplay.Hide();       // 隐藏最小单位
-                    break;
-
-                case WorkStyle.MinSec:
-                    min = Math.Floor(span.TotalMinutes).ToString(); // 累计分钟数
-                    sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
-
-                    DayDisplay.Text = min; // 分钟作为首位
-                    HourDisplay.Text = sec; // 秒作为第二位
-
-                    //MinDisplay.Hide();
-                    //SecDisplay.Hide();
-                    break;
-
-                case WorkStyle.Sec:
-                    sec = Math.Floor(span.TotalSeconds).ToString(); // 累计秒数
-
-                    DayDisplay.Text = sec;
-
-                    //HourDisplay.Hide();
-                    //MinDisplay.Hide();
-                    //SecDisplay.Hide();
-                    break;
-
-                case WorkStyle.Hour:
-                    hour = Math.Floor(span.TotalHours).ToString(); // 累计小时数
-
-                    DayDisplay.Text = hour;
-
-                    //HourDisplay.Hide();
-                    //MinDisplay.Hide();
-                    //SecDisplay.Hide();
-                    break;
-
-                case WorkStyle.Min:
-                    min = Math.Floor(span.TotalMinutes).ToString(); // 累计分钟数
-
-                    DayDisplay.Text = min;
-
-                    //HourDisplay.Hide();
-                    //MinDisplay.Hide();
-                    //SecDisplay.Hide();
-                    break;
-
-            }
-        }
 
 
         void GrowWindow()
@@ -873,6 +790,10 @@ namespace Widgets.MVP.WidgetModels
             // 遍历所有控件
             foreach (var control in controls)
             {
+                if (!control.Visible)
+                {
+                    continue;
+                }
                 currentTemp = control.Location.X + control.Size.Width + border;
                 if (currentTemp > Width)
                 {
@@ -893,28 +814,28 @@ namespace Widgets.MVP.WidgetModels
 
         void RelocateCompoments()
         {
-            int spare = Height / 100; // 控件之间的间距
+            int spare = Height / spareConst; // 控件之间的间距
             int currentX = FrontTipLabel.Location.X;   // 从左侧边距开始布局
 
             // DayDisplay 定位
             DayDisplay.Location = new Point(currentX, DayDisplay.Location.Y);
-            currentX += DayDisplay.Width + spare;
+            currentX += DayDisplay.Width + spare - fontBoundLR;
 
             // DayLabel 定位
             DayLabel.Location = new Point(currentX, DayLabel.Location.Y);
-            currentX += DayLabel.Width + spare;
+            currentX += DayLabel.Width + spare - fontBoundLR;
 
             // HourDisplay 定位
             HourDisplay.Location = new Point(currentX, HourDisplay.Location.Y);
-            currentX += HourDisplay.Width + spare;
+            currentX += HourDisplay.Width + spare - fontBoundLR;
 
             // HourLabel 定位
             HourLabel.Location = new Point(currentX, HourLabel.Location.Y);
-            currentX += HourLabel.Width + spare;
+            currentX += HourLabel.Width + spare - fontBoundLR;
 
             // MinDisplay 定位
             MinDisplay.Location = new Point(currentX, MinDisplay.Location.Y);
-            currentX += MinDisplay.Width + spare;
+            currentX += MinDisplay.Width + spare - fontBoundLR;
 
             // MinLabel 定位
             MinLabel.Location = new Point(currentX, MinLabel.Location.Y);
