@@ -14,7 +14,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Widgets.MVP.Essential_Repos;
-using Windows.Devices.PointOfService;
 
 namespace Widgets.MVP.WidgetModels
 {
@@ -34,6 +33,11 @@ namespace Widgets.MVP.WidgetModels
         int fontBoundUp = 5;
         int fontBoundLR = 5;
         int spareConst = 100;
+        Hashtable AppConfig;
+        string updaterUID = "";
+        public bool allowMove = true;
+
+
         Hashtable htStandard = new Hashtable()
             {
                 { "type", "CountdownV2" },
@@ -72,6 +76,21 @@ namespace Widgets.MVP.WidgetModels
             InitializeComponent();
             this.Path = Path;
             StartPosition = FormStartPosition.Manual;
+        }
+
+
+        static string GenerateUID(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            char[] uid = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                uid[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new string(uid);
         }
 
 
@@ -157,15 +176,32 @@ namespace Widgets.MVP.WidgetModels
         }
         #endregion
 
+        public void LoadWidget()
+        {
 
+        }
 
 
         private void CountdownV2_Load(object sender, EventArgs e)
         {
+
+            foreach (Control item in this.Controls)
+            {
+                item.MouseDown += (object sender, MouseEventArgs e) =>
+                {
+                    if ((string)AppConfig["allowMove"] == "true")
+                    {
+                        ReleaseCapture();
+                        SendMessage(this.Handle, 0x0112, 0xF012, 0);
+                    }
+                };
+                item.ContextMenuStrip = Menu;
+            }
+
             Log.SaveLog($"{Path} Start initializing...", "CountdownV2");
-            Hashtable AppConfig = PropertiesHelper.AutoCheck(htStandard, Path);
+            AppConfig = PropertiesHelper.AutoCheck(htStandard, Path);
             //topmost
-            if ((string)AppConfig["topMost"] == "true") 
+            if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
             }
@@ -183,6 +219,18 @@ namespace Widgets.MVP.WidgetModels
             {
                 Log.SaveLog($"{Path} Err when applying constss: {ex}", "CountdownV2");
                 //throw;
+            }
+
+
+            //allowMove
+            try
+            {
+                allowMove = ((string)AppConfig["opacity"]) == "true";
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLog($"{Path} Err when applying allowMove: {ex}", "CountdownV2");
+                throw;
             }
 
 
@@ -242,9 +290,9 @@ namespace Widgets.MVP.WidgetModels
             //fonts
             try
             {
-                if ((string)AppConfig["date"] != "auto") 
+                if ((string)AppConfig["date"] != "auto")
                 {
-                    
+
 
                     //将字体显示到控件
                     foreach (Control item in this.Controls)
@@ -260,7 +308,7 @@ namespace Widgets.MVP.WidgetModels
                         item.Font = myFont;
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -320,7 +368,7 @@ namespace Widgets.MVP.WidgetModels
             {
                 enableGrowing = true;
                 GrowWindow();
-                
+
             }
 
 
@@ -464,7 +512,7 @@ namespace Widgets.MVP.WidgetModels
                     break;
             }
 
-            
+
 
 
 
@@ -509,7 +557,7 @@ namespace Widgets.MVP.WidgetModels
                 //throw;
             }
 
-            
+
 
 
             //colors
@@ -571,6 +619,8 @@ namespace Widgets.MVP.WidgetModels
 
         private void Updater()
         {
+            var uid = GenerateUID(16);
+            updaterUID = uid.ToString();
             int LenDay = 0, LenHour = 0, LenMin = 0, LenSec = 0;
             bool isCountdown = true;
             if (dtTarget > DateTime.Now)
@@ -585,6 +635,12 @@ namespace Widgets.MVP.WidgetModels
             }
             while (true)
             {
+
+                if (updaterUID != uid)
+                {
+                    return;
+                }
+
                 //var span = DateTime.Now - DateTime.Parse("2024.10.03");
                 //DayDisplay.Text = Math.Floor(span.TotalDays).ToString();
                 //HourDisplay.Text = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
@@ -606,7 +662,7 @@ namespace Widgets.MVP.WidgetModels
                 }
                 else
                 {
-                    
+
                     span = DateTime.Now - dtTarget;
                 }
                 string day = "", hour = "", min = "", sec = "";
@@ -857,8 +913,11 @@ namespace Widgets.MVP.WidgetModels
 
         private void FrmMain_MouseDown(object sender, MouseEventArgs e)
         {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x0112, 0xF012, 0);
+            if (allowMove)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, 0x0112, 0xF012, 0);
+            }
 
         }
         protected override void OnMouseDown(MouseEventArgs e)
@@ -866,6 +925,17 @@ namespace Widgets.MVP.WidgetModels
             base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
         }
+
+        private void SaveLocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         protected override CreateParams CreateParams
         {
             get

@@ -116,12 +116,7 @@ namespace Widgets.MVP.WidgetModels
 
             }
 
-            if ((string)AppConfig["formatIfStyleIncorrect"] != "true")
-            {
-                formatIfStyleIncorrect = false;
-                return;
-
-            }
+            
 
             if ((string)AppConfig["type"] != "OneQuote")
             {
@@ -466,6 +461,13 @@ namespace Widgets.MVP.WidgetModels
 
         public void ReloadOneQuote()
         {
+            if ((string)AppConfig["formatIfStyleIncorrect"] != "true")
+            {
+                formatIfStyleIncorrect = false;
+                return;
+
+            }
+
             //size
             if ((string)AppConfig["size"] == "auto")
             {

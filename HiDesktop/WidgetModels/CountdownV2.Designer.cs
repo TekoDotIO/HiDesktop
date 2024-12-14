@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             EventLabel = new System.Windows.Forms.Label();
             FrontTipLabel = new System.Windows.Forms.Label();
             DayDisplay = new System.Windows.Forms.Label();
@@ -37,6 +38,10 @@
             MinDisplay = new System.Windows.Forms.Label();
             MinLabel = new System.Windows.Forms.Label();
             SecDisplay = new System.Windows.Forms.Label();
+            Menu = new System.Windows.Forms.ContextMenuStrip(components);
+            SaveLocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            Menu.SuspendLayout();
             SuspendLayout();
             // 
             // EventLabel
@@ -138,6 +143,26 @@
             SecDisplay.TabIndex = 8;
             SecDisplay.Text = "00";
             // 
+            // Menu
+            // 
+            Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SaveLocToolStripMenuItem, ReloadToolStripMenuItem });
+            Menu.Name = "Menu";
+            Menu.Size = new System.Drawing.Size(181, 70);
+            // 
+            // SaveLocToolStripMenuItem
+            // 
+            SaveLocToolStripMenuItem.Name = "SaveLocToolStripMenuItem";
+            SaveLocToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            SaveLocToolStripMenuItem.Text = "保存当前位置";
+            SaveLocToolStripMenuItem.Click += SaveLocToolStripMenuItem_Click;
+            // 
+            // ReloadToolStripMenuItem
+            // 
+            ReloadToolStripMenuItem.Name = "ReloadToolStripMenuItem";
+            ReloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ReloadToolStripMenuItem.Text = "重新加载小组件";
+            ReloadToolStripMenuItem.Click += ReloadToolStripMenuItem_Click;
+            // 
             // CountdownV2
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -159,6 +184,7 @@
             Name = "CountdownV2";
             Text = "CountdownV2";
             Load += CountdownV2_Load;
+            Menu.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -174,5 +200,8 @@
         private System.Windows.Forms.Label MinDisplay;
         private System.Windows.Forms.Label MinLabel;
         private System.Windows.Forms.Label SecDisplay;
+        private System.Windows.Forms.ContextMenuStrip Menu;
+        private System.Windows.Forms.ToolStripMenuItem SaveLocToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ReloadToolStripMenuItem;
     }
 }

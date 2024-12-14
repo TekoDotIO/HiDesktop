@@ -12,7 +12,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using Widgets.MVP.WidgetModels;
 using Widgets.MVP.WidgetModels.ActivatorDataModel;
-using Windows.Services.Maps;
 using System.IO.Pipes;
 using System.Text;
 using Widgets.MVP.Essential_Repos;
