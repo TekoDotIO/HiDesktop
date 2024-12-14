@@ -28,45 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LabelNo1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            LabelNo1 = new System.Windows.Forms.Label();
+            Menu = new System.Windows.Forms.ContextMenuStrip(components);
+            ReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            SaveLocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openPropertiesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            Menu.SuspendLayout();
+            SuspendLayout();
             // 
             // LabelNo1
             // 
-            this.LabelNo1.AutoSize = true;
-            this.LabelNo1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LabelNo1.Location = new System.Drawing.Point(0, 0);
-            this.LabelNo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.LabelNo1.Name = "LabelNo1";
-            this.LabelNo1.Size = new System.Drawing.Size(69, 35);
-            this.LabelNo1.TabIndex = 0;
-            this.LabelNo1.Text = "Text";
-            this.LabelNo1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-            this.LabelNo1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.LabelNo1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            LabelNo1.AutoSize = true;
+            LabelNo1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F);
+            LabelNo1.Location = new System.Drawing.Point(0, 0);
+            LabelNo1.Margin = new System.Windows.Forms.Padding(3);
+            LabelNo1.Name = "LabelNo1";
+            LabelNo1.Size = new System.Drawing.Size(69, 35);
+            LabelNo1.TabIndex = 0;
+            LabelNo1.Text = "Text";
+            LabelNo1.MouseDoubleClick += OnMouseUp;
+            LabelNo1.MouseDown += OnMouseDown;
+            LabelNo1.MouseUp += OnMouseUp;
+            // 
+            // Menu
+            // 
+            Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ReloadToolStripMenuItem, SaveLocToolStripMenuItem, openPropertiesFileToolStripMenuItem });
+            Menu.Name = "Menu";
+            Menu.Size = new System.Drawing.Size(181, 92);
+            // 
+            // ReloadToolStripMenuItem
+            // 
+            ReloadToolStripMenuItem.Name = "ReloadToolStripMenuItem";
+            ReloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ReloadToolStripMenuItem.Text = "重新加载小组件";
+            ReloadToolStripMenuItem.Click += ReloadToolStripMenuItem_Click;
+            // 
+            // SaveLocToolStripMenuItem
+            // 
+            SaveLocToolStripMenuItem.Name = "SaveLocToolStripMenuItem";
+            SaveLocToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            SaveLocToolStripMenuItem.Text = "保存当前位置";
+            SaveLocToolStripMenuItem.Click += SaveLocToolStripMenuItem_Click;
+            // 
+            // openPropertiesFileToolStripMenuItem
+            // 
+            openPropertiesFileToolStripMenuItem.Name = "openPropertiesFileToolStripMenuItem";
+            openPropertiesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            openPropertiesFileToolStripMenuItem.Text = "打开配置文件";
+            openPropertiesFileToolStripMenuItem.Click += openPropertiesFileToolStripMenuItem_Click;
             // 
             // TextBar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(100, 48);
-            this.ControlBox = false;
-            this.Controls.Add(this.LabelNo1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "TextBar";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "TextBar";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(70, 41);
+            ControlBox = false;
+            Controls.Add(LabelNo1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            ImeMode = System.Windows.Forms.ImeMode.Disable;
+            Name = "TextBar";
+            ShowInTaskbar = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            Text = "TextBar";
+            Load += TextBar_Load;
+            Menu.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label LabelNo1;
+        private System.Windows.Forms.ContextMenuStrip Menu;
+        private System.Windows.Forms.ToolStripMenuItem ReloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveLocToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openPropertiesFileToolStripMenuItem;
     }
 }

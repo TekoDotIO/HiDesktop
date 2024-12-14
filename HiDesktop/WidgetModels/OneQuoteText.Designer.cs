@@ -37,14 +37,16 @@
             SkipTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ChangeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             savePositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openPropertiesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             AuthorText = new System.Windows.Forms.Label();
+            openDataFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             Menu.SuspendLayout();
             SuspendLayout();
             // 
             // QuoteText
             // 
             QuoteText.ContextMenuStrip = Menu;
-            QuoteText.Font = new System.Drawing.Font("Microsoft YaHei UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            QuoteText.Font = new System.Drawing.Font("Microsoft YaHei UI", 15.75F, System.Drawing.FontStyle.Bold);
             QuoteText.ForeColor = System.Drawing.Color.FromArgb(119, 140, 204);
             QuoteText.Location = new System.Drawing.Point(36, 49);
             QuoteText.Name = "QuoteText";
@@ -57,15 +59,15 @@
             // 
             // Menu
             // 
-            Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ReloadOneQuoteToolStripMenuItem, OneQuoteControlMenuToolStripMenuItem, savePositionToolStripMenuItem });
+            Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ReloadOneQuoteToolStripMenuItem, OneQuoteControlMenuToolStripMenuItem, savePositionToolStripMenuItem, openPropertiesFileToolStripMenuItem, openDataFileToolStripMenuItem });
             Menu.Name = "Menu";
-            Menu.Size = new System.Drawing.Size(161, 70);
+            Menu.Size = new System.Drawing.Size(181, 136);
             Menu.Opening += Menu_Opening;
             // 
             // ReloadOneQuoteToolStripMenuItem
             // 
             ReloadOneQuoteToolStripMenuItem.Name = "ReloadOneQuoteToolStripMenuItem";
-            ReloadOneQuoteToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            ReloadOneQuoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             ReloadOneQuoteToolStripMenuItem.Text = "重新加载小组件";
             ReloadOneQuoteToolStripMenuItem.Click += ReloadOneQuoteToolStripMenuItem_Click;
             // 
@@ -73,42 +75,49 @@
             // 
             OneQuoteControlMenuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { ChangeTextManualToolStripMenuItem, SkipTextToolStripMenuItem, ChangeColorToolStripMenuItem });
             OneQuoteControlMenuToolStripMenuItem.Name = "OneQuoteControlMenuToolStripMenuItem";
-            OneQuoteControlMenuToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            OneQuoteControlMenuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             OneQuoteControlMenuToolStripMenuItem.Text = "控制选项";
             // 
             // ChangeTextManualToolStripMenuItem
             // 
             ChangeTextManualToolStripMenuItem.Name = "ChangeTextManualToolStripMenuItem";
-            ChangeTextManualToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            ChangeTextManualToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             ChangeTextManualToolStripMenuItem.Text = "换一条（临时）";
             ChangeTextManualToolStripMenuItem.Click += ChangeTextManualToolStripMenuItem_Click;
             // 
             // SkipTextToolStripMenuItem
             // 
             SkipTextToolStripMenuItem.Name = "SkipTextToolStripMenuItem";
-            SkipTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            SkipTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             SkipTextToolStripMenuItem.Text = "跳过当前条目";
             SkipTextToolStripMenuItem.Click += SkipTextToolStripMenuItem_Click;
             // 
             // ChangeColorToolStripMenuItem
             // 
             ChangeColorToolStripMenuItem.Name = "ChangeColorToolStripMenuItem";
-            ChangeColorToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            ChangeColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             ChangeColorToolStripMenuItem.Text = "换个颜色";
             ChangeColorToolStripMenuItem.Click += ChangeColorToolStripMenuItem_Click;
             // 
             // savePositionToolStripMenuItem
             // 
             savePositionToolStripMenuItem.Name = "savePositionToolStripMenuItem";
-            savePositionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            savePositionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             savePositionToolStripMenuItem.Text = "保存位置";
             savePositionToolStripMenuItem.Click += SavePositionToolStripMenuItem_Click;
+            // 
+            // openPropertiesFileToolStripMenuItem
+            // 
+            openPropertiesFileToolStripMenuItem.Name = "openPropertiesFileToolStripMenuItem";
+            openPropertiesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            openPropertiesFileToolStripMenuItem.Text = "打开配置文件";
+            openPropertiesFileToolStripMenuItem.Click += openPropertiesFileToolStripMenuItem_Click;
             // 
             // AuthorText
             // 
             AuthorText.BackColor = System.Drawing.Color.Transparent;
             AuthorText.ContextMenuStrip = Menu;
-            AuthorText.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            AuthorText.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Italic);
             AuthorText.ForeColor = System.Drawing.Color.FromArgb(119, 140, 204);
             AuthorText.Location = new System.Drawing.Point(36, 208);
             AuthorText.Name = "AuthorText";
@@ -118,6 +127,13 @@
             AuthorText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             AuthorText.MouseDown += AuthorText_MouseDown;
             AuthorText.MouseUp += AuthorText_MouseUp;
+            // 
+            // openDataFileToolStripMenuItem
+            // 
+            openDataFileToolStripMenuItem.Name = "openDataFileToolStripMenuItem";
+            openDataFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            openDataFileToolStripMenuItem.Text = "打开数据文件";
+            openDataFileToolStripMenuItem.Click += openDataFileToolStripMenuItem_Click;
             // 
             // OneQuoteText
             // 
@@ -149,5 +165,7 @@
         private System.Windows.Forms.ToolStripMenuItem SkipTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ChangeColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem savePositionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openPropertiesFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openDataFileToolStripMenuItem;
     }
 }

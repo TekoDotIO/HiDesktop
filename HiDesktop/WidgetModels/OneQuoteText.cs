@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Org.BouncyCastle.Pqc.Crypto.Falcon;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -116,7 +118,7 @@ namespace Widgets.MVP.WidgetModels
 
             }
 
-            
+
 
             if ((string)AppConfig["type"] != "OneQuote")
             {
@@ -186,7 +188,7 @@ namespace Widgets.MVP.WidgetModels
             }
 
             CorrectFormat();
-            
+
 
 
             if (quote == null)
@@ -464,8 +466,12 @@ namespace Widgets.MVP.WidgetModels
             if ((string)AppConfig["formatIfStyleIncorrect"] != "true")
             {
                 formatIfStyleIncorrect = false;
-                return;
+                //return;
 
+            }
+            else
+            {
+                formatIfStyleIncorrect = true;
             }
 
             //size
@@ -525,11 +531,19 @@ namespace Widgets.MVP.WidgetModels
             {
                 allowMove = true;
             }
+            else
+            {
+                allowMove = false;
+            }
 
             //topMost
             if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
+            }
+            else
+            {
+                TopMost = false;
             }
 
             //random
@@ -763,6 +777,30 @@ namespace Widgets.MVP.WidgetModels
         private void AuthorText_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void openPropertiesFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var filepath = System.IO.Path.GetFullPath(Path);
+            Process p = new();
+            p.StartInfo = new()
+            {
+                FileName = filepath,
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+
+        private void openDataFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var filepath = System.IO.Path.GetFullPath(DataSrc);
+            Process p = new();
+            p.StartInfo = new()
+            {
+                FileName = filepath,
+                UseShellExecute = true
+            };
+            p.Start();
         }
     }
 }

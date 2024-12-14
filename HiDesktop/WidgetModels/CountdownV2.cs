@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -75,7 +76,7 @@ namespace Widgets.MVP.WidgetModels
         {
             InitializeComponent();
             this.Path = Path;
-            StartPosition = FormStartPosition.Manual;
+
         }
 
 
@@ -179,31 +180,17 @@ namespace Widgets.MVP.WidgetModels
         public void LoadWidget()
         {
 
-        }
 
-
-        private void CountdownV2_Load(object sender, EventArgs e)
-        {
-
-            foreach (Control item in this.Controls)
-            {
-                item.MouseDown += (object sender, MouseEventArgs e) =>
-                {
-                    if ((string)AppConfig["allowMove"] == "true")
-                    {
-                        ReleaseCapture();
-                        SendMessage(this.Handle, 0x0112, 0xF012, 0);
-                    }
-                };
-                item.ContextMenuStrip = Menu;
-            }
-
-            Log.SaveLog($"{Path} Start initializing...", "CountdownV2");
+            Log.SaveLog($"{Path} Start (re-)initializing...", "CountdownV2");
             AppConfig = PropertiesHelper.AutoCheck(htStandard, Path);
             //topmost
             if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
+            }
+            else
+            {
+                TopMost = false;
             }
 
             //Consts
@@ -225,7 +212,7 @@ namespace Widgets.MVP.WidgetModels
             //allowMove
             try
             {
-                allowMove = ((string)AppConfig["opacity"]) == "true";
+                allowMove = ((string)AppConfig["allowMove"]) == "true";
             }
             catch (Exception ex)
             {
@@ -249,17 +236,17 @@ namespace Widgets.MVP.WidgetModels
             {
                 if ((string)AppConfig["location"] == "auto")
                 {
-                    Location = new Point(0, 0);
+                    StartPosition = FormStartPosition.CenterScreen;
                 }
                 else
                 {
-
+                    StartPosition = FormStartPosition.Manual;
                     Location = new Point(Convert.ToInt32(((string)AppConfig["location"]).Split(",")[0]), Convert.ToInt32(((string)AppConfig["location"]).Split(",")[1]));
                 }
             }
             catch (Exception ex)
             {
-                Location = new Point(0, 0);
+                StartPosition = FormStartPosition.CenterScreen;
                 Log.SaveLog($"{Path} Err when applying location: {ex}", "CountdownV2");
             }
             //date&time
@@ -288,6 +275,7 @@ namespace Widgets.MVP.WidgetModels
             EventLabel.Text = event_text;
             //
             //fonts
+            //
             try
             {
                 if ((string)AppConfig["date"] != "auto")
@@ -316,14 +304,22 @@ namespace Widgets.MVP.WidgetModels
             }
 
 
-
+            //
             //tagsFloating
+            //
             if ((string)AppConfig["tagsFloating"] != "true")
             {
                 DayLabel.Location = new Point(DayLabel.Location.X, DayDisplay.Location.Y + DayDisplay.Height - DayLabel.Height - fontBoundUp);
                 HourLabel.Location = new Point(HourLabel.Location.X, HourDisplay.Location.Y + HourDisplay.Height - DayLabel.Height - fontBoundUp);
                 MinLabel.Location = new Point(MinLabel.Location.X, MinDisplay.Location.Y + MinDisplay.Height - MinLabel.Height - fontBoundUp);
                 SecDisplay.Location = new Point(SecDisplay.Location.X, MinDisplay.Location.Y);
+            }
+            else
+            {
+                DayLabel.Location = new Point(82, 160);
+                HourLabel.Location = new Point(244, 160);
+                MinLabel.Location = new Point(319, 193);
+                SecDisplay.Location = new Point(358, 213);
             }
 
             var wsStr = (string)AppConfig["timeCalcLevel"];
@@ -515,8 +511,9 @@ namespace Widgets.MVP.WidgetModels
 
 
 
-
+            //
             //size
+            //
             try
             {
                 setTag(this);
@@ -543,7 +540,9 @@ namespace Widgets.MVP.WidgetModels
                 Log.SaveLog($"{Path} Err when applying size: {ex}", "CountdownV2");
                 //throw;
             }
+            //
             //radius
+            //
             try
             {
                 radius = Convert.ToInt32((string)AppConfig["radius"]);
@@ -559,8 +558,9 @@ namespace Widgets.MVP.WidgetModels
 
 
 
-
+            //
             //colors
+            //
             try
             {
                 var bkColor = ColorTranslator.FromHtml((string)AppConfig["back_Color"]);
@@ -586,8 +586,9 @@ namespace Widgets.MVP.WidgetModels
                 Log.SaveLog($"{Path} Err when applying colors: {ex}", "CountdownV2");
                 //throw;
             }
-
+            //
             //refreshTime
+            //
             try
             {
                 refreshTime = (Convert.ToInt32((string)AppConfig["radius"]));
@@ -601,6 +602,26 @@ namespace Widgets.MVP.WidgetModels
 
             Thread updateThread = new(new ThreadStart(Updater));
             updateThread.Start();
+        }
+
+
+        private void CountdownV2_Load(object sender, EventArgs e)
+        {
+            this.ContextMenuStrip = Menu;
+            foreach (Control item in this.Controls)
+            {
+                item.MouseDown += (object sender, MouseEventArgs e) =>
+                {
+                    if (allowMove)
+                    {
+                        ReleaseCapture();
+                        SendMessage(this.Handle, 0x0112, 0xF012, 0);
+                    }
+                };
+                item.ContextMenuStrip = Menu;
+            }
+            LoadWidget();
+
         }
 
 
@@ -928,12 +949,26 @@ namespace Widgets.MVP.WidgetModels
 
         private void SaveLocToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+            MessageBox.Show("新的位置已保存到配置文件", $"{Path} - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            LoadWidget();
+        }
 
+        private void openPropertiesFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var filepath = System.IO.Path.GetFullPath(Path);
+            Process p = new();
+            p.StartInfo = new()
+            {
+                FileName = filepath,
+                UseShellExecute = true
+            };
+            p.Start();
         }
 
         protected override CreateParams CreateParams

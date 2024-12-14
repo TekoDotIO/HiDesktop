@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
@@ -17,15 +18,16 @@ namespace HiDesktop
         DateTime Latest;
         bool enableSpace;
         string space = " ";
-        readonly DateTime Target;
-        readonly string Path;
-        readonly Hashtable AppConfig;
-        readonly string days;
-        readonly string hours;
-        readonly string minutes;
-        readonly string seconds;
-        readonly string weekdays;
-        readonly int refreshTime;
+        DateTime Target;
+        string Path;
+        Hashtable AppConfig;
+        string days;
+        string hours;
+        string minutes;
+        string seconds;
+        string weekdays;
+        int refreshTime;
+        string updaterUID = "";
         bool countDown = true;
         WorkStyle workStyle;
         int getdays;
@@ -75,6 +77,21 @@ namespace HiDesktop
             //}
         }
 
+        static string GenerateUID(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            char[] uid = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                uid[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new string(uid);
+        }
+
+
         public enum WorkStyle
         {
             DayHourMinSecWork,
@@ -100,6 +117,12 @@ namespace HiDesktop
             //SetFormToolWindowStyle(this);
             this.Path = Path;
 
+
+
+        }
+
+        public void LoadWidget()
+        {
             Hashtable htStandard = new Hashtable()
             {
                 { "type", "CounterBar" },
@@ -180,6 +203,10 @@ namespace HiDesktop
             if (!enableSpace)
             {
                 space = "";
+            }
+            else
+            {
+                space = " ";
             }
 
             if ((string)AppConfig["font"] != "auto")
@@ -330,9 +357,7 @@ namespace HiDesktop
             thread = new Thread(new ThreadStart(Countdown_UpdateTime));
             //?:的作用相当于if else 如果?左侧是true 则执行:左侧句 否则执行右侧句
             thread.Start();
-
         }
-
 
         private void ReloadLocations()
         {
@@ -394,8 +419,14 @@ namespace HiDesktop
 
         private void Countdown_UpdateTime()
         {
+            var uid = GenerateUID(16);
+            updaterUID = uid.ToString();
             while (true)
             {
+                if (updaterUID != uid)
+                {
+                    return;
+                }
                 Countdown_UpdateTimeOnce();
                 //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
             }
@@ -428,7 +459,7 @@ namespace HiDesktop
                     LabelNo2.Text = (string)AppConfig["count_middleText"];
                     ReloadLocations();
                 }
-                
+
             }
             TimeSpan span;
 
@@ -547,10 +578,6 @@ namespace HiDesktop
             }
 
         }
-        private void TextBar_Load(object sender, EventArgs e)
-        {
-            //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-        }
 
         private void Label1_Click(object sender, EventArgs e)
         {
@@ -564,27 +591,23 @@ namespace HiDesktop
 
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-            FrmMain_MouseDown(this, e);
-        }
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            base.OnMouseUp(e);
+            //AppConfig["location"] = $"{Location.X},{Location.Y}";
+            //PropertiesHelper.Save(Path, AppConfig);
         }
         private void LabelNo1_Click(object sender, EventArgs e)
         {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            //AppConfig["location"] = $"{Location.X},{Location.Y}";
+            //PropertiesHelper.Save(Path, AppConfig);
             //SetWindowPos(this.Handle, new IntPtr(1), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            //AppConfig["location"] = $"{Location.X},{Location.Y}";
+            //PropertiesHelper.Save(Path, AppConfig);
         }
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
@@ -663,6 +686,41 @@ namespace HiDesktop
         private void NumText_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CountBar_Load(object sender, EventArgs e)
+        {
+            LoadWidget();
+            foreach (Control item in Controls)
+            {
+                item.ContextMenuStrip = Menu;
+
+            }
+        }
+
+        private void ReloadWidgetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadWidget();
+
+        }
+
+        private void SaveLocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+            MessageBox.Show("新的位置已保存到配置文件", $"{Path} - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void openPropertiesFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var filepath = System.IO.Path.GetFullPath(Path);
+            Process p = new();
+            p.StartInfo = new()
+            {
+                FileName = filepath,
+                UseShellExecute = true
+            };
+            p.Start();
         }
     }
 

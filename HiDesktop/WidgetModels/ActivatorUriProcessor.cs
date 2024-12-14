@@ -253,9 +253,9 @@ namespace Widgets.MVP.WidgetModels
                     {
                         icon = args["icon"];
                     }
-                    if (args.AllKeys.Contains("action"))
+                    if (args.AllKeys.Contains("action2"))
                     {
-                        action = args["action"];
+                        action = args["action2"];
                     }
                     ActivatorObjectEditor a = new()
                     {

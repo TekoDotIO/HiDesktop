@@ -244,5 +244,32 @@ namespace Widgets.MVP.WidgetModels
         {
 
         }
+
+        private void DelWithID_Click(object sender, EventArgs e)
+        {
+            Repo v;
+            try
+            {
+                int id = Convert.ToInt32(idBox.Text);
+                v = dataSrc.Repo.FirstOrDefault(p => p.ID == id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"搜索对象时发生错误！\n{ex}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.SaveLog($"{ex}", "AOEditor");
+                return;
+            }
+
+            if (v != null)
+            {
+                dataSrc.Repo.Remove(v);
+                dataSrc.SaveChanges();
+                MessageBox.Show("删除操作执行完成！", "删除操作", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show($"数据库中未发现ID对应的数据记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

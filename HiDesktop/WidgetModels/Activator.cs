@@ -483,6 +483,8 @@ namespace Widgets.MVP.WidgetModels
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            TopLevel = (string)AppConfig["topMost"] == "true";
+            TopMost = (string)AppConfig["topMost"] == "true";
             var previousPoint = Location;
             base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
@@ -520,6 +522,8 @@ namespace Widgets.MVP.WidgetModels
         }
         private void Pb_MouseDown(object sender, MouseEventArgs e)
         {
+            TopLevel = (string)AppConfig["topMost"] == "true";
+            TopMost = (string)AppConfig["topMost"] == "true";
             var previousPoint = Location;
             
             //base.OnMouseDown(e);
@@ -695,7 +699,8 @@ namespace Widgets.MVP.WidgetModels
 
         private void Activator_Load(object sender, EventArgs e)
         {
-
+            TopLevel = (string)AppConfig["topMost"] == "true";
+            TopMost = (string)AppConfig["topMost"] == "true";
         }
 
         private void Activator_Click(object sender, EventArgs e)

@@ -41,13 +41,14 @@
             Menu = new System.Windows.Forms.ContextMenuStrip(components);
             SaveLocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openPropertiesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             Menu.SuspendLayout();
             SuspendLayout();
             // 
             // EventLabel
             // 
             EventLabel.AutoSize = true;
-            EventLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            EventLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Bold);
             EventLabel.ForeColor = System.Drawing.Color.FromArgb(250, 173, 172);
             EventLabel.Location = new System.Drawing.Point(34, 80);
             EventLabel.Name = "EventLabel";
@@ -58,7 +59,7 @@
             // FrontTipLabel
             // 
             FrontTipLabel.AutoSize = true;
-            FrontTipLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            FrontTipLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 15F, System.Drawing.FontStyle.Bold);
             FrontTipLabel.ForeColor = System.Drawing.Color.Black;
             FrontTipLabel.Location = new System.Drawing.Point(38, 44);
             FrontTipLabel.Name = "FrontTipLabel";
@@ -69,7 +70,7 @@
             // DayDisplay
             // 
             DayDisplay.AutoSize = true;
-            DayDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            DayDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 60F, System.Drawing.FontStyle.Bold);
             DayDisplay.ForeColor = System.Drawing.Color.Black;
             DayDisplay.Location = new System.Drawing.Point(21, 144);
             DayDisplay.Name = "DayDisplay";
@@ -80,7 +81,7 @@
             // DayLabel
             // 
             DayLabel.AutoSize = true;
-            DayLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            DayLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Bold);
             DayLabel.ForeColor = System.Drawing.Color.Black;
             DayLabel.Location = new System.Drawing.Point(82, 160);
             DayLabel.Name = "DayLabel";
@@ -91,7 +92,7 @@
             // HourDisplay
             // 
             HourDisplay.AutoSize = true;
-            HourDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            HourDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 60F, System.Drawing.FontStyle.Bold);
             HourDisplay.ForeColor = System.Drawing.Color.Black;
             HourDisplay.Location = new System.Drawing.Point(134, 144);
             HourDisplay.Name = "HourDisplay";
@@ -102,7 +103,7 @@
             // HourLabel
             // 
             HourLabel.AutoSize = true;
-            HourLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            HourLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F, System.Drawing.FontStyle.Bold);
             HourLabel.ForeColor = System.Drawing.Color.Black;
             HourLabel.Location = new System.Drawing.Point(244, 160);
             HourLabel.Name = "HourLabel";
@@ -113,7 +114,7 @@
             // MinDisplay
             // 
             MinDisplay.AutoSize = true;
-            MinDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            MinDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F);
             MinDisplay.ForeColor = System.Drawing.Color.DimGray;
             MinDisplay.Location = new System.Drawing.Point(298, 186);
             MinDisplay.Name = "MinDisplay";
@@ -124,9 +125,9 @@
             // MinLabel
             // 
             MinLabel.AutoSize = true;
-            MinLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            MinLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold);
             MinLabel.ForeColor = System.Drawing.Color.DimGray;
-            MinLabel.Location = new System.Drawing.Point(358, 186);
+            MinLabel.Location = new System.Drawing.Point(359, 193);
             MinLabel.Name = "MinLabel";
             MinLabel.Size = new System.Drawing.Size(36, 19);
             MinLabel.TabIndex = 7;
@@ -135,7 +136,7 @@
             // SecDisplay
             // 
             SecDisplay.AutoSize = true;
-            SecDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            SecDisplay.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold);
             SecDisplay.ForeColor = System.Drawing.Color.DimGray;
             SecDisplay.Location = new System.Drawing.Point(358, 213);
             SecDisplay.Name = "SecDisplay";
@@ -145,23 +146,30 @@
             // 
             // Menu
             // 
-            Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SaveLocToolStripMenuItem, ReloadToolStripMenuItem });
+            Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SaveLocToolStripMenuItem, ReloadToolStripMenuItem, openPropertiesFileToolStripMenuItem });
             Menu.Name = "Menu";
-            Menu.Size = new System.Drawing.Size(181, 70);
+            Menu.Size = new System.Drawing.Size(181, 92);
             // 
             // SaveLocToolStripMenuItem
             // 
             SaveLocToolStripMenuItem.Name = "SaveLocToolStripMenuItem";
-            SaveLocToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            SaveLocToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             SaveLocToolStripMenuItem.Text = "保存当前位置";
             SaveLocToolStripMenuItem.Click += SaveLocToolStripMenuItem_Click;
             // 
             // ReloadToolStripMenuItem
             // 
             ReloadToolStripMenuItem.Name = "ReloadToolStripMenuItem";
-            ReloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ReloadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             ReloadToolStripMenuItem.Text = "重新加载小组件";
             ReloadToolStripMenuItem.Click += ReloadToolStripMenuItem_Click;
+            // 
+            // openPropertiesFileToolStripMenuItem
+            // 
+            openPropertiesFileToolStripMenuItem.Name = "openPropertiesFileToolStripMenuItem";
+            openPropertiesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            openPropertiesFileToolStripMenuItem.Text = "打开配置文件";
+            openPropertiesFileToolStripMenuItem.Click += openPropertiesFileToolStripMenuItem_Click;
             // 
             // CountdownV2
             // 
@@ -203,5 +211,6 @@
         private System.Windows.Forms.ContextMenuStrip Menu;
         private System.Windows.Forms.ToolStripMenuItem SaveLocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ReloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openPropertiesFileToolStripMenuItem;
     }
 }

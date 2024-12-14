@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
@@ -11,8 +12,8 @@ namespace HiDesktop
 {
     public partial class TextBar : Form
     {
-        readonly string Path;
-        readonly Hashtable AppConfig;
+        string Path;
+        Hashtable AppConfig;
         /// <summary>
         /// 让程序不显示在alt+Tab视图窗体中
         /// </summary>
@@ -54,6 +55,11 @@ namespace HiDesktop
 
             InitializeComponent();
             this.Path = Path;
+
+        }
+
+        public void LoadWidget()
+        {
             Hashtable htStandard = new Hashtable()
             {
                 { "type", "TextBar" },
@@ -216,26 +222,50 @@ namespace HiDesktop
             base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
         }
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
-        }
-        private void LabelNo1_Click(object sender, EventArgs e)
-        {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
-        }
+
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            //AppConfig["location"] = $"{Location.X},{Location.Y}";
+            //PropertiesHelper.Save(Path, AppConfig);
         }
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
             base.OnMouseDown(e);
             FrmMain_MouseDown(this, e);
+        }
+
+        private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadWidget();
+        }
+
+        private void SaveLocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AppConfig["location"] = $"{Location.X},{Location.Y}";
+            PropertiesHelper.Save(Path, AppConfig);
+            MessageBox.Show("新的位置已保存到配置文件", $"{Path} - HiDesktop", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void TextBar_Load(object sender, EventArgs e)
+        {
+            foreach (Control item in Controls)
+            {
+                item.ContextMenuStrip = Menu;
+            }
+            LoadWidget();
+        }
+
+        private void openPropertiesFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var filepath = System.IO.Path.GetFullPath(Path);
+            Process p = new();
+            p.StartInfo = new()
+            {
+                FileName = filepath,
+                UseShellExecute = true
+            };
+            p.Start();
         }
     }
 }

@@ -44,13 +44,14 @@
             label8 = new System.Windows.Forms.Label();
             iconDisplay = new System.Windows.Forms.PictureBox();
             loadFromDbBtn = new System.Windows.Forms.Button();
+            DelWithID = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)iconDisplay).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 19.8000011F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 19.8000011F, System.Drawing.FontStyle.Bold);
             label1.Location = new System.Drawing.Point(23, 20);
             label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
@@ -84,7 +85,7 @@
             idBox.Location = new System.Drawing.Point(65, 105);
             idBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             idBox.Name = "idBox";
-            idBox.Size = new System.Drawing.Size(160, 23);
+            idBox.Size = new System.Drawing.Size(108, 23);
             idBox.TabIndex = 3;
             // 
             // descriptionBox
@@ -198,20 +199,32 @@
             // 
             // loadFromDbBtn
             // 
-            loadFromDbBtn.Location = new System.Drawing.Point(228, 105);
+            loadFromDbBtn.Location = new System.Drawing.Point(177, 105);
             loadFromDbBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             loadFromDbBtn.Name = "loadFromDbBtn";
-            loadFromDbBtn.Size = new System.Drawing.Size(121, 25);
+            loadFromDbBtn.Size = new System.Drawing.Size(97, 25);
             loadFromDbBtn.TabIndex = 16;
             loadFromDbBtn.Text = "从数据库加载";
             loadFromDbBtn.UseVisualStyleBackColor = true;
             loadFromDbBtn.Click += loadFromDbBtn_Click;
+            // 
+            // DelWithID
+            // 
+            DelWithID.Location = new System.Drawing.Point(278, 105);
+            DelWithID.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            DelWithID.Name = "DelWithID";
+            DelWithID.Size = new System.Drawing.Size(71, 25);
+            DelWithID.TabIndex = 17;
+            DelWithID.Text = "删除";
+            DelWithID.UseVisualStyleBackColor = true;
+            DelWithID.Click += DelWithID_Click;
             // 
             // ActivatorObjectEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(622, 382);
+            Controls.Add(DelWithID);
             Controls.Add(loadFromDbBtn);
             Controls.Add(iconDisplay);
             Controls.Add(label8);
@@ -258,5 +271,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox iconDisplay;
         private System.Windows.Forms.Button loadFromDbBtn;
+        private System.Windows.Forms.Button DelWithID;
     }
 }
