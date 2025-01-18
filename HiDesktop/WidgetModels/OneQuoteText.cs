@@ -1,5 +1,4 @@
-﻿using Org.BouncyCastle.Pqc.Crypto.Falcon;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -23,7 +23,7 @@ namespace Widgets.MVP.WidgetModels
     public partial class OneQuoteText : Form
     {
         readonly string Path;
-        readonly Hashtable AppConfig;
+        Hashtable AppConfig;
         private float x;//定义当前窗体的宽度
         private float y;//定义当前窗体的高度
         public int defaultWidth = 500;
@@ -37,6 +37,8 @@ namespace Widgets.MVP.WidgetModels
         DbDataRowObj quote;
         public UpdateMode updateMode;
         OneQuoteDbExcelProcessor dp;
+        Font defaultQuoteFont;
+        Font defaultAuthorFont;
         public enum UpdateMode
         {
             Day,
@@ -63,7 +65,8 @@ namespace Widgets.MVP.WidgetModels
             { "topMost", "false" },
             { "colorSrcIfNotExcelSrc", "" },
             { "radius", "auto" },
-            { "formatIfStyleIncorrect", "true" }
+            { "formatIfStyleIncorrect", "true" },
+            //{ "fontPath", "auto" } // Add this line for font path
         };
 
 
@@ -126,16 +129,42 @@ namespace Widgets.MVP.WidgetModels
                 this.Close();
                 return;
             }
-
-
-            //Start loading: quote
-            //See load
-
-
+            
+            // Load and apply fonts
+            //ApplyFonts();
 
         }
 
 
+        //private void ApplyFonts()
+        //{
+        //    try
+        //    {
+        //        if ((string)AppConfig["fontPath"] != "auto")
+        //        {
+        //            //将字体显示到控件
+        //            foreach (Control item in this.Controls)
+        //            {
+        //                //从外部文件加载字体文件
+        //                PrivateFontCollection font = new PrivateFontCollection();
+        //                font.AddFontFile((string)AppConfig["fontPath"]);
+
+        //                //定义成新的字体对象
+        //                FontFamily myFontFamily = new FontFamily(font.Families[0].Name, font);
+        //                Font myFont = new Font(myFontFamily, item.Font.Size, FontStyle.Regular);
+
+
+        //                loadedFont = myFont;
+
+        //                item.Invoke((MethodInvoker)delegate { item.Font = loadedFont; });
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.SaveLog($"[{Path}]Error when applying fonts: {ex}", "OneQuote");
+        //    }
+        //}
 
         void LoadFromExcel(bool skipDate)
         {
@@ -263,9 +292,20 @@ namespace Widgets.MVP.WidgetModels
             }
 
 
+            QuoteText.Font = defaultQuoteFont;
+            AuthorText.Font = defaultAuthorFont;
+
+
             //Apply quote
-            QuoteText.Text = quote.Text;
-            AuthorText.Text = quote.Author;
+            QuoteText.Invoke((MethodInvoker)delegate {
+                QuoteText.Text = quote.Text;
+            });
+            //QuoteText.Text = quote.Text;
+            Refresh();
+            AuthorText.Invoke((MethodInvoker)delegate {
+                AuthorText.Text = quote.Author;
+            });
+            //AuthorText.Text = quote.Author;
 
 
             //Apply fonts
@@ -275,13 +315,30 @@ namespace Widgets.MVP.WidgetModels
                 {
                     PrivateFontCollection fcText = new();
                     fcText.AddFontFile(quote.TextFont);
-                    QuoteText.Font = new(fcText.Families[0], QuoteText.Font.Size);
+
+                    //定义成新的字体对象
+                    FontFamily myFontFamily = new FontFamily(fcText.Families[0].Name, fcText);
+                    Font myFont = new Font(myFontFamily, QuoteText.Font.Size, FontStyle.Regular);
+
+                    QuoteText.Invoke((MethodInvoker)delegate {
+                        QuoteText.Font = myFont;
+                    });
+
+                    //QuoteText.Font = myFont;
                 }
                 if (quote.AuthorFont != "")
                 {
                     PrivateFontCollection atText = new();
                     atText.AddFontFile(quote.AuthorFont);
-                    QuoteText.Font = new(atText.Families[0], QuoteText.Font.Size);
+                    //定义成新的字体对象
+                    FontFamily myFontFamily = new FontFamily(atText.Families[0].Name, atText);
+                    Font myFont = new Font(myFontFamily, AuthorText.Font.Size, FontStyle.Regular);
+
+                    AuthorText.Invoke((MethodInvoker)delegate {
+                        AuthorText.Font = myFont;
+                    });
+
+                    //AuthorText.Font = myFont;
                 }
 
             }
@@ -463,6 +520,11 @@ namespace Widgets.MVP.WidgetModels
 
         public void ReloadOneQuote()
         {
+            //PropertiesHelper.AutoCheck(htStandard, Path);
+            //Log.SaveLog($"[{Path}]Repaired properties");
+            AppConfig = PropertiesHelper.Load(Path);
+            Log.SaveLog($"[{Path}]Loaded properties");
+
             if ((string)AppConfig["formatIfStyleIncorrect"] != "true")
             {
                 formatIfStyleIncorrect = false;
@@ -488,7 +550,8 @@ namespace Widgets.MVP.WidgetModels
             float newx = (Size.Width) / x;//拖动界面之后的宽度与之前界面的宽度之比
             float newy = (Size.Height) / y;//拖动界面之后的高度与之前界面的高度之比
             setControls(newx, newy, this);//进行控件大小的伸缩变换
-
+            defaultQuoteFont = QuoteText.Font;
+            defaultAuthorFont = AuthorText.Font;
 
             //location
             if ((string)AppConfig["location"] == "auto")
@@ -613,7 +676,7 @@ namespace Widgets.MVP.WidgetModels
                 }
             }
 
-
+            
 
             Log.SaveLog($"[{Path}]Initialization accomplished.", "OneQuote");
 
@@ -627,15 +690,19 @@ namespace Widgets.MVP.WidgetModels
         {
             Thread t = new(new ThreadStart(() =>
             {
+                //ApplyDefaultFont();
                 //Start loading: quote
                 switch (SrcType)
                 {
                     case DataSourceType.Excel:
                         LoadFromExcel(skipDate);
+
                         break;
                     default:
                         break;
                 }
+                // Apply fonts
+                //ApplyFonts();
             }));
             t.Start();
         }
@@ -643,6 +710,7 @@ namespace Widgets.MVP.WidgetModels
 
         private void OneQuoteText_Load(object sender, EventArgs e)
         {
+            
             ReloadOneQuote();
             if (updateMode == UpdateMode.Day)
             {
@@ -804,3 +872,4 @@ namespace Widgets.MVP.WidgetModels
         }
     }
 }
+
