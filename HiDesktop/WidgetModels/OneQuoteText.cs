@@ -520,8 +520,7 @@ namespace Widgets.MVP.WidgetModels
 
         public void ReloadOneQuote()
         {
-            //PropertiesHelper.AutoCheck(htStandard, Path);
-            //Log.SaveLog($"[{Path}]Repaired properties");
+            
             AppConfig = PropertiesHelper.Load(Path);
             Log.SaveLog($"[{Path}]Loaded properties");
 
@@ -748,8 +747,8 @@ namespace Widgets.MVP.WidgetModels
 
         private void QuoteText_MouseUp(object sender, MouseEventArgs e)
         {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            //AppConfig["location"] = $"{Location.X},{Location.Y}";
+            //PropertiesHelper.Save(Path, AppConfig);
         }
 
         private void AuthorText_MouseDown(object sender, MouseEventArgs e)
@@ -760,8 +759,8 @@ namespace Widgets.MVP.WidgetModels
 
         private void AuthorText_MouseUp(object sender, MouseEventArgs e)
         {
-            AppConfig["location"] = $"{Location.X},{Location.Y}";
-            PropertiesHelper.Save(Path, AppConfig);
+            //AppConfig["location"] = $"{Location.X},{Location.Y}";
+            //PropertiesHelper.Save(Path, AppConfig);
         }
 
         private void ReloadOneQuoteToolStripMenuItem_Click(object sender, EventArgs e)
