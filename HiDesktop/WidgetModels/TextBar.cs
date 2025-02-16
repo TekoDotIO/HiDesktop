@@ -40,9 +40,9 @@ namespace HiDesktop
         [DllImport("user32.dll")]
         static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
-        const uint SWP_NOMOVE = 0x0002;
-        const uint SWP_NOSIZE = 0x0001;
-        const int HWND_BOTTOM = 1;
+        //const uint SWP_NOMOVE = 0x0002;
+        //const uint SWP_NOSIZE = 0x0001;
+        //const int HWND_BOTTOM = 1;
 
         protected override void OnLoad(EventArgs e)
         {
@@ -107,22 +107,22 @@ namespace HiDesktop
             }
 
             float fontSize = Convert.ToInt32(AppConfig["fontSize"]);
-            Log.SaveLog($"[{Path}]FontSize set.");
+            //Log.SaveLog($"[{Path}]FontSize set.");
             Opacity = Convert.ToDouble(AppConfig["opacity"]);
-            Log.SaveLog($"[{Path}]Opacity set.");
+            // Log.SaveLog($"[{Path}]Opacity set.");
             if ((string)AppConfig["topMost"] == "true")
             {
                 TopMost = true;
-                Log.SaveLog($"[{Path}]TopMost.");
+                //Log.SaveLog($"[{Path}]TopMost.");
             }
             else
             {
                 TopMost = false;
-                Log.SaveLog($"[{Path}]Not TopMost.");
+                //Log.SaveLog($"[{Path}]Not TopMost.");
             }
             if ((string)AppConfig["font"] != "auto")
             {
-                Setfont((string)AppConfig["font"]);
+                Setfont((string)AppConfig["font"], fontSize);
             }
 
 
@@ -180,7 +180,7 @@ namespace HiDesktop
 
         }
 
-        public void Setfont(string path)
+        public void Setfont(string path, float size)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace HiDesktop
 
                 //定义成新的字体对象
                 FontFamily myFontFamily = new FontFamily(font.Families[0].Name, font);
-                Font myFont = new Font(myFontFamily, 56F, FontStyle.Regular);
+                Font myFont = new Font(myFontFamily, size, FontStyle.Regular);
 
                 //将字体显示到控件
                 LabelNo1.Font = myFont;
@@ -201,7 +201,7 @@ namespace HiDesktop
                 MessageBox.Show(e.Message.ToString(), "异常：", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
-
+        //原文链接：https://blog.csdn.net/electricperi/article/details/8630757
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
