@@ -304,23 +304,7 @@ namespace Widgets.MVP.WidgetModels
             }
 
 
-            //
-            //tagsFloating
-            //
-            if ((string)AppConfig["tagsFloating"] != "true")
-            {
-                DayLabel.Location = new Point(DayLabel.Location.X, DayDisplay.Location.Y + DayDisplay.Height - DayLabel.Height - fontBoundUp);
-                HourLabel.Location = new Point(HourLabel.Location.X, HourDisplay.Location.Y + HourDisplay.Height - DayLabel.Height - fontBoundUp);
-                MinLabel.Location = new Point(MinLabel.Location.X, MinDisplay.Location.Y + MinDisplay.Height - MinLabel.Height - fontBoundUp);
-                SecDisplay.Location = new Point(SecDisplay.Location.X, MinDisplay.Location.Y);
-            }
-            else
-            {
-                DayLabel.Location = new Point(82, 160);
-                HourLabel.Location = new Point(244, 160);
-                MinLabel.Location = new Point(319, 193);
-                SecDisplay.Location = new Point(358, 213);
-            }
+            
 
             var wsStr = (string)AppConfig["timeCalcLevel"];
             switch (wsStr)
@@ -508,7 +492,25 @@ namespace Widgets.MVP.WidgetModels
                     break;
             }
 
-
+            //
+            //tagsFloating
+            //
+            int OriX = 864;
+            double times = Width / OriX;
+            if ((string)AppConfig["tagsFloating"] != "true")
+            {
+                DayLabel.Location = new Point(DayLabel.Location.X, DayDisplay.Location.Y + DayDisplay.Height - DayLabel.Height - fontBoundUp);
+                HourLabel.Location = new Point(HourLabel.Location.X, HourDisplay.Location.Y + HourDisplay.Height - DayLabel.Height - fontBoundUp);
+                MinLabel.Location = new Point(MinLabel.Location.X, MinDisplay.Location.Y + MinDisplay.Height - MinLabel.Height - fontBoundUp);
+                SecDisplay.Location = new Point(SecDisplay.Location.X, MinDisplay.Location.Y);
+            }
+            else
+            {
+                DayLabel.Location = new Point(DayDisplay.Location.X + DayDisplay.Width, DayDisplay.Location.Y);
+                HourLabel.Location = new Point(HourDisplay.Location.X + HourDisplay.Width, HourDisplay.Location.Y);
+                MinLabel.Location = new Point(MinDisplay.Location.X + MinDisplay.Width, MinDisplay.Location.Y);
+                SecDisplay.Location = new Point(MinLabel.Location.X, MinLabel.Location.Y + MinLabel.Height);
+            }
 
 
             //
