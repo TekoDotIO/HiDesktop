@@ -18,7 +18,7 @@ using Widgets.MVP.Essential_Repos;
 
 namespace Widgets.MVP
 {
-    internal class Program
+    public class Program
     {
         static bool activatorExists = false;
         public static WidgetModels.Activator activatedActivator;
@@ -249,6 +249,8 @@ namespace Widgets.MVP
 
             }
             Log.SaveLog("Launched all.");
+            Log.SaveLog("Start building notify controller...");
+            NotifyController.BuildNotifyController();
             Log.SaveLog("Start building Pipes service...");
             while (true)
             {

@@ -794,6 +794,8 @@ namespace Widgets.MVP.WidgetModels
         {
             try
             {
+                // 在某些环境下，需要先初始化本地库组件
+                //SQLitePCL.Batteries.Init();
                 DbProviderFactories.RegisterFactory("System.Data.SQLite.EF6", SQLiteFactory.Instance);
                 if (!File.Exists((string)AppConfig["dataSource"]))
                 {
