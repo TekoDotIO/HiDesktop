@@ -252,6 +252,17 @@ namespace Widgets.MVP
             Log.SaveLog("Start building notify controller...");
             NotifyController.BuildNotifyController();
             Log.SaveLog("Start building Pipes service...");
+            Thread PipesThread = new(new ThreadStart(() =>
+            {
+                StartPipesSystemBuilding();
+            }));
+            PipesThread.Start();
+            
+            
+        }
+
+        static void StartPipesSystemBuilding()
+        {
             while (true)
             {
                 // 定义命名管道名称
@@ -292,7 +303,7 @@ namespace Widgets.MVP
                 {
                     Log.SaveLog($"Error occurs at pipe server or command system: \n{ex}");
                     var r = MessageBox.Show($"通过URL传递的命令执行时出现致命错误！\n出错的程序模块已终止，我们对造成的不便表示歉意。\n\n如果您是用户，请将此信息和日志信息反馈给开发者：\n\n异常文件：-\n异常信息：{ex}\n\n如果您想亲自调试程序，请点击“是”，如果您想退出当前模块，请点击“否”。", $"HiDesktop - 异常捕获：URL Scheme模块", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                    if (r == DialogResult.Yes) 
+                    if (r == DialogResult.Yes)
                     {
                         throw;
                     }
@@ -305,8 +316,6 @@ namespace Widgets.MVP
 
             }
         }
-
-
 
         static void Main2(string[] args)
         {

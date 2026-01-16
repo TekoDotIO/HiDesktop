@@ -726,6 +726,11 @@ namespace Widgets.MVP.WidgetModels
                         hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
                         min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
                         sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = day;
                         HourDisplay.Text = hour;
@@ -737,6 +742,11 @@ namespace Widgets.MVP.WidgetModels
                         day = Math.Floor(span.TotalDays).ToString();
                         hour = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
                         min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = day;
                         HourDisplay.Text = hour;
@@ -748,6 +758,11 @@ namespace Widgets.MVP.WidgetModels
                     case WorkStyle.DayHour:
                         day = Math.Floor(span.TotalDays).ToString();
                         hour = Math.Floor(span.TotalHours).ToString(); // 包括天数的小时总计
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = day;
                         HourDisplay.Text = hour;
@@ -758,6 +773,11 @@ namespace Widgets.MVP.WidgetModels
 
                     case WorkStyle.Day:
                         day = Math.Floor(span.TotalDays).ToString(); // 累计天数
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = day;
 
@@ -770,6 +790,11 @@ namespace Widgets.MVP.WidgetModels
                         hour = Math.Floor(span.TotalHours).ToString();
                         min = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();
                         sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = hour;  // 小时作为首位
                         HourDisplay.Text = min;  // 分钟作为第二位
@@ -781,6 +806,11 @@ namespace Widgets.MVP.WidgetModels
                     case WorkStyle.MinSec:
                         min = Math.Floor(span.TotalMinutes).ToString(); // 累计分钟数
                         sec = (Math.Floor(span.TotalSeconds) - Math.Floor(span.TotalMinutes) * 60).ToString();
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = min; // 分钟作为首位
                         HourDisplay.Text = sec; // 秒作为第二位
@@ -791,6 +821,11 @@ namespace Widgets.MVP.WidgetModels
 
                     case WorkStyle.Sec:
                         sec = Math.Floor(span.TotalSeconds).ToString(); // 累计秒数
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = sec;
 
@@ -801,6 +836,11 @@ namespace Widgets.MVP.WidgetModels
 
                     case WorkStyle.Hour:
                         hour = Math.Floor(span.TotalHours).ToString(); // 累计小时数
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = hour;
 
@@ -811,6 +851,11 @@ namespace Widgets.MVP.WidgetModels
 
                     case WorkStyle.Min:
                         min = Math.Floor(span.TotalMinutes).ToString(); // 累计分钟数
+                        if (day.Length < 3) day = "0" + day;
+                        if (day.Length < 3) day = "0" + day;
+                        if (hour.Length < 2) hour = "0" + hour;
+                        if (min.Length < 2) min = "0" + min;
+                        if (sec.Length < 2) sec = "0" + sec;
 
                         DayDisplay.Text = min;
 
