@@ -108,6 +108,10 @@ namespace Widgets.MVP.WidgetModels
         //public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
         //public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
 
+        public void Exit()
+        {
+            this.Close();
+        }
 
         /// <summary>
         /// 标准示例配置文件

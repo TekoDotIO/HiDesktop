@@ -492,7 +492,7 @@ namespace Widgets.MVP.WindowApps.RandomItemsDataModel
                 { "Name_KEY", "Name" },
                 { "Tags_KEY", "Tags" },
                 { "PoolWeight_KEY", "PoolWeight" },
-                { "SoftwareCopyright", "HiDesktop.Widgets.MVP by teko.IO SisTemS 2024" }
+                { "SoftwareCopyright", "HiDesktop.Widgets.MVP by teko.IO SisTemS 2026" }
             };
             for (int i = 0; i < configData.GetLength(0); i++)
             {

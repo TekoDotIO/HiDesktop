@@ -807,7 +807,7 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
                 { "BackColor_KEY", "BackColor" },
                 { "TextColor_KEY", "TextColor" },
                 { "AuthorColor_KEY", "AuthorColor" },
-                { "SoftwareCopyright", "HiDesktop.Widgets.MVP by teko.IO SisTemS 2024" }
+                { "SoftwareCopyright", "HiDesktop.Widgets.MVP by teko.IO SisTemS 2026" }
             };
             for (int i = 0; i < configData.GetLength(0); i++)
             {

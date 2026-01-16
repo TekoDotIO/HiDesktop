@@ -664,7 +664,7 @@ namespace Widgets.MVP.WidgetModels
                     return;
                 }
 
-                //var span = DateTime.Now - DateTime.Parse("2024.10.03");
+                //var span = DateTime.Now - DateTime.Parse("2026.10.03");
                 //DayDisplay.Text = Math.Floor(span.TotalDays).ToString();
                 //HourDisplay.Text = (Math.Floor(span.TotalHours) - Math.Floor(span.TotalDays) * 24).ToString();
                 //MinDisplay.Text = (Math.Floor(span.TotalMinutes) - Math.Floor(span.TotalHours) * 60).ToString();

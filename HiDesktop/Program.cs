@@ -32,38 +32,40 @@ namespace Widgets.MVP
             { "showBootWindow" , "true"},
             { "topMost" , "true"}
         };
-        const string productName = "HiDesktop";
+        public const string productName = "HiDesktop";
         static bool showBootWindow = false;
         //static bool enableFontInstall = false;
         static bool waitForEffects = false;
         static string UriName = "HiDesktop";
-        readonly Hashtable widgets = new Hashtable();
+        public Hashtable ActivatedWidgets = new Hashtable();
+        public Hashtable ActivatedWidgetsTypeRepo = new Hashtable();
+        public static Program ActivatedProgram;
         string nowFile;
         void StartView()
         {
             try
             {
-                switch (widgets[nowFile])
+                switch (ActivatedWidgets[nowFile])
                 {
                     case CounterBar _:
-                        if (!((CounterBar)widgets[nowFile]).IsDisposed)
+                        if (!((CounterBar)ActivatedWidgets[nowFile]).IsDisposed)
                         {
                             //throw new Exception("This is a simulating FATAL exception...");
-                            ((CounterBar)widgets[nowFile]).ShowDialog();
+                            ((CounterBar)ActivatedWidgets[nowFile]).ShowDialog();
                             
                         }
                         break;
                     case TextBar _:
-                        ((TextBar)widgets[nowFile]).ShowDialog();
+                        ((TextBar)ActivatedWidgets[nowFile]).ShowDialog();
                         break;
                     case WidgetModels.Activator _:
-                        ((WidgetModels.Activator)widgets[nowFile]).ShowDialog();
+                        ((WidgetModels.Activator)ActivatedWidgets[nowFile]).ShowDialog();
                         break;
                     case OneQuoteText _:
-                        ((OneQuoteText)widgets[nowFile]).ShowDialog();
+                        ((OneQuoteText)ActivatedWidgets[nowFile]).ShowDialog();
                         break;
                     case CountdownV2 _:
-                        ((CountdownV2)widgets[nowFile]).ShowDialog();
+                        ((CountdownV2)ActivatedWidgets[nowFile]).ShowDialog();
                         break;
                     default:
                         break;
@@ -72,7 +74,7 @@ namespace Widgets.MVP
             }
             catch (Exception e)
             {
-                var item = (Form)widgets[nowFile];
+                var item = (Form)ActivatedWidgets[nowFile];
                 if (item != null)
                 {
                     if (!item.IsDisposed)
@@ -101,7 +103,7 @@ namespace Widgets.MVP
             Directory.CreateDirectory("./Properties/");
             string[] properties = Directory.GetFiles("./Properties/");
             //MessageBox.Show(Path.GetFullPath("./Properties/"));
-            Program p = new Program();
+            ActivatedProgram = new Program();
             
             bool enableHook = false;//允许接入启动页面
             if (launchPage != null) 
@@ -122,9 +124,10 @@ namespace Widgets.MVP
                                 if ((string)config["enabled"] == "true")
                                 {
                                     CountdownV2 widget = new(localFile);
-                                    p.widgets.Add(localFile, widget);
-                                    p.nowFile = localFile;
-                                    Thread View = new Thread(new ThreadStart(p.StartView));
+                                    ActivatedProgram.ActivatedWidgets.Add(localFile, widget);
+                                    ActivatedProgram.ActivatedWidgetsTypeRepo.Add(localFile, "CountdownV2");
+                                    ActivatedProgram.nowFile = localFile;
+                                    Thread View = new Thread(new ThreadStart(ActivatedProgram.StartView));
                                     View.Start();
                                     string s = $"Launched {localFile}";
                                     Log.SaveLog(s);
@@ -143,9 +146,10 @@ namespace Widgets.MVP
                                 if ((string)config["enabled"] == "true")
                                 {
                                     CounterBar textBar = new CounterBar(localFile);
-                                    p.widgets.Add(localFile, textBar);
-                                    p.nowFile = localFile;
-                                    Thread View = new Thread(new ThreadStart(p.StartView));
+                                    ActivatedProgram.ActivatedWidgets.Add(localFile, textBar);
+                                    ActivatedProgram.ActivatedWidgetsTypeRepo.Add(localFile, "CounterBar");
+                                    ActivatedProgram.nowFile = localFile;
+                                    Thread View = new Thread(new ThreadStart(ActivatedProgram.StartView));
                                     View.Start();
                                     string s = $"Launched {localFile}";
                                     Log.SaveLog(s);
@@ -163,9 +167,10 @@ namespace Widgets.MVP
                                 if ((string)config["enabled"] == "true")
                                 {
                                     TextBar textBar = new TextBar(localFile);
-                                    p.widgets.Add(localFile, textBar);
-                                    p.nowFile = localFile;
-                                    Thread Counter = new Thread(new ThreadStart(p.StartView));
+                                    ActivatedProgram.ActivatedWidgets.Add(localFile, textBar);
+                                    ActivatedProgram.ActivatedWidgetsTypeRepo.Add(localFile, "TextBar");
+                                    ActivatedProgram.nowFile = localFile;
+                                    Thread Counter = new Thread(new ThreadStart(ActivatedProgram.StartView));
                                     Counter.Start();
                                     Log.SaveLog($"Launched {localFile}");
                                     if (enableHook && launchPage.isAlive && !launchPage.isBusy)
@@ -187,9 +192,10 @@ namespace Widgets.MVP
                                 if ((string)config["enabled"] == "true")
                                 {
                                     WidgetModels.Activator activator = new(localFile);
-                                    p.widgets.Add(localFile, activator);
-                                    p.nowFile = localFile;
-                                    Thread a = new Thread(new ThreadStart(p.StartView));
+                                    ActivatedProgram.ActivatedWidgets.Add(localFile, activator);
+                                    ActivatedProgram.ActivatedWidgetsTypeRepo.Add(localFile, "Activator");
+                                    ActivatedProgram.nowFile = localFile;
+                                    Thread a = new Thread(new ThreadStart(ActivatedProgram.StartView));
                                     a.Start();
                                     Log.SaveLog($"Launched {localFile}");
                                     activatorExists = true;
@@ -208,9 +214,10 @@ namespace Widgets.MVP
                                 if ((string)config["enabled"] == "true")
                                 {
                                     OneQuoteText obj = new(localFile);
-                                    p.widgets.Add(localFile, obj);
-                                    p.nowFile = localFile;
-                                    Thread Counter = new Thread(new ThreadStart(p.StartView));
+                                    ActivatedProgram.ActivatedWidgets.Add(localFile, obj);
+                                    ActivatedProgram.ActivatedWidgetsTypeRepo.Add(localFile, "OneQuote");
+                                    ActivatedProgram.nowFile = localFile;
+                                    Thread Counter = new Thread(new ThreadStart(ActivatedProgram.StartView));
                                     Counter.Start();
                                     Log.SaveLog($"Launched {localFile}");
                                     if (enableHook && launchPage.isAlive && !launchPage.isBusy)
@@ -368,7 +375,7 @@ namespace Widgets.MVP
                     {
                         case "--MainProcess":
 
-                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                             if (showBootWindow)
@@ -398,7 +405,7 @@ namespace Widgets.MVP
                             }
                             break;
                         case "--SkipLaunchPage":
-                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             Application.EnableVisualStyles();
                             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                             Thread t2 = new(new ThreadStart(MainProcess));
@@ -409,13 +416,13 @@ namespace Widgets.MVP
                             CommandRepo.ExitAll(productName);
                             CommandRepo.ExitAll("Widgets.MVP");
                             Log.SaveLog($"Killed all {productName} process.");
-                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             break;
                         case "--Install":
                             CommandRepo.CreateStartUpScript();
                             Log.SaveLog("准备创建URL Scheme...Creating URL Scheme");
                             CommandRepo.RegisterCustomURLScheme(UriName);
-                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             break;
                         case "--Uninstall":
                             CommandRepo.Uninstall("Widgets.MVP");
@@ -426,7 +433,7 @@ namespace Widgets.MVP
                         case "--RegURL":
                             Log.SaveLog("准备创建Activator URL Scheme...Creating URL Scheme");
                             CommandRepo.RegisterCustomURLScheme(UriName);
-                            Log.SaveLog("teko.IO 相互科技 2024 All Right Reserved.");
+                            Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             break;
                         case "--UnRegURL":
                             Log.SaveLog("准备删除Activator URL Scheme...Deleting URL Scheme");

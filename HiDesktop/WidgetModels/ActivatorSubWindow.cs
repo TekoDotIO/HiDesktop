@@ -26,7 +26,7 @@ namespace Widgets.MVP.WidgetModels
         /// <summary>
         /// 数据库版本信息
         /// </summary>
-        string version = "a.db.20240731.1119";
+        string version = "a.db.20260731.1119";
         /// <summary>
         /// 下一页图标
         /// </summary>

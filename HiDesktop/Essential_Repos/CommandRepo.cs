@@ -74,6 +74,22 @@ namespace Widgets.MVP.Essential_Repos
                 }
             }
         }
+        public static void ExitSelf(string product)
+        {
+            var Running = Process.GetProcessesByName(product);
+            //获取所有名为product的进程
+            var ThisID = Process.GetCurrentProcess().Id;
+            //获取当前进程ID
+            foreach (Process process in Running)//为每个识别到的进程重复
+            {
+                if (ThisID == process.Id)//自行结束
+                {
+                    process.Kill();//结束此进程
+                    Log.SaveLog("Killed process:" + process.Id);
+                }
+            }
+        }
+
         public static void Uninstall(string product)
         {
             string CdPath = Directory.GetCurrentDirectory();
