@@ -677,6 +677,7 @@ namespace Widgets.MVP.WidgetModels.OneQuoteDataModel
         {
             using (var fileStream = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
             {
+                fileStream.Position = 0;
                 XSSFWorkbook workbook = new(fileStream);
                 ISheet configSheet = workbook.GetSheet("Config");
                 if (configSheet == null) 

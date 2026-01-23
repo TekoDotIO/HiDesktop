@@ -257,7 +257,12 @@ namespace Widgets.MVP
             }
             Log.SaveLog("Launched all.");
             Log.SaveLog("Start building notify controller...");
-            NotifyController.BuildNotifyController();
+            
+            Thread NotifyThread = new(new ThreadStart(() =>
+            {
+                NotifyController.BuildNotifyController();
+            }));
+            NotifyThread.Start();
             Log.SaveLog("Start building Pipes service...");
             Thread PipesThread = new(new ThreadStart(() =>
             {
@@ -395,6 +400,9 @@ namespace Widgets.MVP
                     switch (args[0])
                     {
                         case "--MainProcess":
+                        case "-m":
+                        case "-M":
+                        case "--mainprocess":
 
                             Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             Application.EnableVisualStyles();
@@ -425,6 +433,9 @@ namespace Widgets.MVP
                                 Log.SaveLog("Program started with no a launch page.");
                             }
                             break;
+                        case "-s":
+                        case "-S":
+                        case "--skiplaunchpage":
                         case "--SkipLaunchPage":
                             Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             Application.EnableVisualStyles();
@@ -433,30 +444,43 @@ namespace Widgets.MVP
                             t2.Start();
                             Log.SaveLog("Program started with no launch pages.");
                             break;
+                        case "-e":
+                        case "-E":
+                        case "--exitall":
                         case "--ExitAll":
                             CommandRepo.ExitAll(productName);
                             CommandRepo.ExitAll("Widgets.MVP");
                             Log.SaveLog($"Killed all {productName} process.");
                             Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             break;
+                        case "-i":
+                        case "-I":
+                        case "--install":
                         case "--Install":
                             CommandRepo.CreateStartUpScript();
                             Log.SaveLog("准备创建URL Scheme...Creating URL Scheme");
                             CommandRepo.RegisterCustomURLScheme(UriName);
                             Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             break;
+                        case "-u":
+                        case "-U":
+                        case "--uninstall":
                         case "--Uninstall":
                             CommandRepo.Uninstall("Widgets.MVP");
                             Log.SaveLog("准备删除URL Scheme...Deleting URL Scheme");
                             CommandRepo.RemoveCustomURLScheme(UriName);
                             CommandRepo.Uninstall(productName);
                             break;
+                        case "-r":
+                        case "-R":
+                        case "--regurl":
                         case "--RegURL":
                             Log.SaveLog("准备创建Activator URL Scheme...Creating URL Scheme");
                             CommandRepo.RegisterCustomURLScheme(UriName);
                             Log.SaveLog("teko.IO 相互科技 2026 All Right Reserved.");
                             break;
                         case "--UnRegURL":
+                        case "--unregurl":
                             Log.SaveLog("准备删除Activator URL Scheme...Deleting URL Scheme");
                             CommandRepo.RemoveCustomURLScheme(UriName);
                             break;

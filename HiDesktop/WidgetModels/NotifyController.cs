@@ -1,6 +1,7 @@
 ﻿using HiDesktop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -56,26 +57,39 @@ namespace Widgets.MVP.WidgetModels
                 });
                 ExitSingleMenuItem = new ToolStripMenuItem();
                 ExitSingleMenuItem.Text = "退出指定小组件...";
-                EnterManagePageMenuItem = new ToolStripMenuItem();
-                EnterManagePageMenuItem.Text = "打开特定组件设置...";
-                OpenPanelMenuItem = new ToolStripMenuItem();
-                OpenPanelMenuItem.Text = "打开管理面板";
+                //EnterManagePageMenuItem = new ToolStripMenuItem();
+                //EnterManagePageMenuItem.Text = "打开特定组件设置...";
+                //OpenPanelMenuItem = new ToolStripMenuItem();
+                //OpenPanelMenuItem.Text = "打开管理面板";
                 RestartMenuItem = new ToolStripMenuItem();
                 RestartMenuItem.Text = "重新启动程序";
-                
+                RestartMenuItem.Click += new EventHandler((sender, e) =>
+                {
+                    Process newProcess = new();
+                    string CdPath = Directory.GetCurrentDirectory();
+                    string ThisFile = Process.GetCurrentProcess().MainModule.FileName;
+                    string path = ThisFile;
+                    newProcess.StartInfo.FileName = path;
+                    newProcess.StartInfo.WorkingDirectory = CdPath;
+                    newProcess.Start();
+                    Log.SaveLog("Exiting to restart...");
+                    CommandRepo.ExitSelf(Program.productName);
+                    CommandRepo.ExitSelf("Widgets.MVP");
+                });
+
                 contextMenuStrip.Items.AddRange(
                 [
                     ExitAllMenuItem,
                     ExitSingleMenuItem, 
-                    EnterManagePageMenuItem,
-                    OpenPanelMenuItem, 
+                    //EnterManagePageMenuItem,
+                    //OpenPanelMenuItem, 
                     RestartMenuItem,
                 ]);
             }
             public void RefreshWidgetsList()
             {
                 ExitSingleMenuItem.DropDownItems.Clear();
-                EnterManagePageMenuItem.DropDownItems.Clear();
+                //EnterManagePageMenuItem.DropDownItems.Clear();
                 var widgetsListForExiting = new ToolStripMenuItem[Program.ActivatedProgram.ActivatedWidgets.Count];
                 int i = 0;
                 foreach (string item in Program.ActivatedProgram.ActivatedWidgets.Keys)
@@ -157,7 +171,7 @@ namespace Widgets.MVP.WidgetModels
                     widgetsListForManager[i] = new ToolStripMenuItem(shortName);
                     i++;
                 }
-                EnterManagePageMenuItem.DropDownItems.AddRange(widgetsListForManager);
+                //EnterManagePageMenuItem.DropDownItems.AddRange(widgetsListForManager);
             }
         }
     }
