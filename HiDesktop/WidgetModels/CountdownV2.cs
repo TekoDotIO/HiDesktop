@@ -38,6 +38,10 @@ namespace Widgets.MVP.WidgetModels
         string updaterUID = "";
         public bool allowMove = true;
 
+        public void Exit()
+        {
+            this.Close();
+        }
 
         Hashtable htStandard = new Hashtable()
             {

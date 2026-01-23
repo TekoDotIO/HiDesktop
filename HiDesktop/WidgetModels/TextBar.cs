@@ -58,6 +58,11 @@ namespace HiDesktop
 
         }
 
+        public void Exit()
+        {
+            this.Close();
+        }
+
         public void LoadWidget()
         {
             Hashtable htStandard = new Hashtable()

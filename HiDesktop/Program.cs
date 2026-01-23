@@ -347,7 +347,8 @@ namespace Widgets.MVP
         public static void Main(string[] args)
         {
             var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
-
+            AppInfo.InitializeSettings();
+            Log.SaveLog("Loaded AppInfo default settings.");
 
             //if ((string)ht["enableFontInstall"] == "true") enableFontInstall = true;
             if ((string)ht["waitForEffects"] == "true") waitForEffects = true;

@@ -49,6 +49,12 @@ namespace Widgets.MVP.WidgetModels
         {
             Excel
         }
+
+        public void Exit()
+        {
+            this.Close();
+        }
+
         public Hashtable htStandard = new()
         {
             { "type", "OneQuote" },
