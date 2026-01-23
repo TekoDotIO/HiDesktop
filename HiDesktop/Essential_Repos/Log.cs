@@ -22,7 +22,7 @@ namespace Widgets.MVP.Essential_Repos
                 lock (_fileLock) // 确保线程互斥
                 {
                     string Path = $"{System.IO.Path.GetDirectoryName(Environment.ProcessPath)}/";
-                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "] " + message;
+                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff") + "] " + message;
                     //空格是为了增强日志可读性,DateTime的作用是获取目前时间
                     Directory.CreateDirectory($"{Path}/Log/");
                     //如果不存在Log文件夹,则创建(会略微拖慢运行速度,但是用if判断一次代码量和工作量会大很多)
@@ -53,7 +53,7 @@ namespace Widgets.MVP.Essential_Repos
                 lock (_fileLock) // 确保线程互斥
                 {
                     string Path = $"{System.IO.Path.GetDirectoryName(Environment.ProcessPath)}/";
-                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + $"] [{module}] " + message;
+                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff") + $"] [{module}] " + message;
                     //空格是为了增强日志可读性,DateTime的作用是获取目前时间
                     Directory.CreateDirectory($"{Path}/Log/");
                     //如果不存在Log文件夹,则创建(会略微拖慢运行速度,但是用if判断一次代码量和工作量会大很多)
@@ -84,7 +84,7 @@ namespace Widgets.MVP.Essential_Repos
                 lock (_fileLock) // 确保线程互斥
                 {
                     string Path = $"{System.IO.Path.GetDirectoryName(Environment.ProcessPath)}/";
-                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "] " + message;
+                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff") + "] " + message;
                     //空格是为了增强日志可读性,DateTime的作用是获取目前时间
                     Directory.CreateDirectory($"{Path}/Log/");
                     //如果不存在Log文件夹,则创建(会略微拖慢运行速度,但是用if判断一次代码量和工作量会大很多)
@@ -118,7 +118,7 @@ namespace Widgets.MVP.Essential_Repos
                 lock (_fileLock) // 确保线程互斥
                 {
                     string Path = $"{System.IO.Path.GetDirectoryName(Environment.ProcessPath)}/";
-                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + $"] [{module}] " + message;
+                    message = "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff") + $"] [{module}] " + message;
                     //空格是为了增强日志可读性,DateTime的作用是获取目前时间
                     Directory.CreateDirectory($"{Path}/Log/");
                     //如果不存在Log文件夹,则创建(会略微拖慢运行速度,但是用if判断一次代码量和工作量会大很多)
