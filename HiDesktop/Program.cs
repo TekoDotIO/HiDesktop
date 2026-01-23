@@ -348,6 +348,26 @@ namespace Widgets.MVP
         {
             var ht = PropertiesHelper.AutoCheck(htStandard, @"./Properties/LaunchPage.properties");
             AppInfo.InitializeSettings();
+            if((string)AppInfo.ApplicationConfig["debugMode"] == "false")
+            {
+                Log.EnableLogs = false;
+            }
+            
+            if (Log.EnableLogs && (string)AppInfo.ApplicationConfig["clearLastNLogs"] != "0")
+            {
+                Log.SaveLog("Initializing Log clean-up...", "LogCleaningUp");
+                try
+                {
+                    int saveEntries = Convert.ToInt32((string)AppInfo.ApplicationConfig["clearLastNLogs"]);
+                    Log.SaveLog($"Totally {saveEntries} will be saved. Processing...", "LogCleaningUp");
+                    Log.DoLogCleanUp(saveEntries);
+                }
+                catch (Exception ex)
+                {
+                    Log.SaveLog($"Error when doing Log folder clean up: {ex}", "LogCleaningUp");
+                    //throw;
+                }
+            }
             Log.SaveLog("Loaded AppInfo default settings.");
 
             //if ((string)ht["enableFontInstall"] == "true") enableFontInstall = true;

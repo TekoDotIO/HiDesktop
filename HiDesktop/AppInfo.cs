@@ -17,7 +17,9 @@ namespace Widgets.MVP
         {
             { "type", "AppSettings" },
             { "notifyIcon.autoExitApp", "true" },
-            { "notifyIcon.sendNotifyAfterAllDisposed", "true" }
+            { "notifyIcon.sendNotifyAfterAllDisposed", "true" },
+            { "debugMode", "true" },
+            { "clearLastNLogs", "5" }
         };
         public static void InitializeSettings()
         {
