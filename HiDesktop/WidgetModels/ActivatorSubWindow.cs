@@ -179,7 +179,7 @@ namespace Widgets.MVP.WidgetModels
         PictureBox lastPage, nextPage;
         #endregion
 
-
+        
 
         //[DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         //public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
@@ -539,9 +539,9 @@ namespace Widgets.MVP.WidgetModels
         public void SleepForm()
         {
             if (!enableAutoClose) return;
-            for (int i = 12; i > 0; i--)
+            for (int i = 10; i > 0; i--)
             {
-                Opacity -= 0.08;
+                Opacity -= 0.1;
                 Thread.Sleep(1);
             }
             Hide();
@@ -551,6 +551,8 @@ namespace Widgets.MVP.WidgetModels
 
         public void CallUpForm()
         {
+            Opacity = 1;
+            SetLayeredWindowAttributes(this.Handle, 0, (byte)(this.Opacity * 255), 0x02); // 0x02 代表 LWA_ALPHA
             if (stopNextAwake)
             {
                 stopNextAwake = false;
@@ -573,7 +575,7 @@ namespace Widgets.MVP.WidgetModels
             }
             if (parentActivator.Location.X < scrW / 2)
             {
-                Location = new Point(-Size.Width, Location.Y);
+                Location = new Point( - Size.Width, Location.Y);
             }
             else
             {
@@ -787,7 +789,8 @@ namespace Widgets.MVP.WidgetModels
             }
         }
 
-        
+        [DllImport("user32.dll")]
+        static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);//分层动画后必须的他透明度处理逻辑
 
 
         void LoadDatabase()
@@ -844,6 +847,7 @@ namespace Widgets.MVP.WidgetModels
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle &= (~WS_EX_APPWINDOW);
                 cp.ExStyle |= WS_EX_TOOLWINDOW;
+                cp.ExStyle |= 0x00080000; // WS_EX_LAYERED (分层样式)
                 return cp;
             }
         }

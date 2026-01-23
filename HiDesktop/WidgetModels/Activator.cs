@@ -391,6 +391,7 @@ namespace Widgets.MVP.WidgetModels
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
+                        Thread.Sleep(10);
                     }
                     //SetWindowRegion(20);
                     SetIcon(rightArrowIcon);
@@ -413,10 +414,11 @@ namespace Widgets.MVP.WidgetModels
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
+                        Thread.Sleep(10);
                         Refresh();
                     }
                     SetIcon(leftArrowIcon);
-                    //SetWindowRegion(20);
+                    SetWindowRegion(20);
                     statu = ActivatorStatus.Right;
                 }
                 MathRepo.MoveWindowSmoothly_MethodA(this, scrW - 5 - size / 2, Location.Y, 0.2, 30);
@@ -442,6 +444,7 @@ namespace Widgets.MVP.WidgetModels
                     foreach (var item in l)
                     {
                         Size = new Size(Convert.ToInt32(item), Size.Height);
+                        Thread.Sleep(10);
                         SetWindowRegion(20);//由于限定窗口区域，必须SetWindowRegion，否则动画不生效
                         Refresh();
                     }
@@ -598,11 +601,12 @@ namespace Widgets.MVP.WidgetModels
             }
         }
 
-        
+
 
         /// <summary>
         /// 设置窗体的Region
         /// </summary>
+        /// <param name="radius">弧度</param>
         public void SetWindowRegion(int radius)
         {
             GraphicsPath FormPath;
