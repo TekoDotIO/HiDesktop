@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReaLTaiizor;
+using ReaLTaiizor.Forms;
 
 namespace Widgets.MVP
 {
-    public partial class MainMenu : Form
+    public partial class MainMenu : MaterialForm 
     {
         public MainMenu()
         {

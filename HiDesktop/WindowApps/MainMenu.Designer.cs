@@ -32,15 +32,7 @@
             // 
             // MainMenu
             // 
-            this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.ControlBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.IsMdiContainer = true;
             this.Name = "MainMenu";
             this.Text = "HiDesktop-菜单";
             this.UseWaitCursor = true;

@@ -382,6 +382,7 @@ namespace Widgets.MVP
             switch (args.Length)//读取传入的参数
             {
                 case 0:
+
                     Thread.Sleep(500);
                     if (CommandRepo.IsMultiProcess("Widgets.MVP"))
                     {
@@ -399,6 +400,12 @@ namespace Widgets.MVP
                     //读取第一个参数
                     switch (args[0])
                     {
+                        case "--DebugEntry":
+                            Application.Run(new Welcome()
+                            {
+                                AutoScaleMode = AutoScaleMode.Dpi
+                            });
+                            break;
                         case "--MainProcess":
                         case "-m":
                         case "-M":

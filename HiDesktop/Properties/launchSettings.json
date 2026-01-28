@@ -3,6 +3,10 @@
     "HiDesktop": {
       "commandName": "Project",
       "commandLineArgs": "--MainProcess"
+    },
+    "HiDesktop - 调试入口点": {
+      "commandName": "Project",
+      "commandLineArgs": "--DebugEntry"
     }
   }
 }
